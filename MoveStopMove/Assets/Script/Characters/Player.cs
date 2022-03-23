@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public Camera _camera;
     [SerializeField]
     private Vector3 offset;
+    public GameObject weapon;
 
 
     private void FixedUpdate()
@@ -31,5 +32,10 @@ public class Player : MonoBehaviour
             _anim.SetBool("IsIdle", true);
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
     }
 }

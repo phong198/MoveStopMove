@@ -20,8 +20,9 @@ public class EnemiesSpawner : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
 
-            if (gameObject.transform.childCount > 10) // hỏi luôn cách if active trong pool > 10 :ded:
+            if (EnemyPool.PoolAccess.enemyList.Count > 10) 
             {
+                Debug.Log("aaa");
                 SpawnEnemies();
             }
         }

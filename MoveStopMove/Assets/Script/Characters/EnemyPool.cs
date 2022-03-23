@@ -16,18 +16,19 @@ public class EnemyPool : MonoBehaviour
 
     #region singleton
     public static EnemyPool PoolAccess;
-    private void Awake()
-    {
-        PoolAccess = this;
-    }
+    //private void Awake()
+    //{
+    //    PoolAccess = this;
+    //}
     #endregion
 
 
     public List<Pool> enemyList;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
 
-    private void Start()
+    private void Awake()
     {
+        PoolAccess = this;
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
         foreach (Pool pool in enemyList)
