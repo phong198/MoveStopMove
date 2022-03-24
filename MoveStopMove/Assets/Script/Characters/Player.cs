@@ -36,6 +36,12 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.tag == "enemy")
+        {
+            if (_rigid.velocity == null)
+            {
+
+            }
+        }
     }
 }

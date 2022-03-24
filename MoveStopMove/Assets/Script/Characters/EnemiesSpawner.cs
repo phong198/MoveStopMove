@@ -20,7 +20,9 @@ public class EnemiesSpawner : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
 
-            if (EnemyPool.PoolAccess.enemyList.Count > 10) 
+            EnemyPool.PoolAccess.CountActiveObject();
+
+            if (EnemyPool.PoolAccess.activeObjCount < EnemyPool.PoolAccess.enemyList.Count) 
             {
                 Debug.Log("aaa");
                 SpawnEnemies();

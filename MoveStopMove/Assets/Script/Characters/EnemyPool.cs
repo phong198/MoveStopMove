@@ -16,13 +16,9 @@ public class EnemyPool : MonoBehaviour
 
     #region singleton
     public static EnemyPool PoolAccess;
-    //private void Awake()
-    //{
-    //    PoolAccess = this;
-    //}
     #endregion
 
-
+    public int activeObjCount;
     public List<Pool> enemyList;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
 
@@ -40,6 +36,7 @@ public class EnemyPool : MonoBehaviour
                 enemyObj.transform.parent = pool._enemy.transform.parent;
                 enemyObj.SetActive(false);
                 enemyPool.Enqueue(enemyObj);
+                Debug.Log(pool.poolSize); // = 10
             }
             poolDictionary.Add(pool.poolTag, enemyPool);
         }
@@ -53,5 +50,18 @@ public class EnemyPool : MonoBehaviour
         enemyToSpawn.transform.rotation = rotation;
 
         poolDictionary[poolTag].Enqueue(enemyToSpawn);
+    }    
+
+    public void CountActiveObject ()
+    {
+        activeObjCount = 0;
+        foreach (Pool pool in enemyList)
+        {
+            for (int j = 0; j < pool.poolSize; j++)
+            {
+                activeObjCount++;
+            }
+        }
+        Debug.Log("So object:" + activeObjCount); 
     }    
 }
