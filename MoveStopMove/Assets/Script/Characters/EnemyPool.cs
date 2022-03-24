@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyPool : MonoBehaviour
 {
-    // Start is called before the first frame update
 
     [System.Serializable]
     public class Pool
@@ -19,13 +18,14 @@ public class EnemyPool : MonoBehaviour
     #endregion
 
     public int activeObjCount = 0;
-    public int poolSize;
+
     public List<Pool> enemyList;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
 
     private void Awake()
     {
-        PoolAccess = this;
+        PoolAccess = this; //singleton
+
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
         foreach (Pool pool in enemyList)
@@ -37,9 +37,8 @@ public class EnemyPool : MonoBehaviour
                 enemyObj.transform.parent = pool._enemy.transform.parent;
                 enemyObj.SetActive(false);
                 enemyPool.Enqueue(enemyObj);
-                Debug.Log("enemyList.Count:" + enemyList.Count);
-                Debug.Log("pool.poolSize" + pool.poolSize);
             }
+
             poolDictionary.Add(pool.poolTag, enemyPool);
         }
     }
@@ -52,15 +51,7 @@ public class EnemyPool : MonoBehaviour
         enemyToSpawn.transform.rotation = rotation;
 
         poolDictionary[poolTag].Enqueue(enemyToSpawn);
+
         activeObjCount++;
-        Debug.Log("activeObjCount:" + activeObjCount);
-    }    
-     
-    public void GetPoolSize()
-    {
-        foreach (Pool pool in enemyList)
-        {
-            poolSize = pool.poolSize;
-        }
-    }    
+    }       
 }
