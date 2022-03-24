@@ -9,8 +9,12 @@ public class EnemiesSpawner : MonoBehaviour
     private int xPos;
     private int zPos;
 
+    private void Update()
+    {
+    }
     private void Start()
     {
+        EnemyPool.PoolAccess.GetPoolSize();
         SpawnEnemies();
         StartCoroutine(countinueSpawn());
     }
@@ -20,11 +24,8 @@ public class EnemiesSpawner : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
 
-            EnemyPool.PoolAccess.CountActiveObject();
-
-            if (EnemyPool.PoolAccess.activeObjCount < EnemyPool.PoolAccess.enemyList.Count) 
+            if (EnemyPool.PoolAccess.activeObjCount < EnemyPool.PoolAccess.poolSize)
             {
-                Debug.Log("aaa");
                 SpawnEnemies();
             }
         }
