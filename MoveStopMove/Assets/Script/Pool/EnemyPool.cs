@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyPool : MonoBehaviour
 {
@@ -47,7 +48,19 @@ public class EnemyPool : MonoBehaviour
     public void SpawnFromPool (string poolTag, Vector3 position, Quaternion rotation)
     {
         GameObject enemyToSpawn = poolDictionary[poolTag].Dequeue();
+        NavMeshHit closestHit;
+
+        if (NavMesh.SamplePosition(enemyToSpawn.transform.position, out closestHit, 500f, NavMesh.AllAreas))
+        {
+            enemyToSpawn.transform.position = closestHit.position;
+        }
+        else
+        {
+            Debug.LogError("Could not find position on NavMesh!");
+        }
+
         enemyToSpawn.SetActive(true);
+
         enemyToSpawn.transform.position = position;
         enemyToSpawn.transform.rotation = rotation;
 

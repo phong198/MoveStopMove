@@ -22,8 +22,10 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         gameObject.GetComponent<Rigidbody>().velocity = transform.forward * 5f;
+
+
         timer += Time.deltaTime;
-        //if (gameObject.activeInHierarchy)
+
         {
             if (timer >= wanderTimer)
             {
@@ -32,7 +34,7 @@ public class Enemy : MonoBehaviour
                 timer = 0;
             }
         }
-        Debug.Log(gameObject.activeInHierarchy);
+
     }
 
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
