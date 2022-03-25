@@ -19,6 +19,7 @@ public class EnemyPool : MonoBehaviour
 
     public int activeObjCount = 0;
 
+
     public List<Pool> enemyList;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
 

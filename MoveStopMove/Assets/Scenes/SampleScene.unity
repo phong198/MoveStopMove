@@ -1016,14 +1016,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 512544375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cf042f5d58ca694b9ef01eaebc1f61e, type: 3}
+  m_Script: {fileID: 11500000, guid: 15868ecd0bebfcd47a4d998956a21715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   activeObjCount: 0
   enemyList:
   - poolTag: Enemy
     _enemy: {fileID: 2136471209}
-    poolSize: 10
+    poolSize: 9
 --- !u!1 &513634970
 GameObject:
   m_ObjectHideFlags: 0
@@ -4378,6 +4378,7 @@ GameObject:
   - component: {fileID: 2136471213}
   - component: {fileID: 2136471212}
   - component: {fileID: 2136471210}
+  - component: {fileID: 2136471211}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -4407,6 +4408,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2136471211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136471209}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800bc87e93e56e547be2a8fc67d95617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wanderRadius: 5
+  wanderTimer: 5
+  movementSpeed: 5
 --- !u!64 &2136471212
 MeshCollider:
   m_ObjectHideFlags: 0
