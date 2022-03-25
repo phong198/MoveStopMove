@@ -8,7 +8,6 @@ public class EnemiesSpawner : MonoBehaviour
     private Vector3 position;
     private int xPos;
     private int zPos;
-    public bool isActive = false;
 
     private void Start()
     {
