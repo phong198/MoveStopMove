@@ -1023,7 +1023,7 @@ MonoBehaviour:
   enemyList:
   - poolTag: Enemy
     _enemy: {fileID: 2136471209}
-    poolSize: 9
+    poolSize: 10
 --- !u!1 &513634970
 GameObject:
   m_ObjectHideFlags: 0
@@ -4385,7 +4385,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &2136471210
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4422,7 +4422,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wanderRadius: 5
   wanderTimer: 5
-  movementSpeed: 5
 --- !u!64 &2136471212
 MeshCollider:
   m_ObjectHideFlags: 0
