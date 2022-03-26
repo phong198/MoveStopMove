@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 
     public float wanderRadius;
     public float wanderTimer;
+    public Rigidbody enemy;
 
     private NavMeshAgent agent;
     private float timer;
@@ -21,7 +22,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<Rigidbody>().velocity = transform.forward * 5f;
+        enemy.velocity = transform.forward * 5f;
 
 
         timer += Time.deltaTime;
@@ -32,9 +33,9 @@ public class Enemy : MonoBehaviour
                 Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
                 agent.SetDestination(newPos);
                 timer = 0;
+                Debug.Log(newPos);
             }
         }
-
     }
 
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
