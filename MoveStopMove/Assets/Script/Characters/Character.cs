@@ -5,22 +5,26 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
-    public UnityAction OnAttack;
-    public UnityAction OnRun;
-    public UnityAction OnIdle;
-    public UnityAction OnDeath;
-    public UnityAction OnWin;
-    public UnityAction OnDance;
-    public UnityAction OnUlti;
-    // Start is called before the first frame update
-    void Start()
+
+    public Animator Anim { get; private set; }
+    public GameObject _Character { get; private set; }
+    [SerializeField]
+
+    public virtual void Start()
     {
-        
+        Anim = GetComponent<Animator>();
+        _Character = GetComponent<GameObject>(); 
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+        //Debug.Log(Anim.GetBool());
     }
+
+    public void Attack()
+    {
+        //Anim.SetBool("IsAttack", true);
+    }
+
 }

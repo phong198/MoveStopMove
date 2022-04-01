@@ -1,16 +1,44 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
 
     public float wanderRadius;
     public float wanderTimer;
-    public Rigidbody enemy;
 
     private NavMeshAgent agent;
     private float timer;
+    private float changeStateTimer = 5;
+    private bool stateTimerIsRunning = false;
+
+    public override void Start()
+    {
+
+        ChangeState(new StatePatrol());
+        stateTimerIsRunning = true;
+        //Run();
+    }
+
+    //internal virtual void Run()
+    //{
+    //    if (stateTimerIsRunning)
+    //    {
+    //        if (changeStateTimer > 0)
+    //        {
+    //            changeStateTimer -= Time.deltaTime;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        ChangeState(new StateIdle());
+    //        changeStateTimer = 5f;
+    //        stateTimerIsRunning = false;
+    //    }
+
+    //}
 
     // Use this for initialization
     void OnEnable()
@@ -22,9 +50,17 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemy.velocity = transform.forward * 5f;
+        //Debug.Log(changeStateTimer);
+        //Debug.Log(stateTimerIsRunning);
+        Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
+        if (currentState != null)
+        {
+            currentState.OnExecute(this);
+        }
+    }
 
-
+    public void Patrol()
+    {
         timer += Time.deltaTime;
 
         {
@@ -33,7 +69,6 @@ public class Enemy : MonoBehaviour
                 Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
                 agent.SetDestination(newPos);
                 timer = 0;
-                Debug.Log(newPos);
             }
         }
     }
@@ -49,5 +84,35 @@ public class Enemy : MonoBehaviour
         NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
 
         return navHit.position;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Character"))
+        {
+            ChangeState(new StateAttack());
+        }    
+    }
+
+    public void Idle()
+    {
+
+    }
+
+    private IStates currentState;
+
+    public void ChangeState(IStates state)
+    {
+        if (currentState != null)
+        {
+            currentState.OnExit(this);
+        }
+
+        currentState = state;
+
+        if (currentState != null)
+        {
+            currentState.OnEnter(this);
+        }
     }
 }
