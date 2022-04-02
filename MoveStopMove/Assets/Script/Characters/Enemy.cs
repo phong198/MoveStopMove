@@ -11,52 +11,27 @@ public class Enemy : Character
 
     private NavMeshAgent agent;
     private float timer;
-    private float changeStateTimer = 5;
-    private bool stateTimerIsRunning = false;
 
-    public override void Start()
+    public void Start()
     {
-
         ChangeState(new StatePatrol());
-        stateTimerIsRunning = true;
-        //Run();
     }
 
-    //internal virtual void Run()
-    //{
-    //    if (stateTimerIsRunning)
-    //    {
-    //        if (changeStateTimer > 0)
-    //        {
-    //            changeStateTimer -= Time.deltaTime;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        ChangeState(new StateIdle());
-    //        changeStateTimer = 5f;
-    //        stateTimerIsRunning = false;
-    //    }
 
-    //}
-
-    // Use this for initialization
     void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
         timer = wanderTimer;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Debug.Log(changeStateTimer);
-        //Debug.Log(stateTimerIsRunning);
-        Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
+        
         if (currentState != null)
         {
             currentState.OnExecute(this);
         }
+        Debug.Log("currentState:" + currentState);
     }
 
     public void Patrol()
@@ -86,13 +61,13 @@ public class Enemy : Character
         return navHit.position;
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Character"))
-        {
-            ChangeState(new StateAttack());
-        }    
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Character"))
+    //    {
+    //        ChangeState(new StateAttack());
+    //    }    
+    //}
 
     public void Idle()
     {

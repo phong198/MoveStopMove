@@ -11,7 +11,7 @@ public class StateIdle : IStates
 
     public void OnExecute(Enemy enemy)
     {
-        //Debug.Log("Idling");
+
     }
 
     public void OnExit(Enemy enemy)

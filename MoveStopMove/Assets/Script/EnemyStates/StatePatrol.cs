@@ -21,6 +21,6 @@ public class StatePatrol : MonoBehaviour, IStates
 
     public void OnExit(Enemy enemy)
     {
-        //enemy.Anim.SetBool("IsIdle", true);
+
     }
 }

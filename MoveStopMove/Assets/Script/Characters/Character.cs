@@ -5,26 +5,30 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
-
-    public Animator Anim { get; private set; }
+    public Transform _transform;
+    public Vector3 weapDirection;
+    public Animator Anim; 
     public GameObject _Character { get; private set; }
     [SerializeField]
-
-    public virtual void Start()
+    private void Awake()
     {
         Anim = GetComponent<Animator>();
-        _Character = GetComponent<GameObject>(); 
+        _Character = GetComponent<GameObject>();
+    }
+    public virtual void Start()
+    {
+        
     }
 
 
     void Update()
     {
-        //Debug.Log(Anim.GetBool());
+
     }
 
     public void Attack()
     {
-        //Anim.SetBool("IsAttack", true);
+        Anim.SetBool("IsIdle", true);
     }
 
 }
