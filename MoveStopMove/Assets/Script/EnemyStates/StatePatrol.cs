@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class StatePatrol : MonoBehaviour, IStates
+public class StatePatrol : IStates
 {
-
+    bool isPatrol = false;
 
 
     public void OnEnter(Enemy enemy)
@@ -16,11 +16,11 @@ public class StatePatrol : MonoBehaviour, IStates
 
     public void OnExecute(Enemy enemy)
     {
-        enemy.Patrol();
+            enemy.Patrol();
     }
 
     public void OnExit(Enemy enemy)
     {
-
+        Debug.Log("exit");
     }
 }

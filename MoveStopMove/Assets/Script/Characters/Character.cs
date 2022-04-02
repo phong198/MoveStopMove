@@ -7,17 +7,14 @@ public class Character : MonoBehaviour
 {
     public Transform _transform;
     public Vector3 weapDirection;
-    public Animator Anim; 
-    public GameObject _Character { get; private set; }
-    [SerializeField]
-    private void Awake()
+    public Animator Anim;
+    public GameObject _Character;
+
+
+    public virtual void Start()
     {
         Anim = GetComponent<Animator>();
         _Character = GetComponent<GameObject>();
-    }
-    public virtual void Start()
-    {
-        
     }
 
 

@@ -12,8 +12,9 @@ public class Enemy : Character
     private NavMeshAgent agent;
     private float timer;
 
-    public void Start()
+    public override void Start()
     {
+        base.Start();
         ChangeState(new StatePatrol());
     }
 
@@ -31,7 +32,6 @@ public class Enemy : Character
         {
             currentState.OnExecute(this);
         }
-        Debug.Log("currentState:" + currentState);
     }
 
     public void Patrol()
@@ -61,17 +61,12 @@ public class Enemy : Character
         return navHit.position;
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("Character"))
-    //    {
-    //        ChangeState(new StateAttack());
-    //    }    
-    //}
-
-    public void Idle()
+    private void OnTriggerStay(Collider other)
     {
-
+        if (other.gameObject.CompareTag("Character"))
+        {
+            ChangeState(new StateAttack());
+        }    
     }
 
     private IStates currentState;
