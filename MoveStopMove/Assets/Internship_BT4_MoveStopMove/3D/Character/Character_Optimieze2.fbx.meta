@@ -33,6 +33,12 @@ ModelImporter:
   - first:
       74: 5522812681064789136
     second: Run
+  - first:
+      74: -729247239487951332
+    second: Armature|Attack2
+  - first:
+      74: 6950567274491055869
+    second: Armature|all (1)
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -76,11 +82,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
-      takeName: Armature|all
+      name: Armature|Attack2
+      takeName: Armature|Attack2
       internalID: 0
-      firstFrame: 129
-      lastFrame: 263
+      firstFrame: 0
+      lastFrame: 66
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -134,19 +140,19 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Attack
+      name: Armature|all (1)
       takeName: Armature|all
       internalID: 0
-      firstFrame: 24
-      lastFrame: 57
+      firstFrame: 0
+      lastFrame: 261
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0

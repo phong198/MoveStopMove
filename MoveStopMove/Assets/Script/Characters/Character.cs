@@ -22,10 +22,40 @@ public class Character : MonoBehaviour
     {
 
     }
-
-    public void Attack()
+    public virtual void Attack()
     {
-        Anim.SetBool("IsIdle", true);
+        Anim.SetBool("IsAttack", true);
+    }
+    public virtual void StopAttack()
+    {
+        Anim.SetBool("IsAttack", false);
     }
 
+    public virtual void Patrol()
+    {
+        //Anim.Set("IsRun")
+    }
+    public virtual void StopPatrol()
+    {
+
+    }
+
+    protected IStates currentState;
+
+    public virtual void ChangeState(IStates state)
+    {
+        if (currentState == state)
+            return;
+        if (currentState != null)
+        {
+            currentState.OnExit(this);
+        }
+
+        currentState = state;
+
+        if (currentState != null)
+        {
+            currentState.OnEnter(this);
+        }
+    }
 }

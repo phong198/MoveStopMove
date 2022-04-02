@@ -8,19 +8,19 @@ public class StatePatrol : IStates
     bool isPatrol = false;
 
 
-    public void OnEnter(Enemy enemy)
+    public void OnEnter(Character target)
     {
 
     }
 
 
-    public void OnExecute(Enemy enemy)
+    public void OnExecute(Character target)
     {
-            enemy.Patrol();
+        target.Patrol();
     }
 
-    public void OnExit(Enemy enemy)
+    public void OnExit(Character target)
     {
-        Debug.Log("exit");
+        target.StopPatrol();
     }
 }

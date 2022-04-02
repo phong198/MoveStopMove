@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class StateAttack : IStates
 {
-    public void OnEnter(Enemy enemy)
+    public void OnEnter(Character target)
     {
 
     }
 
-    public void OnExecute(Enemy enemy)
+    public void OnExecute(Character target)
     {
-        enemy.Attack();
+        target.Attack();
     }
 
-    public void OnExit(Enemy enemy)
+    public void OnExit(Character target)
     {
-
+        target.StopAttack();
     }
 }

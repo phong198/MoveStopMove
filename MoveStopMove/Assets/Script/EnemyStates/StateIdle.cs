@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class StateIdle : IStates
 {
-    public void OnEnter(Enemy enemy)
+    public void OnEnter(Character enemy)
     {
 
     }
 
-    public void OnExecute(Enemy enemy)
+    public void OnExecute(Character enemy)
     {
 
     }
 
-    public void OnExit(Enemy enemy)
+    public void OnExit(Character enemy)
     {
 
     }

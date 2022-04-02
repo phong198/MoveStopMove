@@ -12,12 +12,13 @@ public class Enemy : Character
     private NavMeshAgent agent;
     private float timer;
 
+    GameObject attackTarget;
+
     public override void Start()
     {
         base.Start();
         ChangeState(new StatePatrol());
     }
-
 
     void OnEnable()
     {
@@ -32,20 +33,29 @@ public class Enemy : Character
         {
             currentState.OnExecute(this);
         }
+        //Debug.Log("currentState:" + currentState);
     }
 
-    public void Patrol()
+    public override void Patrol()
     {
+        base.Patrol();
         timer += Time.deltaTime;
 
         {
             if (timer >= wanderTimer)
             {
                 Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+                agent.isStopped = false;
                 agent.SetDestination(newPos);
                 timer = 0;
             }
         }
+    }
+    public override void StopPatrol()
+    {
+        base.StopPatrol();
+        agent.isStopped = true;
+        timer = wanderTimer;
     }
 
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
@@ -66,23 +76,31 @@ public class Enemy : Character
         if (other.gameObject.CompareTag("Character"))
         {
             ChangeState(new StateAttack());
-        }    
+            attackTarget = other.gameObject;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Character"))
+        {
+            ChangeState(new StatePatrol());
+            attackTarget = null;
+        }
     }
 
-    private IStates currentState;
 
-    public void ChangeState(IStates state)
+    public void Idle()
     {
-        if (currentState != null)
-        {
-            currentState.OnExit(this);
-        }
 
-        currentState = state;
+    }
 
-        if (currentState != null)
-        {
-            currentState.OnEnter(this);
-        }
+    public override void Attack()
+    {
+        base.Attack();
+        transform.LookAt(attackTarget.transform);
+        Vector3 eulerAngles = transform.rotation.eulerAngles;
+        eulerAngles.x = 0;
+        eulerAngles.z = 0;
+        transform.rotation = Quaternion.Euler(eulerAngles);
     }
 }
