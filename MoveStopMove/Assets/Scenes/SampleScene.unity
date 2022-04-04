@@ -3619,7 +3619,8 @@ MonoBehaviour:
   Anim: {fileID: 0}
   _Character: {fileID: 0}
   wanderRadius: 100
-  wanderTimer: 5
+  wanderTimer: 0
+  patrolTimer: 5
   idleTimer: 3
 --- !u!64 &2136471212
 MeshCollider:

@@ -31,4 +31,25 @@ public class Player : Character
         }
 
     }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        base.OnTriggerStay(other);
+        if (other.gameObject.CompareTag("Character"))
+        {
+            if (_joystick.Horizontal == 0 || _joystick.Vertical == 0)
+            {
+                ChangeState(new StateAttack());
+                attackTarget = other.gameObject;
+            }
+            else ChangeState(null);
+        }
+    }
+
+    public override void OnTriggerExit(Collider other)
+    {
+        base.OnTriggerExit(other);
+        attackTarget = null;
+
+    }
 }

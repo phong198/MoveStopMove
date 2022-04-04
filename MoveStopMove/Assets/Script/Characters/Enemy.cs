@@ -10,8 +10,6 @@ public class Enemy : Character
 
     public float wanderRadius;
 
-    private float timerCount;
-    public float wanderTimer;
 
     private float idleTimerCount;
     public float idleTimer;
@@ -21,44 +19,18 @@ public class Enemy : Character
     private double reactionTimer;
 
 
-    GameObject attackTarget;
-
-    public override void Start()
+    private void Start()
     {
-        base.Start();
         ChangeState(new StatePatrol());
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
-        timerCount = 0;
         idleTimerCount = 0;
     }
 
-    void Update()
-    {
-        if (currentState != null)
-        {
-            currentState.OnExecute(this);
-        }
-        Debug.Log(currentState);
-    }
-
     public override void StartIdleTimer()
-    {
-        timerCount += Time.deltaTime;
-        if (timerCount >= wanderTimer)
-        {
-            ChangeState(new StateIdle());
-            timerCount = 0;
-        }
-        Debug.Log("idleTimer: " + idleTimer);
-        Debug.Log("idleTimerCount: " + idleTimerCount);
-    }
-
-
-    public override void StartPatrolTimer()
     {
         idleTimerCount += Time.deltaTime;
         if (idleTimerCount >= idleTimer)
@@ -66,24 +38,26 @@ public class Enemy : Character
             ChangeState(new StatePatrol());
             idleTimerCount = 0;
         }
-        Debug.Log("wanderTimer: " + wanderTimer);
-        Debug.Log("timerCount: " + timerCount);
     }
+
+    public override void FindDestination()
+    {
+        Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+        pos = newPos;
+    }
+
 
     public override void Patrol()
     {
         base.Patrol();
-
-        Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
-        agent.isStopped = false;
-        agent.SetDestination(newPos);
-        pos = newPos;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(pos, 2);
+        {
+            agent.isStopped = false;
+            agent.SetDestination(pos);
+            if (!agent.hasPath)
+            {
+                ChangeState(new StateIdle());
+            }
+        }
     }
 
     public override void StopPatrol()
@@ -92,7 +66,7 @@ public class Enemy : Character
         agent.isStopped = true;
     }
 
-    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    private static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
         Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
 
@@ -114,7 +88,7 @@ public class Enemy : Character
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    public override void OnTriggerStay(Collider other)
     {
         {
             if (other.gameObject.CompareTag("Character"))
@@ -131,23 +105,12 @@ public class Enemy : Character
             }
         }
     }
-    private void OnTriggerExit(Collider other)
+    public override void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Character"))
         {
             ChangeState(new StatePatrol());
             attackTarget = null;
         }
-    }
-
-
-    public override void Attack()
-    {
-        base.Attack();
-        transform.LookAt(attackTarget.transform);
-        Vector3 eulerAngles = transform.rotation.eulerAngles;
-        eulerAngles.x = 0;
-        eulerAngles.z = 0;
-        transform.rotation = Quaternion.Euler(eulerAngles);
     }
 }
