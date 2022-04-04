@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class Enemy : Character
 {
+    private Vector3 pos;
 
     public float wanderRadius;
 
@@ -76,6 +77,13 @@ public class Enemy : Character
         Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
         agent.isStopped = false;
         agent.SetDestination(newPos);
+        pos = newPos;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(pos, 2);
     }
 
     public override void StopPatrol()
@@ -103,7 +111,6 @@ public class Enemy : Character
         {
             System.Random rng = new System.Random();
             reactionTimer = (rng.NextDouble() * 2f);
-            Debug.Log(reactionTimer);
         }
     }
 
