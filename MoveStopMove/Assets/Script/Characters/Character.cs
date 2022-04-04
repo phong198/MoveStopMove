@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
         Anim.SetBool("IsAttack", false);
     }
 
-    public virtual void StartPatrol()
+    public virtual void StartPatrolTimer()
     {
 
     }
@@ -51,7 +51,7 @@ public class Character : MonoBehaviour
 
     }
 
-    public virtual void StartIdle()
+    public virtual void StartIdleTimer()
     {
 
     }

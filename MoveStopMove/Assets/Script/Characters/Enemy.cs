@@ -44,7 +44,7 @@ public class Enemy : Character
         Debug.Log(currentState);
     }
 
-    public override void StartIdle()
+    public override void StartIdleTimer()
     {
         timerCount += Time.deltaTime;
         if (timerCount >= wanderTimer)
@@ -57,7 +57,7 @@ public class Enemy : Character
     }
 
 
-    public override void StartPatrol()
+    public override void StartPatrolTimer()
     {
         idleTimerCount += Time.deltaTime;
         if (idleTimerCount >= idleTimer)

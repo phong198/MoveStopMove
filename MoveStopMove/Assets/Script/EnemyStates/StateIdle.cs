@@ -12,7 +12,7 @@ public class StateIdle : IStates
     public void OnExecute(Character target)
     {
         target.Idle();
-        target.StartPatrol();
+        target.StartPatrolTimer();
     }
 
     public void OnExit(Character target)

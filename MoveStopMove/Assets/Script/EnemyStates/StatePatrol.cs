@@ -17,7 +17,7 @@ public class StatePatrol : IStates
     public void OnExecute(Character target)
     {
         target.Patrol();
-        target.StartIdle();
+        target.StartIdleTimer();
     }
 
     public void OnExit(Character target)
