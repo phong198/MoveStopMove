@@ -5,16 +5,22 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
+    public UnityAction OnHit;
+    public UnityAction OnDie;
+    
     public Transform _transform;
     public Vector3 weapDirection;
     public Animator Anim;
     public GameObject _Character;
 
-
-    public virtual void Start()
+    public virtual void Awake()
     {
         Anim = GetComponent<Animator>();
         _Character = GetComponent<GameObject>();
+    }
+    public virtual void Start()
+    {
+        
     }
 
 
@@ -31,13 +37,33 @@ public class Character : MonoBehaviour
         Anim.SetBool("IsAttack", false);
     }
 
+    public virtual void StartPatrol()
+    {
+
+    }
+
     public virtual void Patrol()
     {
-        //Anim.Set("IsRun")
+        
     }
     public virtual void StopPatrol()
     {
 
+    }
+
+    public virtual void StartIdle()
+    {
+
+    }
+
+    public virtual void Idle()
+    {
+        Anim.SetBool("IsIdle", true);
+    }
+
+    public virtual void StopIdle()
+    {
+        Anim.SetBool("IsIdle", false);
     }
 
     protected IStates currentState;

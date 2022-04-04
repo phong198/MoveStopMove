@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class StateIdle : IStates
 {
-    public void OnEnter(Character enemy)
+    public void OnEnter(Character target)
     {
 
     }
 
-    public void OnExecute(Character enemy)
+    public void OnExecute(Character target)
     {
-
+        target.Idle();
+        target.StartPatrol();
     }
 
-    public void OnExit(Character enemy)
+    public void OnExit(Character target)
     {
-
+        target.StopIdle();
     }
 }
 
