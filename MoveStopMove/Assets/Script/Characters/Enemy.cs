@@ -45,6 +45,18 @@ public class Enemy : Character
         Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
         pos = newPos;
     }
+    private Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
+
+        randDirection += origin;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+
+        return navHit.position;
+    }
 
 
     public override void Patrol()
@@ -64,19 +76,6 @@ public class Enemy : Character
     {
         base.StopPatrol();
         agent.isStopped = true;
-    }
-
-    private static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
-    {
-        Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
-
-        randDirection += origin;
-
-        NavMeshHit navHit;
-
-        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
-
-        return navHit.position;
     }
 
     private void OnTriggerEnter(Collider other)

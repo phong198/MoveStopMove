@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
-    public UnityAction OnAttack;
-    public UnityAction OnHit;
-    public UnityAction OnDie;
+    public static UnityAction OnAttack;
+    public static UnityAction OnHit;
+    public static UnityAction OnDie;
     private int score;
 
     public Transform _transform;
@@ -16,14 +16,17 @@ public class Character : MonoBehaviour
     public GameObject _Character;
     protected GameObject attackTarget;
 
+    public WeaponManager weaponManager;
+
     public virtual void Awake()
     {
         Anim = GetComponent<Animator>();
-        _Character = GetComponent<GameObject>();
+        //_Character = GetComponent<GameObject>();
     }
+
     private void Start()
     {
-
+        weaponManager?.OnInit();
     }
 
     public virtual void Update()
@@ -33,6 +36,8 @@ public class Character : MonoBehaviour
             currentState.OnExecute(this);
         }
         Debug.Log(currentState);
+
+        
     }
 
     public virtual void FindDestination()
@@ -51,6 +56,12 @@ public class Character : MonoBehaviour
             eulerAngles.z = 0;
             transform.rotation = Quaternion.Euler(eulerAngles);
         }
+        if (OnAttack != null)
+        {
+            OnAttack();
+        }
+
+        weaponManager?.OnAttack();
     }
     public virtual void StopAttack()
     {
