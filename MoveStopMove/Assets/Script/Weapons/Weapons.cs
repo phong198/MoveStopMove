@@ -20,7 +20,7 @@ public class Weapons : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.OnAttack += SpawnWeapon;
+        //Player.OnAttack += SpawnWeapon;
     }
 
     private void SpawnWeapon()

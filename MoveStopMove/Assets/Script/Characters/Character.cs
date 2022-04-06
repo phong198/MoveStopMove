@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
-    public static UnityAction OnAttack;
-    public static UnityAction OnHit;
-    public static UnityAction OnDie;
+    //public static UnityAction OnAttack;
+    //public static UnityAction OnHit;
+    //public static UnityAction OnDie;
     private int score;
 
     public Transform _transform;
@@ -56,10 +56,10 @@ public class Character : MonoBehaviour
             eulerAngles.z = 0;
             transform.rotation = Quaternion.Euler(eulerAngles);
         }
-        if (OnAttack != null)
-        {
-            OnAttack();
-        }
+        //if (OnAttack != null)
+        //{
+        //    OnAttack();
+        //}
 
         weaponManager?.OnAttack();
     }
