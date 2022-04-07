@@ -28,4 +28,9 @@ public class Hammer : GameUnit
 
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        HammerPool.Despawn(this);
+    }
+
 }
