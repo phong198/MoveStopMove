@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyPool : MonoBehaviour
 {
+    public Queue<GameObject> enemyPool;
 
     [System.Serializable]
     public class Pool
@@ -24,6 +25,7 @@ public class EnemyPool : MonoBehaviour
     public List<Pool> enemyList;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
 
+
     private void Awake()
     {
         PoolAccess = this; //singleton
@@ -32,7 +34,7 @@ public class EnemyPool : MonoBehaviour
 
         foreach (Pool pool in enemyList)
         {
-            Queue<GameObject> enemyPool = new Queue<GameObject>();
+            enemyPool = new Queue<GameObject>();
             for (int i = 0; i < pool.poolSize; i++)
             {
                 GameObject enemyObj = Instantiate(pool._enemy);
@@ -67,5 +69,16 @@ public class EnemyPool : MonoBehaviour
         poolDictionary[poolTag].Enqueue(enemyToSpawn);
 
         activeObjCount++;
-    }       
+    }  
+    
+    public void DespawnFromPool (GameObject enemyInPool)
+    {
+        if(enemyInPool.activeInHierarchy)
+        {
+            //enemyList.Remove(enemyInPool);
+            enemyPool.Enqueue(enemyInPool);
+            enemyInPool.SetActive(false);
+            activeObjCount--;
+        }
+    }    
 }

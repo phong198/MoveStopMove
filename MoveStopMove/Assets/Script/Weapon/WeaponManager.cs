@@ -32,8 +32,6 @@ public class WeaponManager : MonoBehaviour
     {
         for (int i = 0; i < spawnPoint.Length; i++)
         {
-            //Instantiate(bullet, shotPoints[i].position, shotPoints[i].rotation).GetComponent<Bullet>().OnInit();
-
             HammerPool.Spawn<Hammer>(hammer, spawnPoint[i].position, spawnPoint[i].rotation).OnInit();
         }
     }

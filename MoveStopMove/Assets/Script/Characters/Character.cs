@@ -9,24 +9,20 @@ public class Character : MonoBehaviour
     //public static UnityAction OnHit;
     //public static UnityAction OnDie;
     private int score;
-
-    public Transform _transform;
-    public Vector3 weapDirection;
     public Animator Anim;
-    public GameObject _Character;
     protected GameObject attackTarget;
-
     public WeaponManager weaponManager;
+    public bool inAttackRange;
 
     public virtual void Awake()
     {
         Anim = GetComponent<Animator>();
-        //_Character = GetComponent<GameObject>();
+        weaponManager?.OnInit();
     }
 
     private void Start()
     {
-        weaponManager?.OnInit();
+
     }
 
     public virtual void Update()
@@ -34,10 +30,7 @@ public class Character : MonoBehaviour
         if (currentState != null)
         {
             currentState.OnExecute(this);
-        }
-        Debug.Log(currentState);
-
-        
+        }     
     }
 
     public virtual void FindDestination()
@@ -56,10 +49,6 @@ public class Character : MonoBehaviour
             eulerAngles.z = 0;
             transform.rotation = Quaternion.Euler(eulerAngles);
         }
-        //if (OnAttack != null)
-        //{
-        //    OnAttack();
-        //}
 
         weaponManager?.OnAttack();
     }
@@ -109,6 +98,16 @@ public class Character : MonoBehaviour
         {
             currentState.OnEnter(this);
         }
+    }
+
+    public virtual void OnCollisionEnter(Collision other)
+    {
+        if (other.transform.CompareTag("Weapon"))
+        {
+            EnemyPool.PoolAccess.DespawnFromPool(gameObject);
+        } 
+        
+            
     }
 
     public virtual void OnTriggerStay(Collider other)

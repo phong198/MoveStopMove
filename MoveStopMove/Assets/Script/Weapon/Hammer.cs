@@ -17,10 +17,6 @@ public class Hammer : GameUnit
     {
         if (other.gameObject.CompareTag("Character"))
         {
-            Debug.Log("Hit");
-            //TODO: fix late
-            //Destroy(gameObject);
-
             //ParticlePool.Play(hitVFX, Transform.position, Quaternion.identity);
 
             HammerPool.Despawn(this);

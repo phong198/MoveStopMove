@@ -24,6 +24,15 @@ public class Enemy : Character
         ChangeState(new StatePatrol());
     }
 
+    public override void Update()
+    {
+        base.Update();
+        if (attackTarget = null)
+        {
+            ChangeState(new StateIdle());
+        }
+    }
+
     private void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -100,12 +109,13 @@ public class Enemy : Character
                 {
                     ChangeState(new StateAttack());
                     attackTarget = other.gameObject;
-                }
+                }  
             }
         }
     }
     public override void OnTriggerExit(Collider other)
     {
+        base.OnTriggerExit(other);
         if (other.gameObject.CompareTag("Character"))
         {
             ChangeState(new StatePatrol());

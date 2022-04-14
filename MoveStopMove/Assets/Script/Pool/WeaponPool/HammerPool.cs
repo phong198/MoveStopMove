@@ -153,18 +153,18 @@ public static class HammerPool
 
 public class GameUnit : MonoBehaviour
 {
-    private Transform tf;
+    private Transform HammerTf;
 
     public Transform Transform
     {
         get
         {
-            if (this.tf == null)
+            if (this.HammerTf == null)
             {
-                this.tf = transform;
+                this.HammerTf = transform;
             }
 
-            return tf;
+            return HammerTf;
         }
     }
 }
