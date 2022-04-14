@@ -75,7 +75,6 @@ public class EnemyPool : MonoBehaviour
     {
         if(enemyInPool.activeInHierarchy)
         {
-            //enemyList.Remove(enemyInPool);
             enemyPool.Enqueue(enemyInPool);
             enemyInPool.SetActive(false);
             activeObjCount--;
