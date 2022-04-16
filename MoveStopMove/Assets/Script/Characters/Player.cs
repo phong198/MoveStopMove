@@ -19,10 +19,12 @@ public class Player : Character
         {
             transform.rotation = Quaternion.LookRotation(_rigid.velocity);
             Anim.SetBool("IsIdle", false);
+            ChangeState(new StatePatrol());
         }
         else
         {
             Anim.SetBool("IsIdle", true);
+            ChangeState(new StateIdle());
         }
 
     }

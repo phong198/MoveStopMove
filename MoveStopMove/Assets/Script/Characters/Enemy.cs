@@ -26,15 +26,12 @@ public class Enemy : Character
 
     public override void Update()
     {
-        base.Update();
-        if (attackTarget = null)
-        {
-            ChangeState(new StateIdle());
-        }
+        base.Update();        
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
+        base.OnEnable();
         agent = GetComponent<NavMeshAgent>();
         idleTimerCount = 0;
     }

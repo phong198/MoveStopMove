@@ -14,15 +14,23 @@ public class Character : MonoBehaviour
     public WeaponManager weaponManager;
     public bool inAttackRange;
 
+
+    protected float attackRange;
     public virtual void Awake()
     {
         Anim = GetComponent<Animator>();
         weaponManager?.OnInit();
+        attackRange = transform.Find("AttackRange").GetComponent<SphereCollider>().radius;
     }
 
     private void Start()
     {
 
+    }
+    
+    public virtual void OnEnable()
+    {
+     
     }
 
     public virtual void Update()
@@ -38,19 +46,35 @@ public class Character : MonoBehaviour
 
     }
 
+    public virtual void Die()
+    {
+        ChangeState(null);
+        Anim.SetBool("IsDead", true);
+        Invoke("DespawnWhenDie", 2f);
+    }
+
+    public virtual void DespawnWhenDie()
+    {
+        EnemyPool.PoolAccess.DespawnFromPool(gameObject);   
+    }    
     public virtual void Attack()
     {
-        Anim.SetBool("IsAttack", true);
-        if (attackTarget != null)
+        float targetDistance = (attackTarget.transform.position - transform.position).magnitude;
+
+        if ((attackTarget != null) && attackTarget.activeInHierarchy && (targetDistance <= attackRange))
         {
+            Anim.SetBool("IsAttack", true);
             transform.LookAt(attackTarget.transform);
             Vector3 eulerAngles = transform.rotation.eulerAngles;
             eulerAngles.x = 0;
             eulerAngles.z = 0;
             transform.rotation = Quaternion.Euler(eulerAngles);
+            weaponManager?.OnAttack();
         }
-
-        weaponManager?.OnAttack();
+        else
+        {
+            ChangeState(new StateIdle());
+        }        
     }
     public virtual void StopAttack()
     {
@@ -104,9 +128,8 @@ public class Character : MonoBehaviour
     {
         if (other.transform.CompareTag("Weapon"))
         {
-            EnemyPool.PoolAccess.DespawnFromPool(gameObject);
-        } 
-        
+            Die();
+        }      
             
     }
 

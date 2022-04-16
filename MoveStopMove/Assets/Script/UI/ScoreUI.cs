@@ -1,31 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
 public class ScoreUI : MonoBehaviour
 {
     //public Text text;
-    public TMP_InputField field;
-    public Transform character; 
+    public GameObject scoreUI;
+    public Transform character;
+    public TMP_Text scoreText;
 
 
     // Update is called once per frame
     void Update()
     {
-        float minX = 60; 
-        float maxX = Screen.width - minX; 
+        float minX = 60;
+        float maxX = Screen.width - minX;
 
-        float minY = 28; 
+        float minY = 28;
         float maxY = Screen.height - minY;
 
-        Vector3 ScorePos = new Vector3(character.transform.position.x, character.transform.position.y + 4, character.transform.position.z); 
+        Vector3 ScorePos = new Vector3(character.transform.position.x, character.transform.position.y + 4, character.transform.position.z);
 
         Vector2 pos = Camera.main.WorldToScreenPoint(GetFrontVector(Camera.main, ScorePos));
 
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
-        field.transform.position = pos;
+        scoreUI.transform.position = pos;
+
     }
 
     public Vector3 GetFrontVector(Camera camera, Vector3 position)

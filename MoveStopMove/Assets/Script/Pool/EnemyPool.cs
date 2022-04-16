@@ -79,5 +79,11 @@ public class EnemyPool : MonoBehaviour
             enemyInPool.SetActive(false);
             activeObjCount--;
         }
-    }    
+    }
+
+    private void Update()
+    {
+        Debug.Log("activeObjCount: " + activeObjCount);
+        Debug.Log("poolSize: " + enemyList[0].poolSize);
+    }
 }
