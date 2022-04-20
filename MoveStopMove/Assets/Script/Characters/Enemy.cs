@@ -21,7 +21,7 @@ public class Enemy : Character
 
     private void Start()
     {
-        ChangeState(new StatePatrol());
+        ChangeState(new StateIdle());
     }
 
     public override void Update()
@@ -29,7 +29,7 @@ public class Enemy : Character
         base.Update();        
     }
 
-    public void OnEnable()
+    public override void OnEnable()
     {
         base.OnEnable();
         agent = GetComponent<NavMeshAgent>();
