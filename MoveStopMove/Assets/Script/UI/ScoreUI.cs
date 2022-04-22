@@ -4,9 +4,17 @@ public class ScoreUI : MonoBehaviour
 {
     //public Text text;
     public GameObject scoreUI;
-    public Transform character;
-    public TMP_Text scoreText;
+    public Transform target;
 
+    private Vector3 offset = new Vector3(0, 4, 0);
+
+    private Transform scoreTf;
+
+
+    private void Awake()
+    {
+        scoreTf = scoreUI.transform;
+    }
 
     // Update is called once per frame
     void Update()
@@ -17,28 +25,13 @@ public class ScoreUI : MonoBehaviour
         float minY = 28;
         float maxY = Screen.height - minY;
 
-        Vector3 ScorePos = new Vector3(character.transform.position.x, character.transform.position.y + 4, character.transform.position.z);
+        Vector3 ScorePos = target.position + offset;
 
-        Vector2 pos = Camera.main.WorldToScreenPoint(GetFrontVector(Camera.main, ScorePos));
+        Vector2 pos = Camera.main.WorldToScreenPoint(ScorePos);
 
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
-        scoreUI.transform.position = pos;
-
-    }
-
-    public Vector3 GetFrontVector(Camera camera, Vector3 position)
-    {
-        Vector4 vec = camera.worldToCameraMatrix * new Vector4(position.x, position.y, position.z, 1);
-        if (vec.z < 0.0f)
-        {
-            return position;
-        }
-        else
-        {
-            Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(1, 1, -1));
-            return camera.cameraToWorldMatrix * m * vec;
-        }
+        scoreTf.position = pos;
     }
 }

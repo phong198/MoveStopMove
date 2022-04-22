@@ -10,39 +10,42 @@ public class Player : Character
     private FloatingJoystick _joystick;
     [SerializeField]
     private float moveSpeed;
+    [SerializeField]
+    private GameObject joystickUI;
+
 
 
     private void FixedUpdate()
     {
-        _rigid.velocity = new Vector3(_joystick.Horizontal * moveSpeed, _rigid.velocity.y, _joystick.Vertical * moveSpeed);
-        if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
+        if (joystickUI.activeInHierarchy)
         {
-            transform.rotation = Quaternion.LookRotation(_rigid.velocity);
-            Anim.SetBool("IsIdle", false);
-            ChangeState(new StatePatrol());
-        }
-        else
-        {
-            Anim.SetBool("IsIdle", true);
-            ChangeState(new StateIdle());
+            _rigid.velocity = new Vector3(_joystick.Horizontal * moveSpeed, _rigid.velocity.y, _joystick.Vertical * moveSpeed);
+            if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
+            {
+                transform.rotation = Quaternion.LookRotation(_rigid.velocity);
+                Anim.SetBool(Constant.ANIM_IDLE, false);
+                ChangeState(null);
+            }
+            else
+            {
+                Anim.SetBool(Constant.ANIM_IDLE, true);
+                ChangeState(new StateIdle());
+            }
         }
 
     }
 
-    public override void OnTriggerStay(Collider other)
+    public override void FindTarget()
     {
-        base.OnTriggerStay(other);
-        if (other.gameObject.CompareTag("Character"))
+        if (AttackTargets.Count != 0 && _joystick.Horizontal == 0 && _joystick.Vertical == 0)
         {
-            if (_joystick.Horizontal == 0 && _joystick.Vertical == 0)
-            {
-                ChangeState(new StateAttack());
-                attackTarget = other.gameObject;
-            }
-            else
-            {
-                ChangeState(null);
-            }
+            ChangeState(new StateAttack());
         }
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        joystickUI.SetActive(false);
     }
 }

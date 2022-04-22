@@ -28,7 +28,7 @@ public class EnemyPool : MonoBehaviour
 
     private void Awake()
     {
-        PoolAccess = this; //singleton
+        PoolAccess = this;
 
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
@@ -81,9 +81,4 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        Debug.Log("activeObjCount: " + activeObjCount);
-        Debug.Log("poolSize: " + enemyList[0].poolSize);
-    }
 }

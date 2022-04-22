@@ -12,22 +12,14 @@ public class Enemy : Character
 
 
     private float idleTimerCount;
-    public float idleTimer;
+    [SerializeField]
+    private float idleTimer;
 
+    [SerializeField]
     private NavMeshAgent agent;
 
     private double reactionTimer;
-
-
-    private void Start()
-    {
-        ChangeState(new StateIdle());
-    }
-
-    public override void Update()
-    {
-        base.Update();        
-    }
+    private bool timerIsRunning;
 
     public override void OnEnable()
     {
@@ -35,6 +27,7 @@ public class Enemy : Character
         agent = GetComponent<NavMeshAgent>();
         idleTimerCount = 0;
     }
+
 
     public override void StartIdleTimer()
     {
@@ -64,7 +57,6 @@ public class Enemy : Character
         return navHit.position;
     }
 
-
     public override void Patrol()
     {
         base.Patrol();
@@ -84,39 +76,21 @@ public class Enemy : Character
         agent.isStopped = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void FindTarget()
     {
-        if (other.gameObject.CompareTag("Character"))
+        if (AttackTargets.Count != 0)
         {
-            System.Random rng = new System.Random();
-            reactionTimer = (rng.NextDouble() * 2f);
+            ChangeState(new StateAttack());
         }
     }
 
-    public override void OnTriggerStay(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+        if (other.gameObject.CompareTag(Constant.TAG_CHARACTER))
         {
-            if (other.gameObject.CompareTag("Character"))
-            {
-                if (reactionTimer > 0)
-                {
-                    reactionTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    ChangeState(new StateAttack());
-                    attackTarget = other.gameObject;
-                }  
-            }
+            reactionTimer = (UnityEngine.Random.Range(.5f, 2f));
         }
     }
-    public override void OnTriggerExit(Collider other)
-    {
-        base.OnTriggerExit(other);
-        if (other.gameObject.CompareTag("Character"))
-        {
-            ChangeState(new StatePatrol());
-            attackTarget = null;
-        }
-    }
+
 }

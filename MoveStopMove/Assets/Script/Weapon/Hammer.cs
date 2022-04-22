@@ -7,8 +7,6 @@ public class Hammer : GameUnit
     public Rigidbody rigidbody;
 
     //public ParticleSystem hitVFX;
-    [SerializeField]
-    private int Damage = 35;
 
     public void OnInit()
     {
@@ -17,7 +15,7 @@ public class Hammer : GameUnit
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Character"))
+        if (other.gameObject.CompareTag(Constant.TAG_CHARACTER))
         {
             //ParticlePool.Play(hitVFX, Transform.position, Quaternion.identity);
             HammerPool.Despawn(this);

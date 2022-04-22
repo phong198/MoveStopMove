@@ -31,7 +31,7 @@ public class EnemiesSpawner : MonoBehaviour
         xPos = Random.Range(-50, 50);
         zPos = Random.Range(-50, 50);
         position = new Vector3(xPos, 0, zPos);
-        EnemyPool.PoolAccess.SpawnFromPool("Enemy", position, Quaternion.identity);
+        EnemyPool.PoolAccess.SpawnFromPool(Constant.POOL_ENEMY, position, Quaternion.identity);
     }
 
 }
