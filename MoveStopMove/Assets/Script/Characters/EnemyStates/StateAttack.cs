@@ -14,7 +14,6 @@ public class StateAttack : IStates
         target.LookAtTarget();
         target.StartFireTimer();
         target.ChangeFromAttackToIdle();
-        target.RemoveDeadTargets();
     }
 
     public void OnExit(Character target)

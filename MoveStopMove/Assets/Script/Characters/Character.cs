@@ -22,16 +22,17 @@ public class Character : MonoBehaviour
 
     protected bool isFired;
 
+    [SerializeField]
     protected bool isDead;
 
     public virtual void Awake()
     {
         Anim = GetComponent<Animator>();
-        isDead = false;
     }
 
     public virtual void OnEnable()
     {
+        isDead = false;
         ChangeState(new StateIdle());
     }
 
@@ -41,6 +42,8 @@ public class Character : MonoBehaviour
         {
             currentState.OnExecute(this);
         }
+
+        RemoveDeadTargets();
     }
 
     #region Patrol
