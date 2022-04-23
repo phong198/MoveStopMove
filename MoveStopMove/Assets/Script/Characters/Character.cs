@@ -46,6 +46,7 @@ public class Character : MonoBehaviour
         Debug.Log("Enemy fireTimer: " + GameObject.Find("Enemy(Clone)").GetComponent<Character>().fireTimer);
     }
 
+    #region Patrol
     public virtual void FindDestination()
     {
 
@@ -64,7 +65,9 @@ public class Character : MonoBehaviour
     {
 
     }
+    #endregion
 
+    #region Idle
     public virtual void Idle()
     {
         Anim.SetBool(Constant.ANIM_IDLE, true);
@@ -86,6 +89,9 @@ public class Character : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region Die
     public virtual void Die()
     {
         isDead = true;
@@ -99,19 +105,9 @@ public class Character : MonoBehaviour
     {
         EnemyPool.PoolAccess.DespawnFromPool(gameObject);
     }
+    #endregion
 
-    public virtual void RemoveDeadTargets()
-    {
-        AttackTargets.RemoveAll(attackTarget => attackTarget.GetComponent<Character>().isDead);
-    }
-
-    public virtual void LookAtTarget()
-    {
-        if (AttackTargets.Count != 0)
-        {
-            transform.LookAt(AttackTargets[0].transform);
-        }
-    }
+    #region Attack
     public virtual void Attack()
     {
         Anim.SetBool(Constant.ANIM_ATTACK, true);
@@ -142,9 +138,23 @@ public class Character : MonoBehaviour
         }
     }
 
+    public virtual void RemoveDeadTargets()
+    {
+        AttackTargets.RemoveAll(attackTarget => attackTarget.GetComponent<Character>().isDead);
+    }
+
     public virtual void StopAttack()
     {
         Anim.SetBool(Constant.ANIM_ATTACK, false);
+    }
+    #endregion
+
+    public virtual void LookAtTarget()
+    {
+        if (AttackTargets.Count != 0)
+        {
+            transform.LookAt(AttackTargets[0].transform);
+        }
     }
 
     public virtual void OnCollisionEnter(Collision other)
