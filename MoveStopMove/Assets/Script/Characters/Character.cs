@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System.Linq;
+using System.Threading.Tasks;
+using System;
 
 public class Character : MonoBehaviour
 {
@@ -101,13 +101,15 @@ public class Character : MonoBehaviour
     #region Die
     //Start Die Region
 
-    public virtual void Die()
+    public virtual async void Die()
     {
         isDead = true;
         AttackTargets.Clear();
         ChangeState(null);
         Anim.SetBool(Constant.ANIM_DIE, true);
-        Invoke("DespawnWhenDie", 2f);
+
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        DespawnWhenDie();
     }
 
     public virtual void DespawnWhenDie()
