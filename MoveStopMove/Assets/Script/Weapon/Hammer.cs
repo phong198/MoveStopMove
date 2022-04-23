@@ -10,7 +10,7 @@ public class Hammer : GameUnit
 
     public void OnInit()
     {
-        rigidbody.velocity = Transform.forward * 20f;
+        rigidbody.velocity = Transform.forward * 10f;
     }
 
     private void OnCollisionEnter(Collision other)

@@ -21,6 +21,7 @@ public class Enemy : Character
     private double reactionTimer;
     private bool timerIsRunning;
 
+
     public override void OnEnable()
     {
         base.OnEnable();

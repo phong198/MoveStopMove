@@ -17,7 +17,7 @@ public class Character : MonoBehaviour
     protected float fireTimer;
     protected float attackToIdleTime = 2.05f;
     protected float attackToIdleTimer;
-    protected float idleToAttackTime = 1f;
+    protected float idleToAttackTime = 0.5f;
     protected float idleToAttackTimer;
 
     protected bool isFired;
@@ -41,9 +41,6 @@ public class Character : MonoBehaviour
         {
             currentState.OnExecute(this);
         }
-        Debug.Log("Player isFired: " + GameObject.Find("Player").GetComponent<Character>().isFired);
-        Debug.Log("Player fireTimer: " + GameObject.Find("Player").GetComponent<Character>().fireTimer);
-        Debug.Log("Enemy fireTimer: " + GameObject.Find("Enemy(Clone)").GetComponent<Character>().fireTimer);
     }
 
     #region Patrol

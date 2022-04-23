@@ -13,7 +13,7 @@ public class Player : Character
     [SerializeField]
     private GameObject joystickUI;
 
-
+    private bool isAttacking = false;
 
     private void FixedUpdate()
     {
@@ -25,12 +25,11 @@ public class Player : Character
                 transform.rotation = Quaternion.LookRotation(_rigid.velocity);
                 ChangeState(null);
             }
-            else
+            else if (!isAttacking)
             {
                 ChangeState(new StateIdle());
             }
         }
-
     }
 
     public override void ChangeFromIdleToAttack()
@@ -38,7 +37,14 @@ public class Player : Character
         if (AttackTargets.Count != 0 && _joystick.Horizontal == 0 && _joystick.Vertical == 0)
         {
             ChangeState(new StateAttack());
+            isAttacking = true;
         }
+    }
+
+    public override void StopAttack()
+    {
+        base.StopAttack();
+        isAttacking = false;
     }
 
     public override void Die()
