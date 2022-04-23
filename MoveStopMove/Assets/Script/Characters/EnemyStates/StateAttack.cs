@@ -13,11 +13,11 @@ public class StateAttack : IStates
     {
         target.StartFireTimer();
         target.ChangeFromAttackToIdle();
+        target.RemoveDeadTargets();
     }
 
     public void OnExit(Character target)
     {
-        target.CheckTargetList();
         target.StopAttack();
     }
 }

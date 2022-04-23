@@ -11,8 +11,8 @@ public class StateIdle : IStates
 
     public void OnExecute(Character target)
     {
-        target.StartIdleTimer();
-        target.FindTarget();
+        target.ChangeFromIdleToPatrol();
+        target.ChangeFromIdleToAttack();
     }
 
     public void OnExit(Character target)

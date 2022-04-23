@@ -29,7 +29,7 @@ public class Enemy : Character
     }
 
 
-    public override void StartIdleTimer()
+    public override void ChangeFromIdleToPatrol()
     {
         idleTimerCount += Time.deltaTime;
         if (idleTimerCount >= idleTimer)
@@ -59,7 +59,6 @@ public class Enemy : Character
 
     public override void Patrol()
     {
-        base.Patrol();
         {
             agent.isStopped = false;
             agent.SetDestination(pos);
@@ -72,7 +71,6 @@ public class Enemy : Character
 
     public override void StopPatrol()
     {
-        base.StopPatrol();
         agent.isStopped = true;
     }
 
@@ -80,17 +78,20 @@ public class Enemy : Character
     {
         if (AttackTargets.Count != 0)
         {
-            ChangeState(new StateAttack());
+            ChangeState(new StateIdle());
         }
     }
 
-    public override void OnTriggerEnter(Collider other)
+    public override void ChangeFromIdleToAttack()
     {
-        base.OnTriggerEnter(other);
-        if (other.gameObject.CompareTag(Constant.TAG_CHARACTER))
+        if (AttackTargets.Count != 0)
         {
-            reactionTimer = (UnityEngine.Random.Range(.5f, 2f));
+            idleToAttackTimer -= Time.deltaTime;
+            if (idleToAttackTimer <= 0)
+            {
+                ChangeState(new StateAttack());
+                idleToAttackTimer = idleToAttackTime;
+            }
         }
     }
-
 }

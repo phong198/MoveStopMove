@@ -18,6 +18,8 @@ public class Character : MonoBehaviour
     protected float fireTimer;
     protected float attackToIdleTime = 2.05f;
     protected float attackToIdleTimer;
+    protected float idleToAttackTime = 1f;
+    protected float idleToAttackTimer;
 
     protected bool isFired;
 
@@ -28,13 +30,11 @@ public class Character : MonoBehaviour
     {
         Anim = GetComponent<Animator>();
         attackRange = _collider.radius;
-        fireTimer = fireTime;
-        attackToIdleTimer = attackToIdleTime;
+        isDead = false;
     }
 
     public virtual void OnEnable()
     {
-        isDead = false;
         ChangeState(new StateIdle());
     }
 
@@ -44,10 +44,8 @@ public class Character : MonoBehaviour
         {
             currentState.OnExecute(this);
         }
-        Debug.Log("fireTimer: " + fireTimer);
-        Debug.Log("fireTime: " + fireTime);
-        Debug.Log("attackToIdleTimer: " + attackToIdleTimer);
-        Debug.Log("attackToIdleTime: " + attackToIdleTime);
+        Debug.Log("Player isFired: " + GameObject.Find("Player").GetComponent<Character>().isFired); 
+        Debug.Log("Enemy isFired: " + GameObject.Find("Enemy(Clone)").GetComponent<Character>().isFired);
     }
 
     public virtual void FindDestination()
@@ -72,9 +70,10 @@ public class Character : MonoBehaviour
     public virtual void Idle()
     {
         Anim.SetBool(Constant.ANIM_IDLE, true);
+        idleToAttackTimer = idleToAttackTime;
     }
 
-    public virtual void StartIdleTimer()
+    public virtual void ChangeFromIdleToPatrol()
     {
         
     }
@@ -82,6 +81,11 @@ public class Character : MonoBehaviour
     public virtual void StopIdle()
     {
         Anim.SetBool(Constant.ANIM_IDLE, false);
+    }
+
+    public virtual void ChangeFromIdleToAttack()
+    {
+
     }
 
     public virtual void Die()
@@ -98,7 +102,7 @@ public class Character : MonoBehaviour
         EnemyPool.PoolAccess.DespawnFromPool(gameObject);
     }
 
-    public virtual void CheckTargetList()
+    public virtual void RemoveDeadTargets()
     {
         AttackTargets.RemoveAll(attackTarget => attackTarget.GetComponent<Character>().isDead);
     }
@@ -108,6 +112,9 @@ public class Character : MonoBehaviour
         Anim.SetBool(Constant.ANIM_ATTACK, true);
         isFired = true;
         transform.LookAt(AttackTargets[0].transform);
+
+        fireTimer = fireTime;
+        attackToIdleTimer = attackToIdleTime;
     }
 
     public virtual void StartFireTimer()

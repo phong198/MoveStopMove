@@ -35,7 +35,7 @@ public class Player : Character
 
     }
 
-    public override void FindTarget()
+    public override void ChangeFromIdleToAttack()
     {
         if (AttackTargets.Count != 0 && _joystick.Horizontal == 0 && _joystick.Vertical == 0)
         {
