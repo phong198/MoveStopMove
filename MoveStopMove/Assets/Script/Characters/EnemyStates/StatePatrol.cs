@@ -9,6 +9,7 @@ public class StatePatrol : IStates
     public void OnEnter(Character target)
     {
         target.FindDestination();
+        target.SetReactionTimer();
     }
 
     public void OnExecute(Character target)

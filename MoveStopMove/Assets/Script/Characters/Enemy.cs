@@ -42,9 +42,11 @@ public class Enemy : Character
 
     public override void FindDestination()
     {
+        reactionTimer = UnityEngine.Random.Range(0.5f, 2f);
         Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
         pos = newPos;
     }
+
     private Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
         Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
@@ -58,15 +60,18 @@ public class Enemy : Character
         return navHit.position;
     }
 
+    public override void SetReactionTimer()
+    {
+        reactionTimer = UnityEngine.Random.Range(0f, 2f);
+    }
+
     public override void Patrol()
     {
+        agent.isStopped = false;
+        agent.SetDestination(pos);
+        if (!agent.hasPath)
         {
-            agent.isStopped = false;
-            agent.SetDestination(pos);
-            if (!agent.hasPath)
-            {
-                ChangeState(new StateIdle());
-            }
+            ChangeState(new StateIdle());
         }
     }
 
@@ -78,6 +83,15 @@ public class Enemy : Character
     public override void FindTarget()
     {
         if (AttackTargets.Count != 0)
+        {
+            StartReactiontimer();
+        }
+    }
+
+    private void StartReactiontimer()
+    {
+        reactionTimer -= Time.deltaTime;
+        if (reactionTimer <= 0 && AttackTargets.Count != 0)
         {
             ChangeState(new StateIdle());
         }

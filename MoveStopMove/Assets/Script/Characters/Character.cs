@@ -52,13 +52,14 @@ public class Character : MonoBehaviour
     public virtual void FindDestination()
     {
 
-    }  
+    }
 
-    public virtual void Patrol()
+    public virtual void SetReactionTimer()
     {
 
     }
-    public virtual void StopPatrol()
+
+    public virtual void Patrol()
     {
 
     }
@@ -67,6 +68,12 @@ public class Character : MonoBehaviour
     {
 
     }
+
+    public virtual void StopPatrol()
+    {
+
+    }
+
 
     //End Patrol Region
     #endregion

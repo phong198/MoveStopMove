@@ -15391,6 +15391,7 @@ GameObject:
   - component: {fileID: 1711813854426497203}
   - component: {fileID: 919132148483531111}
   - component: {fileID: 919132148483531112}
+  - component: {fileID: 919132148483531113}
   m_Layer: 0
   m_Name: SM_Cup_01
   m_TagString: Untagged
@@ -15412,7 +15413,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7251255731686344134, guid: 128da7a4470f0864ab5830a15a7c1fa8, type: 3}
---- !u!114 &919132148483531112
+--- !u!135 &919132148483531112
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148483531110}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12
+  m_Center: {x: 0, y: 0, z: -0.00000059604645}
+--- !u!114 &919132148483531113
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15424,13 +15438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 529776f25710a924e8e6334d46b8dd83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeType: 0
-  customFade: 0
-  fadeTo: 0
-  otherObjects: []
-  checkParentObject: 0
-  faded: 0
-  fadeCheck: {fileID: 8296172669118560348}
+  _renderer: {fileID: 1711813854426497203}
+  player: {fileID: 8296172669118560343}
 --- !u!1 &919132148842464166
 GameObject:
   m_ObjectHideFlags: 0
@@ -15444,6 +15453,7 @@ GameObject:
   - component: {fileID: 1711813855988556403}
   - component: {fileID: 919132148842464167}
   - component: {fileID: 919132148842464168}
+  - component: {fileID: 919132148842464169}
   m_Layer: 0
   m_Name: SM_Cup_01 (1)
   m_TagString: Untagged
@@ -15465,7 +15475,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7251255731686344134, guid: 128da7a4470f0864ab5830a15a7c1fa8, type: 3}
---- !u!114 &919132148842464168
+--- !u!135 &919132148842464168
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148842464166}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12
+  m_Center: {x: -0.00000002980234, y: 0, z: -0.00000061094767}
+--- !u!114 &919132148842464169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15477,13 +15500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 529776f25710a924e8e6334d46b8dd83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeType: 0
-  customFade: 0
-  fadeTo: 0
-  otherObjects: []
-  checkParentObject: 0
-  faded: 0
-  fadeCheck: {fileID: 8296172669118560348}
+  _renderer: {fileID: 1711813855988556403}
+  player: {fileID: 8296172669118560343}
 --- !u!1 &919132148974877865
 GameObject:
   m_ObjectHideFlags: 0
@@ -15497,6 +15515,7 @@ GameObject:
   - component: {fileID: 1711813856124624252}
   - component: {fileID: 919132148974877866}
   - component: {fileID: 919132148974877867}
+  - component: {fileID: 919132148974877868}
   m_Layer: 0
   m_Name: SM_Cup_01 (3)
   m_TagString: Untagged
@@ -15518,7 +15537,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7251255731686344134, guid: 128da7a4470f0864ab5830a15a7c1fa8, type: 3}
---- !u!114 &919132148974877867
+--- !u!135 &919132148974877867
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148974877865}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12
+  m_Center: {x: 0, y: 0, z: -0.00000061094755}
+--- !u!114 &919132148974877868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15530,13 +15562,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 529776f25710a924e8e6334d46b8dd83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeType: 0
-  customFade: 0
-  fadeTo: 0
-  otherObjects: []
-  checkParentObject: 0
-  faded: 0
-  fadeCheck: {fileID: 8296172669118560348}
+  _renderer: {fileID: 1711813856124624252}
+  player: {fileID: 8296172669118560343}
 --- !u!1 &919132149497544563
 GameObject:
   m_ObjectHideFlags: 0
@@ -15550,6 +15577,7 @@ GameObject:
   - component: {fileID: 1711813855570468518}
   - component: {fileID: 919132149497544564}
   - component: {fileID: 919132149497544565}
+  - component: {fileID: 919132149497544566}
   m_Layer: 0
   m_Name: SM_Cup_01 (2)
   m_TagString: Untagged
@@ -15571,7 +15599,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7251255731686344134, guid: 128da7a4470f0864ab5830a15a7c1fa8, type: 3}
---- !u!114 &919132149497544565
+--- !u!135 &919132149497544565
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149497544563}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12
+  m_Center: {x: 0.000000014901179, y: 0, z: -0.0000006109479}
+--- !u!114 &919132149497544566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15583,13 +15624,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 529776f25710a924e8e6334d46b8dd83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeType: 0
-  customFade: 0
-  fadeTo: 0
-  otherObjects: []
-  checkParentObject: 0
-  faded: 0
-  fadeCheck: {fileID: 8296172669118560348}
+  _renderer: {fileID: 1711813855570468518}
+  player: {fileID: 8296172669118560343}
 --- !u!1 &952148325636059755
 GameObject:
   m_ObjectHideFlags: 0
@@ -18053,7 +18089,6 @@ GameObject:
   - component: {fileID: 8296172669118560344}
   - component: {fileID: 8296172669118560346}
   - component: {fileID: 8296172669118560347}
-  - component: {fileID: 8296172669118560348}
   m_Layer: 0
   m_Name: Player
   m_TagString: Character
@@ -18125,21 +18160,6 @@ MonoBehaviour:
   spawnPoint:
   - {fileID: 1983518191}
   hammer: {fileID: 5837324590518006588}
---- !u!114 &8296172669118560348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8296172669118560343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e0b9ec5cf8ffdc4c94f84a56cd36f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectHit: {fileID: 0}
-  parentObjectHit: {fileID: 0}
-  fadeTo: 0.5
 --- !u!1 &8404232990556388671
 GameObject:
   m_ObjectHideFlags: 0
