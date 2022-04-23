@@ -14,7 +14,7 @@ public class Character : MonoBehaviour
     protected SphereCollider _collider;
     protected int score;
 
-    protected float fireTime = 1f;
+    protected float fireTime = 0.16f;
     protected float fireTimer;
     protected float attackToIdleTime = 2.05f;
     protected float attackToIdleTimer;
@@ -100,13 +100,7 @@ public class Character : MonoBehaviour
 
     public virtual void CheckTargetList()
     {
-        foreach (GameObject attacktarget in AttackTargets.Reverse<GameObject>())
-        {
-            if (attacktarget.GetComponent<Character>().isDead)
-            {
-                AttackTargets.Remove(attacktarget);
-            }
-        }
+        AttackTargets.RemoveAll(attackTarget => attackTarget.GetComponent<Character>().isDead);
     }
 
     public virtual void Attack()
