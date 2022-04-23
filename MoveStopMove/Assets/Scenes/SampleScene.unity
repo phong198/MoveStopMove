@@ -3085,7 +3085,7 @@ MonoBehaviour:
   enemyList:
   - poolTag: Enemy
     _enemy: {fileID: 2136471209}
-    poolSize: 10
+    poolSize: 1
 --- !u!1 &513634970
 GameObject:
   m_ObjectHideFlags: 0

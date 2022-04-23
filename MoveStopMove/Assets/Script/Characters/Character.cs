@@ -44,8 +44,9 @@ public class Character : MonoBehaviour
         {
             currentState.OnExecute(this);
         }
-        Debug.Log("Player isFired: " + GameObject.Find("Player").GetComponent<Character>().isFired); 
-        Debug.Log("Enemy isFired: " + GameObject.Find("Enemy(Clone)").GetComponent<Character>().isFired);
+        Debug.Log("Player isFired: " + GameObject.Find("Player").GetComponent<Character>().isFired);
+        Debug.Log("Player fireTimer: " + GameObject.Find("Player").GetComponent<Character>().fireTimer);
+        Debug.Log("Enemy fireTimer: " + GameObject.Find("Enemy(Clone)").GetComponent<Character>().fireTimer);
     }
 
     public virtual void FindDestination()
