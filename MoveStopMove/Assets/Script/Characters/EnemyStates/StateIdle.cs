@@ -11,6 +11,7 @@ public class StateIdle : IStates
 
     public void OnExecute(Character target)
     {
+        target.LookAtTarget();
         target.ChangeFromIdleToPatrol();
         target.ChangeFromIdleToAttack();
     }

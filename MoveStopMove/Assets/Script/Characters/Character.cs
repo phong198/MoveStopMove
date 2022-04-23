@@ -107,11 +107,17 @@ public class Character : MonoBehaviour
         AttackTargets.RemoveAll(attackTarget => attackTarget.GetComponent<Character>().isDead);
     }
 
+    public virtual void LookAtTarget()
+    {
+        if (AttackTargets.Count != 0)
+        {
+            transform.LookAt(AttackTargets[0].transform);
+        }
+    }
     public virtual void Attack()
     {
         Anim.SetBool(Constant.ANIM_ATTACK, true);
         isFired = true;
-        transform.LookAt(AttackTargets[0].transform);
 
         fireTimer = fireTime;
         attackToIdleTimer = attackToIdleTime;

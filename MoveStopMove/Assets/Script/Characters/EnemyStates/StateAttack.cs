@@ -11,6 +11,7 @@ public class StateAttack : IStates
 
     public void OnExecute(Character target)
     {
+        target.LookAtTarget();
         target.StartFireTimer();
         target.ChangeFromAttackToIdle();
         target.RemoveDeadTargets();
