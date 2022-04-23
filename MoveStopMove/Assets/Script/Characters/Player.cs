@@ -23,12 +23,10 @@ public class Player : Character
             if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
             {
                 transform.rotation = Quaternion.LookRotation(_rigid.velocity);
-                Anim.SetBool(Constant.ANIM_IDLE, false);
                 ChangeState(null);
             }
             else
             {
-                Anim.SetBool(Constant.ANIM_IDLE, true);
                 ChangeState(new StateIdle());
             }
         }
