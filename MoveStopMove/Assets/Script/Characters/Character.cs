@@ -115,7 +115,7 @@ public class Character : MonoBehaviour
         EnemyPool.PoolAccess.DespawnFromPool(gameObject);
     }
 
-    //Enđ Die Region
+    //End Die Region
     #endregion
 
     #region Attack
