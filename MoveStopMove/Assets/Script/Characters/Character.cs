@@ -10,8 +10,7 @@ public class Character : MonoBehaviour
 
     protected Animator Anim;
     public List<GameObject> AttackTargets = new List<GameObject>();
-    [SerializeField]
-    protected SphereCollider _collider;
+
     protected int score;
 
     protected float fireTime = 0.16f;
@@ -25,11 +24,9 @@ public class Character : MonoBehaviour
 
     protected bool isDead;
 
-    protected float attackRange;
     public virtual void Awake()
     {
         Anim = GetComponent<Animator>();
-        attackRange = _collider.radius;
         isDead = false;
     }
 
