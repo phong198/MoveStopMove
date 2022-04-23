@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -47,6 +47,7 @@ public class Character : MonoBehaviour
     }
 
     #region Patrol
+    //Start Patrol Region
 
     public virtual void FindDestination()
     {
@@ -67,9 +68,11 @@ public class Character : MonoBehaviour
 
     }
 
+    //End Patrol Region
     #endregion
 
     #region Idle
+    //Start Idle Region
 
     public virtual void Idle()
     {
@@ -92,9 +95,11 @@ public class Character : MonoBehaviour
 
     }
 
+    //End Idle Region
     #endregion
 
     #region Die
+    //Start Die Region
 
     public virtual void Die()
     {
@@ -110,9 +115,11 @@ public class Character : MonoBehaviour
         EnemyPool.PoolAccess.DespawnFromPool(gameObject);
     }
 
+    //Enđ Die Region
     #endregion
 
     #region Attack
+    //Start Attack Region
 
     public virtual void Attack()
     {
@@ -154,6 +161,7 @@ public class Character : MonoBehaviour
         Anim.SetBool(Constant.ANIM_ATTACK, false);
     }
 
+    //End Attack Region
     #endregion
 
     public virtual void LookAtTarget()
