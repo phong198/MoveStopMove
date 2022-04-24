@@ -9,7 +9,8 @@ public class Character : MonoBehaviour
     public WeaponManager weaponManager;
 
     protected Animator Anim;
-    public List<GameObject> AttackTargets = new List<GameObject>();
+    [SerializeField]
+    protected List<GameObject> AttackTargets = new List<GameObject>();
 
     protected int score;
 
@@ -76,7 +77,6 @@ public class Character : MonoBehaviour
 
     }
 
-
     //End Patrol Region
     #endregion
 
@@ -91,7 +91,7 @@ public class Character : MonoBehaviour
 
     public virtual void ChangeFromIdleToPatrol()
     {
-        
+
     }
 
     public virtual void StopIdle()
@@ -196,7 +196,7 @@ public class Character : MonoBehaviour
         if (other.transform.CompareTag(Constant.TAG_WEAPON))
         {
             Die();
-        }                 
+        }
     }
 
     public virtual void OnTriggerEnter(Collider other)

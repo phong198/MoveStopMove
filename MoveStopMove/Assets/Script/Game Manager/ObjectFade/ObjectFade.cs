@@ -40,7 +40,7 @@ public class ObjectFade : MonoBehaviour
         if (other.gameObject == player)
         {
             isFade = true;
-        }    
+        }
     }
 
     private void OnTriggerExit(Collider other)

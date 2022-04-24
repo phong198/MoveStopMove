@@ -7,9 +7,8 @@ using UnityEngine.AI;
 public class Enemy : Character
 {
     private Vector3 pos;
-
-    public float wanderRadius;
-
+    [SerializeField]
+    private float wanderRadius;
 
     private float idleTimerCount;
     [SerializeField]
@@ -21,14 +20,12 @@ public class Enemy : Character
     private double reactionTimer;
     private bool reactionTimerIsRunning = false;
 
-
     public override void OnEnable()
     {
         base.OnEnable();
         agent = GetComponent<NavMeshAgent>();
         idleTimerCount = 0;
     }
-
 
     public override void ChangeFromIdleToPatrol()
     {
@@ -120,5 +117,4 @@ public class Enemy : Character
             }
         }
     }
-
 }

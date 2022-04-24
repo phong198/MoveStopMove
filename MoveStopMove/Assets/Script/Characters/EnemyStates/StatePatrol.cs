@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class StatePatrol : IStates
 {
-
     public void OnEnter(Character target)
     {
         target.FindDestination();
