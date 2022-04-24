@@ -19,7 +19,7 @@ public class Enemy : Character
     private NavMeshAgent agent;
 
     private double reactionTimer;
-    private bool timerIsRunning;
+    private bool reactionTimerIsRunning = false;
 
 
     public override void OnEnable()
@@ -84,28 +84,39 @@ public class Enemy : Character
     {
         if (AttackTargets.Count != 0)
         {
+            reactionTimerIsRunning = true;
             StartReactiontimer();
         }
     }
 
     private void StartReactiontimer()
     {
-        reactionTimer -= Time.deltaTime;
-        if (reactionTimer <= 0 && AttackTargets.Count != 0)
+        if (reactionTimerIsRunning)
         {
-            ChangeState(new StateIdle());
+            reactionTimer -= Time.deltaTime;
+            if (reactionTimer <= 0 && AttackTargets.Count != 0)
+            {
+                ChangeState(new StateIdle());
+                reactionTimerIsRunning = false;
+            }
         }
+    }
+
+    public override void Idle()
+    {
+        base.Idle();
+        idleToAttackTimerIsRunning = true;
     }
 
     public override void ChangeFromIdleToAttack()
     {
-        if (AttackTargets.Count != 0)
+        if (AttackTargets.Count != 0 && idleToAttackTimerIsRunning)
         {
             idleToAttackTimer -= Time.deltaTime;
             if (idleToAttackTimer <= 0)
             {
                 ChangeState(new StateAttack());
-                idleToAttackTimer = idleToAttackTime;
+                idleToAttackTimerIsRunning = false;
             }
         }
     }

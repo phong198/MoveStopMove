@@ -20,9 +20,11 @@ public class Character : MonoBehaviour
     protected float idleToAttackTime = 0.5f;
     protected float idleToAttackTimer;
 
-    protected bool isFired;
+    protected bool fireTimerIsRunning = false;
+    protected bool attackToIdleTimerIsRunning = false;
+    protected bool idleToAttackTimerIsRunning = false;
 
-    [SerializeField]
+    protected bool isFired;
     protected bool isDead;
 
     public virtual void Awake()
@@ -134,6 +136,8 @@ public class Character : MonoBehaviour
     {
         Anim.SetBool(Constant.ANIM_ATTACK, true);
         isFired = true;
+        fireTimerIsRunning = true;
+        attackToIdleTimerIsRunning = true;
 
         fireTimer = fireTime;
         attackToIdleTimer = attackToIdleTime;
@@ -141,22 +145,28 @@ public class Character : MonoBehaviour
 
     public virtual void StartFireTimer()
     {
-        fireTimer -= Time.deltaTime;
-        if (fireTimer <= 0 && isFired)
+        if (fireTimerIsRunning)
         {
-            weaponManager.Fire();
-            isFired = false;
-            fireTimer = fireTime;
+            fireTimer -= Time.deltaTime;
+            if (fireTimer <= 0 && isFired)
+            {
+                weaponManager.Fire();
+                isFired = false;
+                fireTimerIsRunning = false;
+            }
         }
     }
 
     public virtual void ChangeFromAttackToIdle()
     {
-        attackToIdleTimer -= Time.deltaTime;
-        if (attackToIdleTimer <= 0)
+        if (attackToIdleTimerIsRunning)
         {
-            ChangeState(new StateIdle());
-            attackToIdleTimer = attackToIdleTime;
+            attackToIdleTimer -= Time.deltaTime;
+            if (attackToIdleTimer <= 0)
+            {
+                ChangeState(new StateIdle());
+                attackToIdleTimerIsRunning = false;
+            }
         }
     }
 
