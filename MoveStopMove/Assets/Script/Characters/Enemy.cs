@@ -17,6 +17,8 @@ public class Enemy : Character
     [SerializeField]
     private NavMeshAgent agent;
 
+    public GameObject TargetIcon;
+
     private double reactionTimer;
     private bool reactionTimerIsRunning = false;
 
@@ -25,6 +27,24 @@ public class Enemy : Character
         base.OnEnable();
         agent = GetComponent<NavMeshAgent>();
         idleTimerCount = 0;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        ShowTargetIcon();
+    }
+
+    private void ShowTargetIcon()
+    {
+        if (gameObject == Player.target)
+        {
+            TargetIcon.SetActive(true);
+        }
+        else
+        {
+            TargetIcon.SetActive(false);
+        }
     }
 
     public override void ChangeFromIdleToPatrol()
@@ -117,4 +137,10 @@ public class Enemy : Character
             }
         }
     }
+
+    public override void DespawnWhenDie()
+    {
+        EnemyPool.PoolAccess.DespawnFromPool(gameObject);
+    }
+
 }

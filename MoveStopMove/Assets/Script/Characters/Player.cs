@@ -15,6 +15,18 @@ public class Player : Character
 
     private bool isAttacking = false;
 
+    public static GameObject target;
+
+    public override void Update()
+    {
+        base.Update();
+        if (AttackTargets.Count != 0)
+        {
+            target = AttackTargets[0];
+        }
+        else target = null;
+    }
+
     private void FixedUpdate()
     {
         if (joystickUI.activeInHierarchy)
@@ -51,5 +63,10 @@ public class Player : Character
     {
         base.Die();
         joystickUI.SetActive(false);
+    }
+
+    public override void DespawnWhenDie()
+    {
+        gameObject.SetActive(false);
     }
 }

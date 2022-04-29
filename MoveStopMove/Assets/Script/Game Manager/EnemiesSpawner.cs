@@ -8,6 +8,7 @@ public class EnemiesSpawner : MonoBehaviour
     private Vector3 position;
     private int xPos;
     private int zPos;
+    public Transform _player;
 
     private void Start()
     {
@@ -28,10 +29,16 @@ public class EnemiesSpawner : MonoBehaviour
     }
     private void SpawnEnemies()
     {
-        xPos = Random.Range(-50, 50);
-        zPos = Random.Range(-50, 50);
-        position = new Vector3(xPos, 0, zPos);
+        do
+        {
+            xPos = Random.Range(-50, 50);
+            zPos = Random.Range(-50, 50);
+            position = new Vector3(xPos, 0, zPos);
+        } while (Vector3.Distance(position, _player.position) < 7f);
+
         EnemyPool.PoolAccess.SpawnFromPool(Constant.POOL_ENEMY, position, Quaternion.identity);
+
+
     }
 
 }

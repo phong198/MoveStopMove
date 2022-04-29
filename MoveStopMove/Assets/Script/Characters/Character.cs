@@ -6,15 +6,24 @@ using System;
 
 public class Character : MonoBehaviour
 {
+    public SphereCollider attackRangeCollider;
+    public float rad;
     public WeaponManager weaponManager;
 
+    [SerializeField]
     protected Animator Anim;
     [SerializeField]
     protected List<GameObject> AttackTargets = new List<GameObject>();
 
+    [SerializeField]
+    protected Transform model;
+    [SerializeField]
+    protected Transform attackRange;
+    protected Vector3 scaleChange;
+
     protected int score;
 
-    protected float fireTime = 0.16f;
+    protected float fireTime = 0.5f;
     protected float fireTimer;
     protected float attackToIdleTime = 2.05f;
     protected float attackToIdleTimer;
@@ -30,14 +39,21 @@ public class Character : MonoBehaviour
 
     public virtual void Awake()
     {
-        Anim = GetComponent<Animator>();
+        scaleChange = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
     public virtual void OnEnable()
     {
         isDead = false;
+        score = 0;
         ChangeState(new StateIdle());
     }
+
+    //public virtual void OnInit()
+    //{
+    //    isDead = false;
+    //    ChangeState(new StateIdle());
+    //}
 
     public virtual void Update()
     {
@@ -46,36 +62,25 @@ public class Character : MonoBehaviour
             currentState.OnExecute(this);
         }
 
+        rad = attackRangeCollider.radius;
+
         RemoveDeadTargets();
+
+        Debug.Log(score);
     }
 
     #region Patrol
     //Start Patrol Region
 
-    public virtual void FindDestination()
-    {
+    public virtual void FindDestination() { }
 
-    }
+    public virtual void SetReactionTimer() { }
 
-    public virtual void SetReactionTimer()
-    {
+    public virtual void Patrol() { }
 
-    }
+    public virtual void FindTarget() { }
 
-    public virtual void Patrol()
-    {
-
-    }
-
-    public virtual void FindTarget()
-    {
-
-    }
-
-    public virtual void StopPatrol()
-    {
-
-    }
+    public virtual void StopPatrol() { }
 
     //End Patrol Region
     #endregion
@@ -89,23 +94,24 @@ public class Character : MonoBehaviour
         idleToAttackTimer = idleToAttackTime;
     }
 
-    public virtual void ChangeFromIdleToPatrol()
-    {
-
-    }
+    public virtual void ChangeFromIdleToPatrol() { }
 
     public virtual void StopIdle()
     {
         Anim.SetBool(Constant.ANIM_IDLE, false);
     }
 
-    public virtual void ChangeFromIdleToAttack()
-    {
-
-    }
+    public virtual void ChangeFromIdleToAttack() { }
 
     //End Idle Region
     #endregion
+
+    public virtual void Hit()
+    {
+        score++;
+        model.localScale += scaleChange;
+        attackRange.localScale += scaleChange;
+    }    
 
     #region Die
     //Start Die Region
@@ -121,10 +127,7 @@ public class Character : MonoBehaviour
         DespawnWhenDie();
     }
 
-    public virtual void DespawnWhenDie()
-    {
-        EnemyPool.PoolAccess.DespawnFromPool(gameObject);
-    }
+    public virtual void DespawnWhenDie() { }
 
     //End Die Region
     #endregion

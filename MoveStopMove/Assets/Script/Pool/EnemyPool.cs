@@ -15,9 +15,7 @@ public class EnemyPool : MonoBehaviour
         public int poolSize;
     }
 
-    #region singleton
     public static EnemyPool PoolAccess;
-    #endregion
 
     public int activeObjCount = 0;
 
