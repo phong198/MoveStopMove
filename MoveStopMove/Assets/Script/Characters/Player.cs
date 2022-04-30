@@ -25,6 +25,7 @@ public class Player : Character
             target = AttackTargets[0];
         }
         else target = null;
+        Debug.Log(score);
     }
 
     private void FixedUpdate()

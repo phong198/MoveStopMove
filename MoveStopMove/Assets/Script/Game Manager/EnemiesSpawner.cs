@@ -12,21 +12,31 @@ public class EnemiesSpawner : MonoBehaviour
 
     private void Start()
     {
-        SpawnEnemies();
-        StartCoroutine(countinueSpawn());
+        //SpawnEnemies();
+        //StartCoroutine(countinueSpawn());
     }
-    IEnumerator countinueSpawn()
-    {
-        while (true)
-        {
-            yield return new WaitForFixedUpdate();
 
-            if (EnemyPool.PoolAccess.activeObjCount < EnemyPool.PoolAccess.enemyList[0].poolSize)
-            {
-                SpawnEnemies();
-            }
+    private void Update()
+    {
+
+        if (EnemyPool.PoolAccess.activeObjCount < EnemyPool.PoolAccess.enemyList[0].poolSize)
+        {
+            SpawnEnemies();
         }
+        Debug.Log(EnemyPool.PoolAccess.activeObjCount);
     }
+    //IEnumerator countinueSpawn()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForFixedUpdate();
+
+    //        if (EnemyPool.PoolAccess.activeObjCount < EnemyPool.PoolAccess.enemyList[0].poolSize)
+    //        {
+    //            SpawnEnemies();
+    //        }
+    //    }
+    //}
     private void SpawnEnemies()
     {
         do

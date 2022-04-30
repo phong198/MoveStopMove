@@ -5,22 +5,25 @@ using UnityEngine;
 public class Hammer : GameUnit
 {
     public Rigidbody _rigidbody;
+    private Character _owner;
+
 
     //public ParticleSystem hitVFX;
 
-    public void OnInit()
+    public void OnInit(Character owner)
     {
         _rigidbody.velocity = Transform.forward * 10f;
+        _owner = owner;
     }
 
-    //public void Update()
-    //{
-    //    float travelRange = (Character.transform.position - gameObject.transform.position).magnitude;
-    //    if(travelRange > Character.rad)
-    //    {
-    //        HammerPool.Despawn(this);
-    //    }    
-    //}
+    public void Update()
+    {
+        float travelRange = (_owner.transform.position - gameObject.transform.position).magnitude;
+        if(travelRange >= _owner.attackRadius)
+        {
+            HammerPool.Despawn(this);
+        }
+    }
 
     private void OnCollisionEnter(Collision other)
     {
@@ -28,14 +31,8 @@ public class Hammer : GameUnit
         {
             //ParticlePool.Play(hitVFX, Transform.position, Quaternion.identity);
             HammerPool.Despawn(this);
-            //Character.Hit();
+            _owner.Hit();
         }
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        HammerPool.Despawn(this);
     }
 
 }

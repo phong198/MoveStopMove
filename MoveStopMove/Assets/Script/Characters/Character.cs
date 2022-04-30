@@ -7,7 +7,7 @@ using System;
 public class Character : MonoBehaviour
 {
     public SphereCollider attackRangeCollider;
-    public float rad;
+    public float attackRadius;
     public WeaponManager weaponManager;
 
     [SerializeField]
@@ -19,9 +19,9 @@ public class Character : MonoBehaviour
     protected Transform model;
     [SerializeField]
     protected Transform attackRange;
-    protected Vector3 scaleChange;
+    protected float scaleChange = 1.2f;
 
-    protected int score;
+    public int score;
 
     protected float fireTime = 0.5f;
     protected float fireTimer;
@@ -39,13 +39,14 @@ public class Character : MonoBehaviour
 
     public virtual void Awake()
     {
-        scaleChange = new Vector3(0.2f, 0.2f, 0.2f);
+        //scaleChange = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
     public virtual void OnEnable()
     {
         isDead = false;
         score = 0;
+        attackRadius = attackRangeCollider.radius;
         ChangeState(new StateIdle());
     }
 
@@ -62,11 +63,7 @@ public class Character : MonoBehaviour
             currentState.OnExecute(this);
         }
 
-        rad = attackRangeCollider.radius;
-
         RemoveDeadTargets();
-
-        Debug.Log(score);
     }
 
     #region Patrol
@@ -109,9 +106,10 @@ public class Character : MonoBehaviour
     public virtual void Hit()
     {
         score++;
-        model.localScale += scaleChange;
-        attackRange.localScale += scaleChange;
-    }    
+        model.localScale = model.localScale * scaleChange;
+        attackRange.localScale = attackRange.localScale * scaleChange;
+        attackRadius = attackRadius * scaleChange;
+    }
 
     #region Die
     //Start Die Region
@@ -153,7 +151,7 @@ public class Character : MonoBehaviour
             fireTimer -= Time.deltaTime;
             if (fireTimer <= 0 && isFired)
             {
-                weaponManager.Fire();
+                weaponManager.Fire(gameObject.GetComponent<Character>());
                 isFired = false;
                 fireTimerIsRunning = false;
             }
