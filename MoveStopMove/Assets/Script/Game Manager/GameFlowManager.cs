@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GameFlowManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameFlowManager Instance;
+    public bool playButtonClicked = false;
+
+    private void Awake()
     {
-        
+        Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ClickPlayButton()
     {
-        
+        playButtonClicked = true;
     }
 }

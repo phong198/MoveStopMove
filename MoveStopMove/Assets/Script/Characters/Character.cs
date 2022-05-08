@@ -37,10 +37,6 @@ public class Character : MonoBehaviour
     protected bool isFired;
     protected bool isDead;
 
-    public virtual void Awake()
-    {
-        //scaleChange = new Vector3(0.2f, 0.2f, 0.2f);
-    }
 
     public virtual void OnEnable()
     {
@@ -62,8 +58,6 @@ public class Character : MonoBehaviour
         {
             currentState.OnExecute(this);
         }
-
-        RemoveDeadTargets();
     }
 
     #region Patrol
@@ -103,13 +97,27 @@ public class Character : MonoBehaviour
     //End Idle Region
     #endregion
 
+    #region Hit
+    //Start Hit Region
+
     public virtual void Hit()
     {
-        score++;
+        score = score + 2;
+        if (score == 2 || score == 6 || score == 10 || score == 14 || score == 20)
+        {
+            IncreaseSize();
+        }
+    }
+
+    public virtual void IncreaseSize()
+    {
         model.localScale = model.localScale * scaleChange;
         attackRange.localScale = attackRange.localScale * scaleChange;
         attackRadius = attackRadius * scaleChange;
     }
+
+    //End Hit Region
+    #endregion
 
     #region Die
     //Start Die Region

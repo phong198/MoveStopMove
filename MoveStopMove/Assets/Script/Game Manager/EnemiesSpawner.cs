@@ -23,7 +23,7 @@ public class EnemiesSpawner : MonoBehaviour
         {
             SpawnEnemies();
         }
-        Debug.Log(EnemyPool.PoolAccess.activeObjCount);
+        //Debug.Log(EnemyPool.PoolAccess.activeObjCount);
     }
     //IEnumerator countinueSpawn()
     //{

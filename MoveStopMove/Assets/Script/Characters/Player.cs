@@ -25,17 +25,18 @@ public class Player : Character
             target = AttackTargets[0];
         }
         else target = null;
-        Debug.Log(score);
     }
 
     private void FixedUpdate()
     {
+        Vector3 JoystickDirection = new Vector3(_joystick.Horizontal, 0f, _joystick.Vertical);
+
         if (joystickUI.activeInHierarchy)
         {
-            _rigid.velocity = new Vector3(_joystick.Horizontal * moveSpeed, _rigid.velocity.y, _joystick.Vertical * moveSpeed);
+            transform.position += JoystickDirection * moveSpeed * Time.deltaTime;
             if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
             {
-                transform.rotation = Quaternion.LookRotation(_rigid.velocity);
+                transform.rotation = Quaternion.LookRotation(JoystickDirection, transform.up);
                 ChangeState(null);
             }
             else if (!isAttacking)

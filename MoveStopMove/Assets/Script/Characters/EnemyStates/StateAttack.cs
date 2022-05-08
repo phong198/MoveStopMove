@@ -6,6 +6,7 @@ public class StateAttack : IStates
 {
     public void OnEnter(Character target)
     {
+        target.RemoveDeadTargets();
         target.Attack();
     }
 
@@ -18,6 +19,7 @@ public class StateAttack : IStates
 
     public void OnExit(Character target)
     {
+        target.RemoveDeadTargets();
         target.StopAttack();
     }
 }
