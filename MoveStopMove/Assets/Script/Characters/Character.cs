@@ -53,8 +53,11 @@ public class Character : MonoBehaviour, IBoost, IDamage
     [SerializeField] protected Transform[] weaponSpawnPoint3;
     [SerializeField] protected Transform[] weaponSpawnPoint4;
 
+    [SerializeField] protected GameObject characterCanvas;
+
     public virtual void OnEnable()
     {
+        characterCanvas.SetActive(false);
         moveSpeed = 5f;
         maxHealth = 1000;
         currentHealth = maxHealth;
@@ -76,6 +79,10 @@ public class Character : MonoBehaviour, IBoost, IDamage
 
     public virtual void Update()
     {
+        if (GameFlowManager.Instance.gameState == GameFlowManager.GameState.gameStart)
+        {
+            characterCanvas.SetActive(true);
+        }
         if (GameFlowManager.Instance.gameState == GameFlowManager.GameState.gameStart)
         {
             if (currentState != null)
