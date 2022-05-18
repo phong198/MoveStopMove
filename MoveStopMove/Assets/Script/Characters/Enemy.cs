@@ -25,7 +25,6 @@ public class Enemy : Character
     public override void OnEnable()
     {
         base.OnEnable();
-        agent = GetComponent<NavMeshAgent>();
         idleTimerCount = 0;
     }
 
@@ -84,6 +83,7 @@ public class Enemy : Character
 
     public override void Patrol()
     {
+        agent.speed = moveSpeed;
         agent.isStopped = false;
         agent.SetDestination(pos);
         if (!agent.hasPath)

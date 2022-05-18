@@ -5,13 +5,11 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField]
-    private Rigidbody _rigid;
-    [SerializeField]
     private FloatingJoystick _joystick;
     [SerializeField]
-    private float moveSpeed;
-    [SerializeField]
     private GameObject joystickUI;
+    [SerializeField]
+    private GameObject perkUI;
 
     private bool isAttacking = false;
 
@@ -61,6 +59,7 @@ public class Player : Character
         isAttacking = false;
     }
 
+
     public override void Die()
     {
         base.Die();
@@ -70,5 +69,11 @@ public class Player : Character
     public override void DespawnWhenDie()
     {
         gameObject.SetActive(false);
+    }
+
+    public override void IncreaseLevel()
+    {
+        base.IncreaseLevel();
+        perkUI.SetActive(true);
     }
 }

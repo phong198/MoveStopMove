@@ -14,8 +14,8 @@ public class ShopUIManager : MonoBehaviour
     public virtual void HideSkinShop() { }
     public virtual void ShowHammerShop() { }
     public virtual void HideHammerShop() { }
-    public virtual void ShowBoomerangShop() { }
-    public virtual void HideBoomerangShop() { }
+    public virtual void ShowCandyShop() { }
+    public virtual void HideCandyShop() { }
     public virtual void ShowKnifeShop() { }
     public virtual void HideKnifeShop() { }
 

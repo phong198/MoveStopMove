@@ -15,21 +15,29 @@ public class WeaponShopUIManager : ShopUIManager
     private TMP_Text weaponName;
     [SerializeField]
     private TMP_Text weaponEffect;
+    [SerializeField]
+    private GameObject mainMenu;
 
-    private void Awake()
+    private void OnEnable()
     {
         ChangePage(new ShowPageHammer());
     }
 
+    public void CloseWeaponShop()
+    {
+        gameObject.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+
     public void ClickLeftArrow()
     {
-        if (currentPage is ShowPageBoomerang)
+        if (currentPage is ShowPageKnife)
         {
             ChangePage(new ShowPageHammer());
         }
-        else if (currentPage is ShowPageKnife)
+        else if (currentPage is ShowPageCandy)
         {
-            ChangePage(new ShowPageBoomerang());
+            ChangePage(new ShowPageKnife());
         }
     }
 
@@ -37,11 +45,11 @@ public class WeaponShopUIManager : ShopUIManager
     {
         if (currentPage is ShowPageHammer)
         {
-            ChangePage(new ShowPageBoomerang());
-        }
-        else if (currentPage is ShowPageBoomerang)
-        {
             ChangePage(new ShowPageKnife());
+        }
+        else if (currentPage is ShowPageKnife)
+        {
+            ChangePage(new ShowPageCandy());
         }
     }
 
@@ -49,19 +57,19 @@ public class WeaponShopUIManager : ShopUIManager
     {
         HammerCatalouge.SetActive(true);
         weaponName.text = "HAMMER";
-        weaponEffect.text = "+1 range";
+        weaponEffect.text = "+3 Damage";
     }
     public override void HideHammerShop()
     {
         HammerCatalouge.SetActive(false);
     }
-    public override void ShowBoomerangShop()
+    public override void ShowCandyShop()
     {
         BoomerangCatalouge.SetActive(true);
-        weaponName.text = "BOOMERANG";
-        weaponEffect.text = "+5 Range*2";
+        weaponName.text = "Candy";
+        weaponEffect.text = "+1 Damage, Burns Enemies";
     }
-    public override void HideBoomerangShop()
+    public override void HideCandyShop()
     {
         BoomerangCatalouge.SetActive(false);
     }
@@ -69,7 +77,7 @@ public class WeaponShopUIManager : ShopUIManager
     {
         KnifeCatalouge.SetActive(true);
         weaponName.text = "KNIFE";
-        weaponEffect.text = "+5 Range*3";
+        weaponEffect.text = "+1 Damage, x2 Bullet speed";
     }
     public override void HideKnifeShop()
     {

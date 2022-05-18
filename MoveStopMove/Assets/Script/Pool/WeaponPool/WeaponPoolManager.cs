@@ -16,7 +16,7 @@ public class WeaponPoolManager : MonoBehaviour
     void Awake()
     {
         //SimplePool.Preload(bullet_1, 5, tf_bullet_1);
-        HammerPool.Preload(hammer, 11, tf_hammer);
+        WeaponPool.Preload(hammer, 11, tf_hammer);
 
         //ParticlePool.Preload(hitVFX, 10, tf_VFX);
     }

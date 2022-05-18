@@ -2,18 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameFlowManager : MonoBehaviour
+public class GameFlowManager : Singleton<GameFlowManager>
 {
-    public static GameFlowManager Instance;
-    public bool playButtonClicked = false;
+    public enum GameState { gameUI, gameStart, gameOver, gameWin}
+    public GameState gameState;
 
     private void Awake()
     {
-        Instance = this;
-    }
-
-    private void ClickPlayButton()
-    {
-        playButtonClicked = true;
+        gameState = GameState.gameUI;
     }
 }

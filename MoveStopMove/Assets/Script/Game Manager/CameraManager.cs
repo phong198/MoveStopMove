@@ -8,7 +8,7 @@ public class CameraManager : MonoBehaviour
     public Transform player;
 
     private Vector3 menuPosition;
-    private Vector3 ingamePosition;
+    public static Vector3 ingamePosition;
 
     private Quaternion menuRotation;
     private Quaternion ingameRotation;
@@ -22,12 +22,22 @@ public class CameraManager : MonoBehaviour
         menuRotation = Quaternion.Euler(0f, 0f, 0f);
         ingameRotation = Quaternion.Euler(60f, 0f, 0f);
 
-        StartCoroutine(Lerp(menuPosition, ingamePosition, menuRotation, ingameRotation, 1f));
+        _camera.transform.position = player.position + menuPosition;
+        _camera.transform.rotation = menuRotation;
+
     }
+
+    public void LerpCamera()
+    {
+        StartCoroutine(Lerp(menuPosition, ingamePosition, menuRotation, ingameRotation, 1f));
+    }    
 
     void Update()
     {
-        _camera.transform.position = player.position + ingamePosition;
+        if (GameFlowManager.Instance.gameState == GameFlowManager.GameState.gameStart)
+        {
+            _camera.transform.position = player.position + ingamePosition;
+        }
     }
 
     IEnumerator Lerp(Vector3 pos1, Vector3 pos2, Quaternion rot1, Quaternion rot2, float time)

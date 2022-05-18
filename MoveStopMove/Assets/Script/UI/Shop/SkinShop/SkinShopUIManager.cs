@@ -30,7 +30,7 @@ public class SkinShopUIManager : ShopUIManager
     private Color imageSkinColor;
 
 
-    private void Awake()
+    private void OnEnable()
     {
         imageHatColor = ChangePageHatsImage.color;
         imagePantColor = ChangePagePantsImage.color;
@@ -38,6 +38,11 @@ public class SkinShopUIManager : ShopUIManager
         imageSkinColor = ChangePageSkinsImage.color;
 
         ChangePage(new ShowPageHats());
+    }
+
+    public void CloseSkinShop()
+    {
+        gameObject.SetActive(false);
     }
 
     public void ChangePageHats()
