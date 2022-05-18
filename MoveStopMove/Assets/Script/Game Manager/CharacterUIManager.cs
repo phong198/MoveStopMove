@@ -13,6 +13,6 @@ public class CharacterUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthText.SetText(character.health.ToString());
+        healthText.SetText(character.currentHealth.ToString() + "/" + character.maxHealth.ToString());
     }
 }

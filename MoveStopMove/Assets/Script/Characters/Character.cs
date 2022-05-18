@@ -12,7 +12,7 @@ public class Character : MonoBehaviour, IBoost, IDamage
     public GameObject weaponHolder;
 
     public float moveSpeed;
-    public int health;
+    public int currentHealth;
     public int maxHealth;
     public int characterDamage;
     public int exp;
@@ -56,7 +56,8 @@ public class Character : MonoBehaviour, IBoost, IDamage
     public virtual void OnEnable()
     {
         moveSpeed = 5f;
-        health = 1000;
+        maxHealth = 1000;
+        currentHealth = maxHealth;
         characterDamage = 5;
         exp = 0;
         expToNextLevel = 10;
@@ -88,9 +89,14 @@ public class Character : MonoBehaviour, IBoost, IDamage
             RemoveDeadTargets();
         }
 
-        if (health <= 0)
+        if (currentHealth > maxHealth)
         {
-            health = 0;
+            currentHealth = maxHealth;
+        }
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
             Die();
         }
     }
@@ -236,15 +242,15 @@ public class Character : MonoBehaviour, IBoost, IDamage
         switch (BulletID)
         {
             case 1: //búa
-                health = health - Constant.HAMMER_DAMAGE - enemyDamage;
+                currentHealth = currentHealth - Constant.HAMMER_DAMAGE - enemyDamage;
                 break;
 
             case 2: //dao
-                health = health - Constant.KNIFE_DAMAGE - enemyDamage;
+                currentHealth = currentHealth - Constant.KNIFE_DAMAGE - enemyDamage;
                 break;
 
             case 3: //kẹo
-                health = health - Constant.CANDY_DAMAGE - enemyDamage;
+                currentHealth = currentHealth - Constant.CANDY_DAMAGE - enemyDamage;
                 burnParticle.Play();
                 StartCoroutine(Burn());
                 IEnumerator Burn()
@@ -252,7 +258,7 @@ public class Character : MonoBehaviour, IBoost, IDamage
                     for (int i = 0; i < Constant.CANDY_BURN_DURATION;)
                     {
                         yield return new WaitForSeconds(1);
-                        health = health - Constant.CANDY_BURN_DAMAGE;
+                        currentHealth = currentHealth - Constant.CANDY_BURN_DAMAGE;
                         i++;
                     }
                     burnParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -270,7 +276,7 @@ public class Character : MonoBehaviour, IBoost, IDamage
         switch (boostID)
         {
             case 1: //boost health
-                health = health + Constant.BOOST_HEALTH;
+                currentHealth = currentHealth + Constant.BOOST_HEALTH;
                 healParticle.Play();
                 break;
 
@@ -333,7 +339,8 @@ public class Character : MonoBehaviour, IBoost, IDamage
     {
         levelUpParticle.Play();
         level = level + 1;
-        health = health + Constant.HEALTH_LVUP;
+        currentHealth = currentHealth + Constant.HEALTH_LVUP;
+        maxHealth = maxHealth + Constant.HEALTH_LVUP;
         exp = 0;
         expToNextLevel = expToNextLevel + Constant.EXP_LVUP;
     }
@@ -350,7 +357,7 @@ public class Character : MonoBehaviour, IBoost, IDamage
                 characterDamage = characterDamage + Constant.PERK_INCREASE_DAMAGE;
                 break;
             case 2: //+ máu
-                health = health + Constant.PERK_INCREASE_HEALTH;
+                maxHealth = maxHealth + Constant.PERK_INCREASE_HEALTH;
                 break;
             case 3: //+ speed
                 moveSpeed = moveSpeed + Constant.PERK_INCREASE_SPEED;
