@@ -141,6 +141,7 @@ public class Enemy : Character
     public override void DespawnWhenDie()
     {
         PoolSystem.Despawn(this);
+        GameFlowManager.Instance.enemyCount--;
     }
 
 }

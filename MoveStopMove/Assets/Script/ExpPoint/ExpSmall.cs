@@ -9,4 +9,8 @@ public class ExpSmall : ExpPoint
     {
         expID = 1;
     }
+    public override void DecreaseCount()
+    {
+        GameFlowManager.Instance.smallXpCount--;
+    }
 }

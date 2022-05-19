@@ -9,4 +9,8 @@ public class ExpBig : ExpPoint
     {
         expID = 2;
     }
+    public override void DecreaseCount()
+    {
+        GameFlowManager.Instance.bigXpCount--;
+    }
 }

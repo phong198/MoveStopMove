@@ -15,7 +15,9 @@ public class ExpPoint : GameUnit
             {
                 character.IncreaseXP(expID, 0);
             }
-            //PoolSystem.Despawn(this);
+            PoolSystem.Despawn(this);
+            DecreaseCount();
         }
     }
+    public virtual void DecreaseCount() { }
 }

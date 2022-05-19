@@ -29,7 +29,10 @@ public class EnemiesSpawner : MonoBehaviour
 
     private void Update()
     {
-
+        if(GameFlowManager.Instance.enemyCount < enemyAmounts)
+        {
+            SpawnEnemy();
+        }
     }
 
     private void SpawnEnemy()
@@ -47,6 +50,7 @@ public class EnemiesSpawner : MonoBehaviour
         } while (Vector3.Distance(randomPosition, _player.position) < 7f);
 
         PoolSystem.Spawn(enemy, randomPosition, Quaternion.identity);
+        GameFlowManager.Instance.enemyCount++;
     }
 
 }
