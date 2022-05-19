@@ -7,7 +7,7 @@ public static class PoolSystem
 {
     static int DEFAULT_AMOUNT = 10;
     //pool tong
-    static Dictionary<GameUnit, Pool> poolObjects = new Dictionary<GameUnit, Pool>();
+    public static Dictionary<GameUnit, Pool> poolObjects = new Dictionary<GameUnit, Pool>();
 
     //tim pool cha cua thang object
     static Dictionary<GameUnit, Pool> poolParents = new Dictionary<GameUnit, Pool>();

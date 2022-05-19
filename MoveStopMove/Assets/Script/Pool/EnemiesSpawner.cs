@@ -16,13 +16,14 @@ public class EnemiesSpawner : MonoBehaviour
     private int xPos;
     private int zPos;
     public Transform _player;
+
     private void Start()
     {
         PoolSystem.Preload(enemy, enemyAmounts, poolParent);
 
-        for(int i = 0; i < enemyAmounts; i++)
+        for (int i = 0; i < enemyAmounts; i++)
         {
-            SpawnEnemies();
+            SpawnEnemy();
         }    
     }
 
@@ -31,7 +32,7 @@ public class EnemiesSpawner : MonoBehaviour
 
     }
 
-    private void SpawnEnemies()
+    private void SpawnEnemy()
     {
         do
         {
