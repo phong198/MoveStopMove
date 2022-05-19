@@ -1,5 +1,5 @@
 
 public interface IDamage
 {
-    void Damage(int BulletID, int characterDamage);
+    void Damage(int BulletID, int characterDamage, Character attacker);
 }

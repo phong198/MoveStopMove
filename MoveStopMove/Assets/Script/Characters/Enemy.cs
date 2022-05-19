@@ -140,7 +140,7 @@ public class Enemy : Character
 
     public override void DespawnWhenDie()
     {
-        EnemyPool.PoolAccess.DespawnFromPool(gameObject);
+        PoolSystem.Despawn(this);
     }
 
 }

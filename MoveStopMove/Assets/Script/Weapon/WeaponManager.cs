@@ -10,7 +10,7 @@ public class WeaponManager : MonoBehaviour
     {
         for (int i = 0; i < spawnPoint.Length; i++)
         {
-            WeaponPool.Spawn<Hammer>(hammer, spawnPoint[i].position, spawnPoint[i].rotation).OnInit(owner);
+            PoolSystem.Spawn<Hammer>(hammer, spawnPoint[i].position, spawnPoint[i].rotation).OnInit(owner);
         }
     }
 }

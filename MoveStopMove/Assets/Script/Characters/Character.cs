@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using System;
 
-public class Character : MonoBehaviour, IBoost, IDamage
+public class Character : GameUnit, IBoost, IDamage
 {
     public SphereCollider attackRangeCollider;
     public float attackRadius;
@@ -21,6 +21,8 @@ public class Character : MonoBehaviour, IBoost, IDamage
 
     [SerializeField] protected Animator Anim;
     [SerializeField] protected List<GameObject> AttackTargets = new List<GameObject>();
+    protected Character currentAttacker;
+    protected Character burnAttacker;
 
     [SerializeField] protected Transform model;
     [SerializeField] protected Transform attackRange;
@@ -59,7 +61,7 @@ public class Character : MonoBehaviour, IBoost, IDamage
     {
         characterCanvas.SetActive(false);
         moveSpeed = 5f;
-        maxHealth = 1000;
+        maxHealth = 20;
         currentHealth = maxHealth;
         characterDamage = 5;
         exp = 0;
@@ -99,12 +101,6 @@ public class Character : MonoBehaviour, IBoost, IDamage
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
-        }
-
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-            Die();
         }
     }
 
@@ -244,35 +240,56 @@ public class Character : MonoBehaviour, IBoost, IDamage
 
     #region Take Damage
     //Start Take Damage Reagion
-    public virtual void Damage(int BulletID, int enemyDamage)
+    public virtual void Damage(int BulletID, int enemyDamage, Character attacker)
     {
         switch (BulletID)
         {
             case 1: //búa
+                currentAttacker = attacker;
                 currentHealth = currentHealth - Constant.HAMMER_DAMAGE - enemyDamage;
                 break;
 
             case 2: //dao
+                currentAttacker = attacker;
                 currentHealth = currentHealth - Constant.KNIFE_DAMAGE - enemyDamage;
                 break;
 
             case 3: //kẹo
+                currentAttacker = attacker;
+                burnAttacker = attacker;
                 currentHealth = currentHealth - Constant.CANDY_DAMAGE - enemyDamage;
-                burnParticle.Play();
+                burnParticle.Play();                
                 StartCoroutine(Burn());
+
                 IEnumerator Burn()
                 {
                     for (int i = 0; i < Constant.CANDY_BURN_DURATION;)
                     {
                         yield return new WaitForSeconds(1);
-                        currentHealth = currentHealth - Constant.CANDY_BURN_DAMAGE;
-                        i++;
+                        if (!isDead)
+                        {
+                            currentAttacker = burnAttacker;
+                            currentHealth = currentHealth - Constant.CANDY_BURN_DAMAGE;
+                            CheckDie();
+                            i++;
+                        }
                     }
                     burnParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 }
                 break;
         }
+        CheckDie();
     }
+
+    public virtual void CheckDie()
+    {
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            currentAttacker.IncreaseXP(3, level);
+            Die();
+        }
+    }    
     //End Take Damage Region
     #endregion
 
@@ -364,6 +381,7 @@ public class Character : MonoBehaviour, IBoost, IDamage
                 characterDamage = characterDamage + Constant.PERK_INCREASE_DAMAGE;
                 break;
             case 2: //+ máu
+                currentHealth = currentHealth + Constant.PERK_INCREASE_HEALTH;
                 maxHealth = maxHealth + Constant.PERK_INCREASE_HEALTH;
                 break;
             case 3: //+ speed

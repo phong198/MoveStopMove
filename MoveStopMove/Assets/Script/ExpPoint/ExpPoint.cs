@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExpPoint : MonoBehaviour
+public class ExpPoint : GameUnit
 {
     public int expID;
     // Start is called before the first frame update
@@ -15,7 +15,7 @@ public class ExpPoint : MonoBehaviour
             {
                 character.IncreaseXP(expID, 0);
             }
-            //Destroy(gameObject);
+            //PoolSystem.Despawn(this);
         }
     }
 }
