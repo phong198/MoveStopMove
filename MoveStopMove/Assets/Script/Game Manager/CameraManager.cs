@@ -12,7 +12,7 @@ public class CameraManager : MonoBehaviour
 
     private Quaternion menuRotation;
     private Quaternion ingameRotation;
-
+    private Quaternion shopRotation;
 
     void Start()
     {
@@ -21,10 +21,21 @@ public class CameraManager : MonoBehaviour
 
         menuRotation = Quaternion.Euler(0f, 0f, 0f);
         ingameRotation = Quaternion.Euler(60f, 0f, 0f);
+        shopRotation = Quaternion.Euler(12f, 0f, 0f);
 
         _camera.transform.position = player.position + menuPosition;
         _camera.transform.rotation = menuRotation;
 
+    }
+
+    public void ChangeToShopCamera()
+    {
+        _camera.transform.rotation = shopRotation;
+    }
+
+    public void ChangeToMenuCamera()
+    {
+        _camera.transform.rotation = menuRotation;
     }
 
     public void LerpCamera()

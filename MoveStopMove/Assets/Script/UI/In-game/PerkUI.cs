@@ -20,7 +20,7 @@ public class PerkUI : MonoBehaviour
             if (!randomperk.activeInHierarchy)
             {
                 randomperk.SetActive(true);
-                i++;
+                ++i;
             }
             else continue;
         }

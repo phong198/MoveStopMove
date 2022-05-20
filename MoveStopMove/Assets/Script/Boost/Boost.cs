@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boost : MonoBehaviour
+public class Boost : GameUnit
 {
     public int boostID;
     private void OnTriggerEnter(Collider other)
@@ -14,7 +14,7 @@ public class Boost : MonoBehaviour
             {
                 boost.Boost(boostID);
             }
-            //Destroy(gameObject);
+            PoolSystem.Despawn(this);
         }
     }
 }

@@ -7,15 +7,14 @@ using UnityEngine.AI;
 public class Enemy : Character
 {
     private Vector3 pos;
-    [SerializeField]
-    private float wanderRadius;
+    [SerializeField] private float wanderRadius;
 
     private float idleTimerCount;
-    [SerializeField]
-    private float idleTimer;
+    [SerializeField] private float idleTimer;
 
-    [SerializeField]
-    private NavMeshAgent agent;
+    [SerializeField] private NavMeshAgent agent;
+
+    [SerializeField] private Player player;
 
     public GameObject TargetIcon;
 
@@ -32,6 +31,15 @@ public class Enemy : Character
     {
         base.Update();
         ShowTargetIcon();
+    }
+
+    public override void OnInit()
+    {
+        base.OnInit();
+        for (int i = 0; i < UnityEngine.Random.Range(player.level, player.level + 2); i++)
+        {
+            IncreaseLevel();
+        }    
     }
 
     private void ShowTargetIcon()
@@ -138,10 +146,26 @@ public class Enemy : Character
         }
     }
 
+    public override void IncreaseLevel()
+    {
+        base.IncreaseLevel();
+        GetPerk(UnityEngine.Random.Range(1, 6));
+    }
+
     public override void DespawnWhenDie()
     {
         PoolSystem.Despawn(this);
         GameFlowManager.Instance.enemyCount--;
+        GameFlowManager.Instance.enemiesLeftCount--;
+        GameFlowManager.Instance.CheckWin();
     }
 
+    public override void ChangeStateWin()
+    {
+        if(GameFlowManager.Instance.enemiesLeftCount == 2 && player.isDead)
+        {
+            ChangeState(null);
+            Anim.SetBool(Constant.ANIM_WIN, true);
+        }    
+    }
 }

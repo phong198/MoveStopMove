@@ -24,11 +24,6 @@ public class Character : GameUnit, IBoost, IDamage
     protected Character currentAttacker;
     protected Character burnAttacker;
 
-    [SerializeField] protected Transform model;
-    [SerializeField] protected Transform attackRange;
-
-    public int score;
-
     protected float fireTime = 0.50f;
     protected float fireTimer;
     protected float attackToIdleTime = 2.05f;
@@ -59,9 +54,15 @@ public class Character : GameUnit, IBoost, IDamage
 
     public virtual void OnEnable()
     {
+        //TODO: chuyển OnInit ra chỗ khác
+        OnInit();
+    }
+
+    public virtual void OnInit()
+    {
         characterCanvas.SetActive(false);
         moveSpeed = 5f;
-        maxHealth = 20;
+        maxHealth = 10;
         currentHealth = maxHealth;
         characterDamage = 5;
         exp = 0;
@@ -72,12 +73,6 @@ public class Character : GameUnit, IBoost, IDamage
         ChangeState(new StateIdle());
         selectedWeaponSpawnPoint = weaponSpawnPoint1;
     }
-
-    //public virtual void OnInit()
-    //{
-    //    isDead = false;
-    //    ChangeState(new StateIdle());
-    //}
 
     public virtual void Update()
     {
@@ -240,45 +235,40 @@ public class Character : GameUnit, IBoost, IDamage
 
     #region Take Damage
     //Start Take Damage Reagion
-    public virtual void Damage(int BulletID, int enemyDamage, Character attacker)
+    public virtual void Damage(int damageType, int bulletDamage, int characterDamage, Character attacker)
     {
-        switch (BulletID)
+        switch (damageType)
         {
-            case 1: //búa
+            case 1: //dam thường
                 currentAttacker = attacker;
-                currentHealth = currentHealth - Constant.HAMMER_DAMAGE - enemyDamage;
+                currentHealth -= bulletDamage + characterDamage;
+                CheckDie();
                 break;
 
-            case 2: //dao
-                currentAttacker = attacker;
-                currentHealth = currentHealth - Constant.KNIFE_DAMAGE - enemyDamage;
-                break;
-
-            case 3: //kẹo
+            case 2: //dam cháy
                 currentAttacker = attacker;
                 burnAttacker = attacker;
-                currentHealth = currentHealth - Constant.CANDY_DAMAGE - enemyDamage;
+                currentHealth -= bulletDamage + characterDamage;
                 burnParticle.Play();                
                 StartCoroutine(Burn());
 
                 IEnumerator Burn()
                 {
-                    for (int i = 0; i < Constant.CANDY_BURN_DURATION;)
+                    for (int i = 0; i < Constant.BURN_DURATION;)
                     {
                         yield return new WaitForSeconds(1);
                         if (!isDead)
                         {
                             currentAttacker = burnAttacker;
-                            currentHealth = currentHealth - Constant.CANDY_BURN_DAMAGE;
+                            currentHealth -= Constant.BURN_DAMAGE;
                             CheckDie();
-                            i++;
+                            ++i;
                         }
                     }
                     burnParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 }
                 break;
         }
-        CheckDie();
     }
 
     public virtual void CheckDie()
@@ -300,13 +290,13 @@ public class Character : GameUnit, IBoost, IDamage
         switch (boostID)
         {
             case 1: //boost health
-                currentHealth = currentHealth + Constant.BOOST_HEALTH;
+                currentHealth += Constant.BOOST_HEALTH;
                 healParticle.Play();
                 break;
 
             case 2: //boost damage
                 int oldCharacterDamage = characterDamage;
-                characterDamage = characterDamage * Constant.BOOST_DAMAGE;
+                characterDamage *= Constant.BOOST_DAMAGE;
                 damageBoostParticle.Play();
                 StartCoroutine(BoostDamage());
                 IEnumerator BoostDamage()
@@ -319,7 +309,7 @@ public class Character : GameUnit, IBoost, IDamage
 
             case 3: //boost speed
                 float oldMoveSpeed = moveSpeed;
-                moveSpeed = moveSpeed * Constant.BOOST_SPEED;
+                moveSpeed *= Constant.BOOST_SPEED;
                 speedBoostParticle.Play();
                 StartCoroutine(BoostSpeed());
                 IEnumerator BoostSpeed()
@@ -341,32 +331,32 @@ public class Character : GameUnit, IBoost, IDamage
         switch(expID)
         {
             case 1: //nhặt cục xp nhỏ
-                exp = exp + Constant.EXP_SMALL;
+                exp += Constant.EXP_SMALL;
                 break;
 
             case 2: //nhặt cục xp to
-                exp = exp + Constant.EXP_BIG;
+                exp += Constant.EXP_BIG;
                 break;
 
             case 3: //giết được một thằng
-                exp = exp + Constant.EXP_KILL * enemyLevel;
+                exp += Constant.EXP_KILL * enemyLevel;
                 break;
         }
         
         if(exp >= expToNextLevel)
         {
+            levelUpParticle.Play();
             IncreaseLevel();
         }
     }
 
     public virtual void IncreaseLevel()
     {
-        levelUpParticle.Play();
-        level = level + 1;
-        currentHealth = currentHealth + Constant.HEALTH_LVUP;
-        maxHealth = maxHealth + Constant.HEALTH_LVUP;
+        level += 1;
+        currentHealth += Constant.HEALTH_LVUP;
+        maxHealth += Constant.HEALTH_LVUP;
         exp = 0;
-        expToNextLevel = expToNextLevel + Constant.EXP_LVUP;
+        expToNextLevel += Constant.EXP_LVUP;
     }
     //End IncreaseXP Region
     #endregion
@@ -378,14 +368,14 @@ public class Character : GameUnit, IBoost, IDamage
         switch(perkID)
         {
             case 1: //+ dam
-                characterDamage = characterDamage + Constant.PERK_INCREASE_DAMAGE;
+                characterDamage += Constant.PERK_INCREASE_DAMAGE;
                 break;
             case 2: //+ máu
-                currentHealth = currentHealth + Constant.PERK_INCREASE_HEALTH;
-                maxHealth = maxHealth + Constant.PERK_INCREASE_HEALTH;
+                currentHealth += Constant.PERK_INCREASE_HEALTH;
+                maxHealth += Constant.PERK_INCREASE_HEALTH;
                 break;
             case 3: //+ speed
-                moveSpeed = moveSpeed + Constant.PERK_INCREASE_SPEED;
+                moveSpeed += Constant.PERK_INCREASE_SPEED;
                 break;
             case 4: //ném 2 đạn thắng
                 selectedWeaponSpawnPoint = weaponSpawnPoint2;
@@ -414,6 +404,8 @@ public class Character : GameUnit, IBoost, IDamage
             transform.LookAt(AttackTargets[0].transform);
         }
     }
+
+    public virtual void ChangeStateWin() { }
 
     protected IStates currentState;
     public virtual void ChangeState(IStates state)

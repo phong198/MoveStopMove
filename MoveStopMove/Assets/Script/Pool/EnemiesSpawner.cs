@@ -29,10 +29,15 @@ public class EnemiesSpawner : MonoBehaviour
 
     private void Update()
     {
-        if(GameFlowManager.Instance.enemyCount < enemyAmounts)
+        if(GameFlowManager.Instance.enemyCount < enemyAmounts && GameFlowManager.Instance.enemiesLeftCount > enemyAmounts)
         {
             SpawnEnemy();
         }
+
+        if(GameFlowManager.Instance.enemiesLeftCount == 4)
+        {
+            Debug.Log("aaa");
+        }    
     }
 
     private void SpawnEnemy()

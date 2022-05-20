@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Player : Character
 {
-    [SerializeField]
-    private FloatingJoystick _joystick;
-    [SerializeField]
-    private GameObject joystickUI;
-    [SerializeField]
-    private GameObject perkUI;
+    [SerializeField] private FloatingJoystick _joystick;
+    [SerializeField] private GameObject joystickUI;
+    [SerializeField] private GameObject perkUI;
 
     private bool isAttacking = false;
 
@@ -63,8 +60,24 @@ public class Player : Character
     public override void Die()
     {
         base.Die();
-        joystickUI.SetActive(false);
+        CloseUI();
+        GameFlowManager.Instance.gameState = GameFlowManager.GameState.gameOver;
     }
+
+    public override void ChangeStateWin()
+    {
+        CloseUI();
+        Anim.SetBool(Constant.ANIM_WIN, true);
+    }
+
+    private void CloseUI()
+    {
+        joystickUI.SetActive(false);
+        if (perkUI.activeSelf)
+        {
+            perkUI.SetActive(false);
+        }
+    }    
 
     public override void DespawnWhenDie()
     {

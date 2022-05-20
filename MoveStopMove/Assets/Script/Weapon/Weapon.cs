@@ -6,7 +6,8 @@ public class Weapon : GameUnit
 {
     public Character _owner;
     public float bulletSpeed;
-    public int bulletID;
+    public int damageType;
+    public int bulletDamage;
 
     public void OnInit(Character owner)
     {
@@ -30,7 +31,7 @@ public class Weapon : GameUnit
             IDamage damage = other.transform.GetComponent<IDamage>();
             if (damage != null)
             {
-                damage.Damage(bulletID, _owner.characterDamage, _owner);
+                damage.Damage(damageType, bulletDamage, _owner.characterDamage, _owner);
             }
             //ParticlePool.Play(hitVFX, Transform.position, Quaternion.identity);
             PoolSystem.Despawn(this);

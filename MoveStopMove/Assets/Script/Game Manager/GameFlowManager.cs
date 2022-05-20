@@ -9,17 +9,27 @@ public class GameFlowManager : Singleton<GameFlowManager>
 
     public int enemyCount = 0;
     public int totalEnemiesPerStage;
+    public int enemiesLeftCount;
 
     public int smallXpCount = 0;
     public int bigXpCount = 0;
     private void Awake()
     {
         gameState = GameState.gameUI;
-        totalEnemiesPerStage = 20;
+        totalEnemiesPerStage = 9;
+        enemiesLeftCount = totalEnemiesPerStage;
     }
+
     private void Update()
     {
-        Debug.Log(smallXpCount);
-        Debug.Log(bigXpCount);
+
     }
+
+    public void CheckWin()
+    {
+        if (enemiesLeftCount == 0)
+        {
+            gameState = GameState.gameWin;
+        }
+    }    
 }

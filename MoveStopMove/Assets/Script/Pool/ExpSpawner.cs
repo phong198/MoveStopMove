@@ -28,7 +28,6 @@ public class ExpSpawner : MonoBehaviour
     {
         CheckExpAmount(GameFlowManager.Instance.smallXpCount, expSmallAmount, 1);
         CheckExpAmount(GameFlowManager.Instance.bigXpCount, expBigAmount, 2);
-
     }
 
     private void SpawnExpAtStart(int expAmount, int expID)
