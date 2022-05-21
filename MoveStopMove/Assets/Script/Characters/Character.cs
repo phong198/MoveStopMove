@@ -56,7 +56,11 @@ public class Character : GameUnit, IBoost, IDamage
     {
         //TODO: chuyển OnInit ra chỗ khác
         OnInit();
-        //EventManager.Instance.onCharacterDie += CheckDie;
+        EventManager.Instance.onCharacterDie += CheckWin;
+    }
+    public virtual void OnDisable()
+    {
+        EventManager.Instance.onCharacterDie -= CheckWin;
     }
 
     public virtual void OnInit()
@@ -162,7 +166,7 @@ public class Character : GameUnit, IBoost, IDamage
     #region Die
     //Start Die Region
 
-    public virtual async void Die(Character attacker)
+    public virtual async void Die()
     {
         isDead = true;
         AttackTargets.Clear();
@@ -170,10 +174,10 @@ public class Character : GameUnit, IBoost, IDamage
         Anim.SetBool(Constant.ANIM_DIE, true);
 
         await Task.Delay(TimeSpan.FromSeconds(2));
-        DespawnWhenDie(attacker);
+        DespawnWhenDie();
     }
 
-    public virtual void DespawnWhenDie(Character attacker) { }
+    public virtual void DespawnWhenDie() { }
 
     //End Die Region
     #endregion
@@ -238,7 +242,7 @@ public class Character : GameUnit, IBoost, IDamage
             case 1: //dam thường
                 currentAttacker = attacker;
                 currentHealth -= bulletDamage + characterDamage;
-                CheckDie(currentAttacker);
+                CheckDie();
                 break;
 
             case 2: //dam cháy
@@ -257,7 +261,7 @@ public class Character : GameUnit, IBoost, IDamage
                         {
                             currentAttacker = burnAttacker;
                             currentHealth -= Constant.BURN_DAMAGE;
-                            CheckDie(currentAttacker);
+                            CheckDie();
                             ++i;
                         }
                     }
@@ -267,13 +271,13 @@ public class Character : GameUnit, IBoost, IDamage
         }
     }
 
-    public virtual void CheckDie(Character attacker)
+    public virtual void CheckDie()
     {
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             currentAttacker.IncreaseXP(3, level);
-            Die(attacker);
+            Die();
         }
     }    
     //End Take Damage Region

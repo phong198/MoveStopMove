@@ -155,15 +155,15 @@ public class Enemy : Character
         GetPerk(UnityEngine.Random.Range(1, 6));
     }
 
-    public override void DespawnWhenDie(Character attacker)
+    public override void DespawnWhenDie()
     {
-        base.DespawnWhenDie(attacker);
+        base.DespawnWhenDie();
         PoolSystem.Despawn(this);
         GameFlowManager.Instance.enemiesLeftCount--;
         GameFlowManager.Instance.enemiesActiveInPool--;
         spawner.CheckNumbersOfEnemiesOnMap();
         GameFlowManager.Instance.CheckGameStateWin();
-        attacker.CheckWin();
+        EventManager.Instance.CharacterDie();
     }
 
     public override void CheckWin()

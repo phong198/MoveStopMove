@@ -57,9 +57,9 @@ public class Player : Character
     }
 
 
-    public override void Die(Character attacker)
+    public override void Die()
     {
-        base.Die(attacker);
+        base.Die();
         CloseUI();
         GameFlowManager.Instance.gameState = GameFlowManager.GameState.gameOver;
     }
@@ -82,11 +82,11 @@ public class Player : Character
         }
     }    
 
-    public override void DespawnWhenDie(Character attacker)
+    public override void DespawnWhenDie()
     {
-        base.DespawnWhenDie(attacker);
+        base.DespawnWhenDie();
         gameObject.SetActive(false);
-        attacker.CheckWin();
+        EventManager.Instance.CharacterDie();
     }
 
     public override void IncreaseLevel()

@@ -20,12 +20,19 @@ public class EnemiesSpawner : MonoBehaviour
 
     private void Start()
     {
+        EventManager.Instance.onCharacterDie += CheckNumbersOfEnemiesOnMap;
+
         PoolSystem.Preload(enemy, enemiesOnMap, poolParent);
 
         for (int i = 0; i < enemiesOnMap; i++)
         {
             SpawnEnemy();
         }    
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.onCharacterDie -= CheckNumbersOfEnemiesOnMap;
     }
 
     public void CheckNumbersOfEnemiesOnMap()
