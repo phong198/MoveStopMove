@@ -8,8 +8,9 @@ using System.Linq;
 public class EnemiesSpawner : MonoBehaviour
 {
     [SerializeField] private GameUnit enemy;
+    private Enemy enemyScript;
     [SerializeField] private Transform poolParent;
-    private int enemyAmounts = 6;
+    private int enemiesOnMap = 6;
 
     private Vector3 randomPosition;
     private Vector3 position;
@@ -19,27 +20,21 @@ public class EnemiesSpawner : MonoBehaviour
 
     private void Start()
     {
-        PoolSystem.Preload(enemy, enemyAmounts, poolParent);
+        PoolSystem.Preload(enemy, enemiesOnMap, poolParent);
 
-        for (int i = 0; i < enemyAmounts; i++)
+        for (int i = 0; i < enemiesOnMap; i++)
         {
             SpawnEnemy();
         }    
     }
 
-    private void Update()
+    public void CheckNumbersOfEnemiesOnMap()
     {
-        if(GameFlowManager.Instance.enemyCount < enemyAmounts && GameFlowManager.Instance.enemiesLeftCount > enemyAmounts)
+        if (GameFlowManager.Instance.enemiesActiveInPool < enemiesOnMap && GameFlowManager.Instance.enemiesLeftCount > enemiesOnMap)
         {
             SpawnEnemy();
         }
-
-        if(GameFlowManager.Instance.enemiesLeftCount == 4)
-        {
-            Debug.Log("aaa");
-        }    
     }
-
     private void SpawnEnemy()
     {
         do
@@ -55,7 +50,7 @@ public class EnemiesSpawner : MonoBehaviour
         } while (Vector3.Distance(randomPosition, _player.position) < 7f);
 
         PoolSystem.Spawn(enemy, randomPosition, Quaternion.identity);
-        GameFlowManager.Instance.enemyCount++;
+        GameFlowManager.Instance.enemiesActiveInPool++;
     }
 
 }

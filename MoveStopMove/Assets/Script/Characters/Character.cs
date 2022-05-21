@@ -56,6 +56,7 @@ public class Character : GameUnit, IBoost, IDamage
     {
         //TODO: chuyển OnInit ra chỗ khác
         OnInit();
+        //EventManager.Instance.onCharacterDie += CheckDie;
     }
 
     public virtual void OnInit()
@@ -91,11 +92,6 @@ public class Character : GameUnit, IBoost, IDamage
         if (AttackTargets.Count != 0)
         {
             RemoveDeadTargets();
-        }
-
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
         }
     }
 
@@ -166,7 +162,7 @@ public class Character : GameUnit, IBoost, IDamage
     #region Die
     //Start Die Region
 
-    public virtual async void Die()
+    public virtual async void Die(Character attacker)
     {
         isDead = true;
         AttackTargets.Clear();
@@ -174,10 +170,10 @@ public class Character : GameUnit, IBoost, IDamage
         Anim.SetBool(Constant.ANIM_DIE, true);
 
         await Task.Delay(TimeSpan.FromSeconds(2));
-        DespawnWhenDie();
+        DespawnWhenDie(attacker);
     }
 
-    public virtual void DespawnWhenDie() { }
+    public virtual void DespawnWhenDie(Character attacker) { }
 
     //End Die Region
     #endregion
@@ -242,7 +238,7 @@ public class Character : GameUnit, IBoost, IDamage
             case 1: //dam thường
                 currentAttacker = attacker;
                 currentHealth -= bulletDamage + characterDamage;
-                CheckDie();
+                CheckDie(currentAttacker);
                 break;
 
             case 2: //dam cháy
@@ -261,7 +257,7 @@ public class Character : GameUnit, IBoost, IDamage
                         {
                             currentAttacker = burnAttacker;
                             currentHealth -= Constant.BURN_DAMAGE;
-                            CheckDie();
+                            CheckDie(currentAttacker);
                             ++i;
                         }
                     }
@@ -271,13 +267,13 @@ public class Character : GameUnit, IBoost, IDamage
         }
     }
 
-    public virtual void CheckDie()
+    public virtual void CheckDie(Character attacker)
     {
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             currentAttacker.IncreaseXP(3, level);
-            Die();
+            Die(attacker);
         }
     }    
     //End Take Damage Region
@@ -291,6 +287,10 @@ public class Character : GameUnit, IBoost, IDamage
         {
             case 1: //boost health
                 currentHealth += Constant.BOOST_HEALTH;
+                if (currentHealth > maxHealth)
+                {
+                    currentHealth = maxHealth;
+                }
                 healParticle.Play();
                 break;
 
@@ -405,7 +405,7 @@ public class Character : GameUnit, IBoost, IDamage
         }
     }
 
-    public virtual void ChangeStateWin() { }
+    public virtual void CheckWin() { }
 
     protected IStates currentState;
     public virtual void ChangeState(IStates state)

@@ -57,17 +57,20 @@ public class Player : Character
     }
 
 
-    public override void Die()
+    public override void Die(Character attacker)
     {
-        base.Die();
+        base.Die(attacker);
         CloseUI();
         GameFlowManager.Instance.gameState = GameFlowManager.GameState.gameOver;
     }
 
-    public override void ChangeStateWin()
+    public override void CheckWin()
     {
-        CloseUI();
-        Anim.SetBool(Constant.ANIM_WIN, true);
+        if (GameFlowManager.Instance.gameState == GameFlowManager.GameState.gameWin)
+        {
+            CloseUI();
+            Anim.SetBool(Constant.ANIM_WIN, true);
+        }
     }
 
     private void CloseUI()
@@ -79,9 +82,11 @@ public class Player : Character
         }
     }    
 
-    public override void DespawnWhenDie()
+    public override void DespawnWhenDie(Character attacker)
     {
+        base.DespawnWhenDie(attacker);
         gameObject.SetActive(false);
+        attacker.CheckWin();
     }
 
     public override void IncreaseLevel()

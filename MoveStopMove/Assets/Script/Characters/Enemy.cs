@@ -16,6 +16,8 @@ public class Enemy : Character
 
     [SerializeField] private Player player;
 
+    [SerializeField] private EnemiesSpawner spawner;
+
     public GameObject TargetIcon;
 
     private double reactionTimer;
@@ -36,6 +38,7 @@ public class Enemy : Character
     public override void OnInit()
     {
         base.OnInit();
+        //Random Level khi spawn
         for (int i = 0; i < UnityEngine.Random.Range(player.level, player.level + 2); i++)
         {
             IncreaseLevel();
@@ -152,17 +155,20 @@ public class Enemy : Character
         GetPerk(UnityEngine.Random.Range(1, 6));
     }
 
-    public override void DespawnWhenDie()
+    public override void DespawnWhenDie(Character attacker)
     {
+        base.DespawnWhenDie(attacker);
         PoolSystem.Despawn(this);
-        GameFlowManager.Instance.enemyCount--;
         GameFlowManager.Instance.enemiesLeftCount--;
-        GameFlowManager.Instance.CheckWin();
+        GameFlowManager.Instance.enemiesActiveInPool--;
+        spawner.CheckNumbersOfEnemiesOnMap();
+        GameFlowManager.Instance.CheckGameStateWin();
+        attacker.CheckWin();
     }
 
-    public override void ChangeStateWin()
+    public override void CheckWin()
     {
-        if(GameFlowManager.Instance.enemiesLeftCount == 2 && player.isDead)
+        if(GameFlowManager.Instance.enemiesLeftCount == 1 && player.isDead)
         {
             ChangeState(null);
             Anim.SetBool(Constant.ANIM_WIN, true);

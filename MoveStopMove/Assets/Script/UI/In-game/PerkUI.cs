@@ -17,7 +17,7 @@ public class PerkUI : MonoBehaviour
         for (int i = 0; i < 3;)
         {
             GameObject randomperk = perkButtonList[UnityEngine.Random.Range(0, perkButtonList.Length)];
-            if (!randomperk.activeInHierarchy)
+            if (!randomperk.activeSelf)
             {
                 randomperk.SetActive(true);
                 ++i;

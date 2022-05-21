@@ -5,6 +5,8 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     public Hammer hammer;
+    public Knife knife;
+    public Candy candy;
 
     public void Fire(Character owner, Transform[] spawnPoint)
     {

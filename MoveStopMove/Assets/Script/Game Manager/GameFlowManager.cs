@@ -7,7 +7,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
     public enum GameState { gameUI, gameStart, gameOver, gameWin}
     public GameState gameState;
 
-    public int enemyCount = 0;
+    public int enemiesActiveInPool = 0;
     public int totalEnemiesPerStage;
     public int enemiesLeftCount;
 
@@ -16,7 +16,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
     private void Awake()
     {
         gameState = GameState.gameUI;
-        totalEnemiesPerStage = 9;
+        totalEnemiesPerStage = 29;
         enemiesLeftCount = totalEnemiesPerStage;
     }
 
@@ -25,7 +25,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
 
     }
 
-    public void CheckWin()
+    public void CheckGameStateWin()
     {
         if (enemiesLeftCount == 0)
         {
