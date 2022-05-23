@@ -41,6 +41,12 @@ public class Player : Character
         }
     }
 
+    public override void EquipWeapon()
+    {
+        equipedWeapon = Weapon.Hammer;
+        base.EquipWeapon();
+    }
+
     public override void ChangeFromIdleToAttack()
     {
         if (AttackTargets.Count != 0 && _joystick.Horizontal == 0 && _joystick.Vertical == 0)
@@ -80,7 +86,7 @@ public class Player : Character
         {
             perkUI.SetActive(false);
         }
-    }    
+    }
 
     public override void DespawnWhenDie()
     {

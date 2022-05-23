@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -42,7 +42,14 @@ public class Enemy : Character
         for (int i = 0; i < UnityEngine.Random.Range(player.level, player.level + 2); i++)
         {
             IncreaseLevel();
-        }    
+        }
+    }
+
+    public override void EquipWeapon()
+    {
+        //random vũ khí khi spawn
+        equipedWeapon = (Weapon)UnityEngine.Random.Range(0, 3);
+        base.EquipWeapon();
     }
 
     private void ShowTargetIcon()
@@ -161,17 +168,16 @@ public class Enemy : Character
         PoolSystem.Despawn(this);
         GameFlowManager.Instance.enemiesLeftCount--;
         GameFlowManager.Instance.enemiesActiveInPool--;
-        spawner.CheckNumbersOfEnemiesOnMap();
         GameFlowManager.Instance.CheckGameStateWin();
         EventManager.Instance.CharacterDie();
     }
 
     public override void CheckWin()
     {
-        if(GameFlowManager.Instance.enemiesLeftCount == 1 && player.isDead)
+        if (GameFlowManager.Instance.enemiesLeftCount == 1 && player.isDead)
         {
             ChangeState(null);
             Anim.SetBool(Constant.ANIM_WIN, true);
-        }    
+        }
     }
 }

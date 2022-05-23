@@ -7,17 +7,25 @@ using System;
 public class Character : GameUnit, IBoost, IDamage
 {
     public SphereCollider attackRangeCollider;
-    public float attackRadius;
+    [HideInInspector] public float attackRadius;
     public WeaponManager weaponManager;
-    public GameObject weaponHolder;
 
-    public float moveSpeed;
-    public int currentHealth;
-    public int maxHealth;
-    public int characterDamage;
-    public int exp;
-    public int expToNextLevel;
-    public int level;
+    [HideInInspector] public float moveSpeed;
+    [HideInInspector] public int currentHealth;
+    [HideInInspector] public int maxHealth;
+    [HideInInspector] public int characterDamage;
+    [HideInInspector] public int exp;
+    [HideInInspector] public int expToNextLevel;
+    [HideInInspector] public int level;
+    public enum Weapon { Hammer, Knife, Candy }
+    public Weapon equipedWeapon;
+    [SerializeField] protected GameObject weaponHolder;
+    [SerializeField] protected GameObject hammerInHand;
+    [SerializeField] protected GameObject knifeInHand;
+    [SerializeField] protected GameObject candyInHand;
+    protected GameObject currentWeaponInHand;
+    protected GameObject lastWeaponInHand;
+
 
     [SerializeField] protected Animator Anim;
     [SerializeField] protected List<GameObject> AttackTargets = new List<GameObject>();
@@ -36,7 +44,7 @@ public class Character : GameUnit, IBoost, IDamage
     protected bool idleToAttackTimerIsRunning = false;
 
     protected bool isFired;
-    public bool isDead;
+    [HideInInspector] public bool isDead;
 
     [SerializeField] protected ParticleSystem healParticle;
     [SerializeField] protected ParticleSystem speedBoostParticle;
@@ -49,6 +57,7 @@ public class Character : GameUnit, IBoost, IDamage
     [SerializeField] protected Transform[] weaponSpawnPoint2;
     [SerializeField] protected Transform[] weaponSpawnPoint3;
     [SerializeField] protected Transform[] weaponSpawnPoint4;
+    [HideInInspector] public int spawnpointID;
 
     [SerializeField] protected GameObject characterCanvas;
 
@@ -75,8 +84,9 @@ public class Character : GameUnit, IBoost, IDamage
         level = 1;
         isDead = false;
         attackRadius = attackRangeCollider.radius;
-        ChangeState(new StateIdle());
         selectedWeaponSpawnPoint = weaponSpawnPoint1;
+        EquipWeapon();
+        ChangeState(new StateIdle());
     }
 
     public virtual void Update()
@@ -114,6 +124,38 @@ public class Character : GameUnit, IBoost, IDamage
             AttackTargets.Remove(other.gameObject);
         }
     }
+
+    #region Equip Weapon
+    //Start Equip Weapon Region
+    public virtual void EquipWeapon()
+    {
+        ShowWeaponInHand(equipedWeapon);
+    }
+
+    public virtual void ShowWeaponInHand(Weapon equipedWeapon)
+    {
+        if(currentWeaponInHand != null)
+        {
+            lastWeaponInHand = currentWeaponInHand;
+            lastWeaponInHand.SetActive(false);
+        }    
+
+        switch (equipedWeapon)
+        {
+            case Weapon.Hammer:
+                currentWeaponInHand = hammerInHand;
+                break;
+            case Weapon.Knife:
+                currentWeaponInHand = knifeInHand;
+                break;
+            case Weapon.Candy:
+                currentWeaponInHand = candyInHand;
+                break;
+        }
+        currentWeaponInHand.SetActive(true);
+    }
+    //End Equip Weapon Region
+    #endregion
 
     #region Patrol
     //Start Patrol Region
@@ -249,7 +291,7 @@ public class Character : GameUnit, IBoost, IDamage
                 currentAttacker = attacker;
                 burnAttacker = attacker;
                 currentHealth -= bulletDamage + characterDamage;
-                burnParticle.Play();                
+                burnParticle.Play();
                 StartCoroutine(Burn());
 
                 IEnumerator Burn()
@@ -279,7 +321,7 @@ public class Character : GameUnit, IBoost, IDamage
             currentAttacker.IncreaseXP(3, level);
             Die();
         }
-    }    
+    }
     //End Take Damage Region
     #endregion
 
@@ -332,7 +374,7 @@ public class Character : GameUnit, IBoost, IDamage
     //Start IncreaseXP Region
     public virtual void IncreaseXP(int expID, int enemyLevel)
     {
-        switch(expID)
+        switch (expID)
         {
             case 1: //nhặt cục xp nhỏ
                 exp += Constant.EXP_SMALL;
@@ -346,8 +388,8 @@ public class Character : GameUnit, IBoost, IDamage
                 exp += Constant.EXP_KILL * enemyLevel;
                 break;
         }
-        
-        if(exp >= expToNextLevel)
+
+        if (exp >= expToNextLevel)
         {
             levelUpParticle.Play();
             IncreaseLevel();
@@ -369,7 +411,7 @@ public class Character : GameUnit, IBoost, IDamage
     //Start Perks Region
     public virtual void GetPerk(int perkID)
     {
-        switch(perkID)
+        switch (perkID)
         {
             case 1: //+ dam
                 characterDamage += Constant.PERK_INCREASE_DAMAGE;
@@ -383,12 +425,15 @@ public class Character : GameUnit, IBoost, IDamage
                 break;
             case 4: //ném 2 đạn thắng
                 selectedWeaponSpawnPoint = weaponSpawnPoint2;
+                characterDamage /= 2;
                 break;
             case 5: //ném 3 đạn chéo
                 selectedWeaponSpawnPoint = weaponSpawnPoint3;
+                characterDamage /= 3;
                 break;
             case 6: //ném 1 đạn phía sau
                 selectedWeaponSpawnPoint = weaponSpawnPoint4;
+                characterDamage /= 2;
                 break;
         }
     }

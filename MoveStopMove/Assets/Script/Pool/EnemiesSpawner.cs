@@ -27,7 +27,7 @@ public class EnemiesSpawner : MonoBehaviour
         for (int i = 0; i < enemiesOnMap; i++)
         {
             SpawnEnemy();
-        }    
+        }
     }
 
     private void OnDestroy()
