@@ -16,7 +16,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
     private void Awake()
     {
         gameState = GameState.gameUI;
-        totalEnemiesPerStage = 9;
+        totalEnemiesPerStage = 29;
         enemiesLeftCount = totalEnemiesPerStage;
     }
 

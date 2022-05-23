@@ -291,6 +291,7 @@ public class Character : GameUnit, IBoost, IDamage
                 currentAttacker = attacker;
                 burnAttacker = attacker;
                 currentHealth -= bulletDamage + characterDamage;
+                CheckDie();
                 burnParticle.Play();
                 StartCoroutine(Burn());
 
@@ -318,8 +319,11 @@ public class Character : GameUnit, IBoost, IDamage
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            currentAttacker.IncreaseXP(3, level);
-            Die();
+            if (!isDead)
+            {
+                currentAttacker.IncreaseXP(3, level);
+                Die();
+            }
         }
     }
     //End Take Damage Region

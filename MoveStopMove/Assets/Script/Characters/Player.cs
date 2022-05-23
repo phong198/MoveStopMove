@@ -43,7 +43,7 @@ public class Player : Character
 
     public override void EquipWeapon()
     {
-        equipedWeapon = Weapon.Hammer;
+        equipedWeapon = Weapon.Candy;
         base.EquipWeapon();
     }
 

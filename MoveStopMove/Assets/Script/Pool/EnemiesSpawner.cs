@@ -37,7 +37,7 @@ public class EnemiesSpawner : MonoBehaviour
 
     public void CheckNumbersOfEnemiesOnMap()
     {
-        if (GameFlowManager.Instance.enemiesActiveInPool < enemiesOnMap && GameFlowManager.Instance.enemiesLeftCount > enemiesOnMap)
+        if (GameFlowManager.Instance.enemiesActiveInPool < enemiesOnMap && GameFlowManager.Instance.enemiesLeftCount >= enemiesOnMap)
         {
             SpawnEnemy();
         }
