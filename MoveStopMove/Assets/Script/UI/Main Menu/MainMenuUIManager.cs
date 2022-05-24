@@ -25,6 +25,11 @@ public class MainMenuUIManager : MonoBehaviour
         OpenMainMenu();
     }
 
+    private void Update()
+    {
+        gold.SetText(GameFlowManager.Instance.totalPlayerGold.ToString());
+    }
+
     public void OpenMainMenu()
     {
         anim.SetBool("isShow", true);

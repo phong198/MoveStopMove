@@ -31,4 +31,7 @@ public class Constant
     public const int BOOST_HEALTH = 10;
     public const int BOOST_DAMAGE = 2;
     public const float BOOST_SPEED = 2f;
+
+    public const int GOLD_PER_KILL = 10;
+    public const int GOLD_PER_RANK = 3;
 }

@@ -7,6 +7,8 @@ public class Player : Character
     [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private GameObject joystickUI;
     [SerializeField] private GameObject perkUI;
+    [SerializeField] private GameObject loseMenu;
+    [SerializeField] private GameObject winMenu;
 
     private bool isAttacking = false;
 
@@ -76,7 +78,15 @@ public class Player : Character
         {
             CloseUI();
             Anim.SetBool(Constant.ANIM_WIN, true);
+            GameFlowManager.Instance.GetGoldAfterStage();
+            winMenu.SetActive(true);
         }
+    }
+
+    public override void IncreaseXP(int expID, int enemyLevel)
+    {
+        base.IncreaseXP(expID, enemyLevel);
+        GameFlowManager.Instance.IncreaseGoldWhenKill();
     }
 
     private void CloseUI()
@@ -93,6 +103,8 @@ public class Player : Character
         base.DespawnWhenDie();
         gameObject.SetActive(false);
         EventManager.Instance.CharacterDie();
+        GameFlowManager.Instance.GetGoldAfterStage();
+        loseMenu.SetActive(true);
     }
 
     public override void IncreaseLevel()

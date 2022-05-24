@@ -14,6 +14,7 @@ public class Character : GameUnit, IBoost, IDamage
     [HideInInspector] public int currentHealth;
     [HideInInspector] public int maxHealth;
     [HideInInspector] public int characterDamage;
+    [HideInInspector] public int characterDamageBeforePerks;
     [HideInInspector] public int exp;
     [HideInInspector] public int expToNextLevel;
     [HideInInspector] public int level;
@@ -79,6 +80,7 @@ public class Character : GameUnit, IBoost, IDamage
         maxHealth = 10;
         currentHealth = maxHealth;
         characterDamage = 5;
+        characterDamageBeforePerks = characterDamage;
         exp = 0;
         expToNextLevel = 10;
         level = 1;
@@ -134,11 +136,11 @@ public class Character : GameUnit, IBoost, IDamage
 
     public virtual void ShowWeaponInHand(Weapon equipedWeapon)
     {
-        if(currentWeaponInHand != null)
+        if (currentWeaponInHand != null)
         {
             lastWeaponInHand = currentWeaponInHand;
             lastWeaponInHand.SetActive(false);
-        }    
+        }
 
         switch (equipedWeapon)
         {
@@ -305,8 +307,8 @@ public class Character : GameUnit, IBoost, IDamage
                             currentAttacker = burnAttacker;
                             currentHealth -= Constant.BURN_DAMAGE;
                             CheckDie();
-                            ++i;
                         }
+                        ++i;
                     }
                     burnParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 }
@@ -345,27 +347,27 @@ public class Character : GameUnit, IBoost, IDamage
                 break;
 
             case 2: //boost damage
-                int oldCharacterDamage = characterDamage;
+                int lastCharacterDamage = characterDamage;
                 characterDamage *= Constant.BOOST_DAMAGE;
                 damageBoostParticle.Play();
                 StartCoroutine(BoostDamage());
                 IEnumerator BoostDamage()
                 {
                     yield return new WaitForSeconds(5);
-                    characterDamage = oldCharacterDamage;
+                    characterDamage = lastCharacterDamage;
                     damageBoostParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 }
                 break;
 
             case 3: //boost speed
-                float oldMoveSpeed = moveSpeed;
+                float lastMoveSpeed = moveSpeed;
                 moveSpeed *= Constant.BOOST_SPEED;
                 speedBoostParticle.Play();
                 StartCoroutine(BoostSpeed());
                 IEnumerator BoostSpeed()
                 {
                     yield return new WaitForSeconds(5);
-                    moveSpeed = oldMoveSpeed;
+                    moveSpeed = lastMoveSpeed;
                     speedBoostParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 }
                 break;
@@ -419,6 +421,7 @@ public class Character : GameUnit, IBoost, IDamage
         {
             case 1: //+ dam
                 characterDamage += Constant.PERK_INCREASE_DAMAGE;
+                characterDamageBeforePerks += Constant.PERK_INCREASE_DAMAGE;
                 break;
             case 2: //+ máu
                 currentHealth += Constant.PERK_INCREASE_HEALTH;
@@ -428,14 +431,17 @@ public class Character : GameUnit, IBoost, IDamage
                 moveSpeed += Constant.PERK_INCREASE_SPEED;
                 break;
             case 4: //ném 2 đạn thắng
+                characterDamage = characterDamageBeforePerks;
                 selectedWeaponSpawnPoint = weaponSpawnPoint2;
                 characterDamage /= 2;
                 break;
             case 5: //ném 3 đạn chéo
+                characterDamage = characterDamageBeforePerks;
                 selectedWeaponSpawnPoint = weaponSpawnPoint3;
                 characterDamage /= 3;
                 break;
             case 6: //ném 1 đạn phía sau
+                characterDamage = characterDamageBeforePerks;
                 selectedWeaponSpawnPoint = weaponSpawnPoint4;
                 characterDamage /= 2;
                 break;

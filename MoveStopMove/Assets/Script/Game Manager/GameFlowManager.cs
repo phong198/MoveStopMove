@@ -7,14 +7,20 @@ public class GameFlowManager : Singleton<GameFlowManager>
     public enum GameState { gameUI, gameStart, gameOver, gameWin }
     public GameState gameState;
 
+    public int goldPerStage;
+    public int totalPlayerGold;
+
     public int enemiesActiveInPool = 0;
     public int totalEnemiesPerStage;
     public int enemiesLeftCount;
 
     public int smallXpCount = 0;
     public int bigXpCount = 0;
+
     private void Awake()
     {
+        totalPlayerGold = PlayerPrefs.GetInt("totalPlayerGold", 0);
+        goldPerStage = 0;
         gameState = GameState.gameUI;
         totalEnemiesPerStage = 29;
         enemiesLeftCount = totalEnemiesPerStage;
@@ -22,8 +28,26 @@ public class GameFlowManager : Singleton<GameFlowManager>
 
     private void Update()
     {
-        Debug.Log("enemiesActiveInPool: " + enemiesActiveInPool);
-    }
+        Debug.Log(goldPerStage);
+    } 
+
+    public void IncreaseGoldWhenKill()
+    {
+        goldPerStage += Constant.GOLD_PER_KILL;
+    }    
+
+    public void GetGoldAfterStage()
+    {
+        goldPerStage += (totalEnemiesPerStage - enemiesLeftCount + 1) * Constant.GOLD_PER_RANK;
+        totalPlayerGold += goldPerStage;
+        SaveGold();
+    }    
+
+    public void SaveGold()
+    {
+        PlayerPrefs.SetInt("totalPlayerGold", totalPlayerGold);
+        PlayerPrefs.Save();
+    }    
 
     public void CheckGameStateWin()
     {
