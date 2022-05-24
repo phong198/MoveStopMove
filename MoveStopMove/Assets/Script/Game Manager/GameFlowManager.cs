@@ -26,11 +26,6 @@ public class GameFlowManager : Singleton<GameFlowManager>
         enemiesLeftCount = totalEnemiesPerStage;
     }
 
-    private void Update()
-    {
-        Debug.Log(goldPerStage);
-    } 
-
     public void IncreaseGoldWhenKill()
     {
         goldPerStage += Constant.GOLD_PER_KILL;

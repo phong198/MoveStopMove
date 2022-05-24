@@ -43,3 +43,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: MainMenu
+    uniqueID: 3017775551
+    locked: 0
+  - name: Shop
+    uniqueID: 2033529415
+    locked: 0
+  - name: Character
+    uniqueID: 680514097
+    locked: 0
+  - name: Ingame
+    uniqueID: 715826791
+    locked: 0
+  - name: EndScreen
+    uniqueID: 1479110733
+    locked: 0

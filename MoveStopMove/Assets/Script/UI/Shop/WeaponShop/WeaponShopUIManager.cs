@@ -17,11 +17,14 @@ public class WeaponShopUIManager : ShopUIManager
     private TMP_Text weaponEffect;
     [SerializeField]
     private GameObject mainMenu;
+    [SerializeField] private Player player;
 
     private void OnEnable()
     {
         ChangePage(new ShowPageHammer());
     }
+
+    #region Change Page
 
     public void CloseWeaponShop()
     {
@@ -66,8 +69,8 @@ public class WeaponShopUIManager : ShopUIManager
     public override void ShowCandyShop()
     {
         BoomerangCatalouge.SetActive(true);
-        weaponName.text = "Candy";
-        weaponEffect.text = "+1 Damage, Burns Enemies";
+        weaponName.text = "CANDY";
+        weaponEffect.text = "+2 Damage, Burns Enemies";
     }
     public override void HideCandyShop()
     {
@@ -83,4 +86,33 @@ public class WeaponShopUIManager : ShopUIManager
     {
         KnifeCatalouge.SetActive(false);
     }
+
+    #endregion
+
+    #region Change Weapon
+    public void ChangeWeapon()
+    {
+        switch (currentPage)
+        {
+            case ShowPageHammer:
+                player.equipedWeapon = Character.Weapon.Hammer;
+                player.EquipWeapon();
+                PlayerPrefs.SetInt("equipedWeapon", (int)Character.Weapon.Hammer);
+                PlayerPrefs.Save();
+                break;
+            case ShowPageKnife:
+                player.equipedWeapon = Character.Weapon.Knife;
+                player.EquipWeapon();
+                PlayerPrefs.SetInt("equipedWeapon", (int)Character.Weapon.Knife);
+                PlayerPrefs.Save();
+                break;
+            case ShowPageCandy:
+                player.equipedWeapon = Character.Weapon.Candy;
+                player.EquipWeapon();
+                PlayerPrefs.SetInt("equipedWeapon", (int)Character.Weapon.Candy);
+                PlayerPrefs.Save();
+                break;
+        }
+    }
+    #endregion
 }

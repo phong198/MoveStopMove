@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Cheat : MonoBehaviour
+{
+    // Start is called before the first frame update
+    public void IncreaseGold()
+    {
+        GameFlowManager.Instance.totalPlayerGold += 1000;
+        GameFlowManager.Instance.SaveGold();
+    }
+
+    public void ResetGold()
+    {
+        GameFlowManager.Instance.totalPlayerGold = 0;
+        GameFlowManager.Instance.SaveGold();
+    }
+}

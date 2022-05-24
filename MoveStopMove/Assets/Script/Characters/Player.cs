@@ -43,10 +43,10 @@ public class Player : Character
         }
     }
 
-    public override void EquipWeapon()
+    public override void OnInit()
     {
-        equipedWeapon = Weapon.Candy;
-        base.EquipWeapon();
+        equipedWeapon = (Weapon)PlayerPrefs.GetInt("equipedWeapon", 0);
+        base.OnInit();
     }
 
     public override void ChangeFromIdleToAttack()
