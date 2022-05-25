@@ -10,6 +10,7 @@ public class Character : GameUnit, IBoost, IDamage
     [HideInInspector] public float attackRadius;
     public WeaponManager weaponManager;
 
+    [HideInInspector] public string characterName;
     [HideInInspector] public float moveSpeed;
     [HideInInspector] public int currentHealth;
     [HideInInspector] public int maxHealth;
@@ -30,7 +31,7 @@ public class Character : GameUnit, IBoost, IDamage
 
     [SerializeField] protected Animator Anim;
     [SerializeField] protected List<GameObject> AttackTargets = new List<GameObject>();
-    protected Character currentAttacker;
+    [HideInInspector] public Character currentAttacker;
     protected Character burnAttacker;
 
     protected float fireTime = 0.50f;

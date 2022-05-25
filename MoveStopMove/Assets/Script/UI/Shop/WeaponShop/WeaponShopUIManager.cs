@@ -5,23 +5,31 @@ using TMPro;
 
 public class WeaponShopUIManager : ShopUIManager
 {
-    [SerializeField]
-    private GameObject HammerCatalouge;
-    [SerializeField]
-    private GameObject BoomerangCatalouge;
-    [SerializeField]
-    private GameObject KnifeCatalouge;
-    [SerializeField]
-    private TMP_Text weaponName;
-    [SerializeField]
-    private TMP_Text weaponEffect;
-    [SerializeField]
-    private GameObject mainMenu;
+    public enum WeaponState { CantBuy, CanBuy, Select, Equipped }
+    public int[] weaponPrice = { 800, 2000 };
+    [SerializeField] private GameObject buyButton;
+    [SerializeField] private GameObject equipButton;
+    [SerializeField] private GameObject equippedButton;
+
+    [SerializeField] private TMP_Text priceText;
+    [SerializeField] private GameObject HammerCatalouge;
+    [SerializeField] private GameObject BoomerangCatalouge;
+    [SerializeField] private GameObject KnifeCatalouge;
+    [SerializeField] private TMP_Text weaponName;
+    [SerializeField] private TMP_Text weaponEffect;
+    [SerializeField] private GameObject mainMenu;
     [SerializeField] private Player player;
+    [SerializeField] private GameObject playerName;
 
     private void OnEnable()
     {
         ChangePage(new ShowPageHammer());
+        playerName.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        playerName.SetActive(true);
     }
 
     #region Change Page
@@ -71,6 +79,7 @@ public class WeaponShopUIManager : ShopUIManager
         BoomerangCatalouge.SetActive(true);
         weaponName.text = "CANDY";
         weaponEffect.text = "+2 Damage, Burns Enemies";
+        priceText.text = weaponPrice[1].ToString();
     }
     public override void HideCandyShop()
     {
@@ -81,11 +90,25 @@ public class WeaponShopUIManager : ShopUIManager
         KnifeCatalouge.SetActive(true);
         weaponName.text = "KNIFE";
         weaponEffect.text = "+1 Damage, x2 Bullet speed";
+        priceText.text = weaponPrice[0].ToString();
     }
     public override void HideKnifeShop()
     {
         KnifeCatalouge.SetActive(false);
     }
+
+    public void BuyWeapon()
+    {
+        switch (currentPage)
+        {
+            case ShowPageKnife:
+
+                break;
+            case ShowPageCandy:
+
+                break;
+        }
+    }    
 
     #endregion
 

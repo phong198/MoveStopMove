@@ -8,20 +8,24 @@ public class Weapon : GameUnit
     public float bulletSpeed;
     public int damageType;
     public int bulletDamage;
+    public float despawnTime = 1;
+    public float despawnTimer;
 
     public void OnInit(Character owner)
     {
         _owner = owner;
+        despawnTimer = despawnTime;
     }
 
     public void Update()
     {
         transform.position += transform.forward * bulletSpeed * Time.deltaTime;
-        float travelRange = (_owner.transform.position - gameObject.transform.position).magnitude;
-        if (travelRange >= _owner.attackRadius)
+
+        despawnTimer -= Time.deltaTime;
+        if (despawnTimer <= 0)
         {
             PoolSystem.Despawn(this);
-        }
+        }    
     }
 
     private void OnCollisionEnter(Collision other)

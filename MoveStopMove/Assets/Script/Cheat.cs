@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Cheat : MonoBehaviour
 {
@@ -15,5 +16,12 @@ public class Cheat : MonoBehaviour
     {
         GameFlowManager.Instance.totalPlayerGold = 0;
         GameFlowManager.Instance.SaveGold();
+    }
+
+    public void ResetMap()
+    {
+        PlayerPrefs.SetInt("mapID", 0);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(0);
     }
 }

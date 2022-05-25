@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class Enemy : Character
 {
+    public enum EnemyName { deGea, Lindelof, Bailly, Jones, Maguire, Pogba, Ronaldo, Mata, Rashford, Greenwood, Grant, Lingard, Fred, Fernandes, Varane, Dalot, Cavani, Heaton, Shaw, Sancho, Henderson, Telles, WanBissaka, Matic, Elanga, McTominay, Mejbri, Shoretire, Fernandez, Garnacho }
     private Vector3 pos;
     [SerializeField] private float wanderRadius;
 
@@ -38,6 +40,8 @@ public class Enemy : Character
     public override void OnInit()
     {
         base.OnInit();
+        characterName = ((EnemyName)UnityEngine.Random.Range(0, (int)Enum.GetValues(typeof(EnemyName)).Cast<EnemyName>().Max())).ToString();
+
         //Random Level khi spawn
         for (int i = 0; i < UnityEngine.Random.Range(player.level, player.level + 2); i++)
         {

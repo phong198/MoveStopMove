@@ -22,9 +22,10 @@ public class GameFlowManager : Singleton<GameFlowManager>
         totalPlayerGold = PlayerPrefs.GetInt("totalPlayerGold", 0);
         goldPerStage = 0;
         gameState = GameState.gameUI;
-        totalEnemiesPerStage = 29;
+        totalEnemiesPerStage = 19;
         enemiesLeftCount = totalEnemiesPerStage;
     }
+      
 
     public void IncreaseGoldWhenKill()
     {

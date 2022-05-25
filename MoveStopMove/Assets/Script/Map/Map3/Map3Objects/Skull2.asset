@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf94737afa7a8744bb7cb120877da67, type: 3}
+  m_Name: Skull2
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7585481066700063479, guid: 46357c438d0cc8345b03b4f1c490183d, type: 3}
+  posX: -14.5
+  posY: -11.9
+  posZ: 38.9
+  rotX: -96
+  rotY: 26
+  rotZ: -85

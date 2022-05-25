@@ -17,17 +17,30 @@ public class MainMenuUIManager : MonoBehaviour
     private GameObject _joystick;
     [SerializeField]
     private GameObject inGameUI;
+    [SerializeField] private Player player;
+    [SerializeField] private TMP_InputField playerName;
+    [SerializeField] private GameObject playerNameIPF;
 
     // Start is called before the first frame update
     private void OnEnable()
     {
         _joystick.SetActive(false);
         OpenMainMenu();
+        playerNameIPF.SetActive(true);
+        playerName.text = PlayerPrefs.GetString("playerName", "Player");
+        playerName.onEndEdit.AddListener(delegate {SaveName(); });
     }
 
     private void Update()
     {
         gold.SetText(GameFlowManager.Instance.totalPlayerGold.ToString());
+    }
+
+    private void SaveName()
+    {
+        player.characterName = playerName.text;
+        PlayerPrefs.SetString("playerName", playerName.text);
+        PlayerPrefs.Save();
     }
 
     public void OpenMainMenu()
@@ -61,12 +74,13 @@ public class MainMenuUIManager : MonoBehaviour
         inGameUI.SetActive(true);
     }
 
-    private void CloseMainMenu()
+    public void CloseMainMenu()
     {
         anim.SetBool("isShow", false);
         anim.SetBool("isHide", true);
         if (GameFlowManager.Instance.gameState == GameFlowManager.GameState.gameStart)
         {
+            playerNameIPF.SetActive(false);
             StartCoroutine(HideMainMenu());
         }
     }

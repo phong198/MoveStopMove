@@ -46,6 +46,7 @@ public class Player : Character
     public override void OnInit()
     {
         equipedWeapon = (Weapon)PlayerPrefs.GetInt("equipedWeapon", 0);
+        characterName = PlayerPrefs.GetString("playerName", "Player");
         base.OnInit();
     }
 
@@ -79,6 +80,7 @@ public class Player : Character
             CloseUI();
             Anim.SetBool(Constant.ANIM_WIN, true);
             GameFlowManager.Instance.GetGoldAfterStage();
+            MapManager.Instance.ToNextMap();
             winMenu.SetActive(true);
         }
     }

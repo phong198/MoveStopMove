@@ -23,6 +23,7 @@ public class SkinShopUIManager : ShopUIManager
     private Image ChangePageShieldImage;
     [SerializeField]
     private Image ChangePageSkinsImage;
+    [SerializeField] private GameObject playerName;
 
     private Color imageHatColor;
     private Color imagePantColor;
@@ -32,12 +33,17 @@ public class SkinShopUIManager : ShopUIManager
 
     private void OnEnable()
     {
+        playerName.SetActive(false);
         imageHatColor = ChangePageHatsImage.color;
         imagePantColor = ChangePagePantsImage.color;
         imageShieldColor = ChangePageShieldImage.color;
         imageSkinColor = ChangePageSkinsImage.color;
 
         ChangePage(new ShowPageHats());
+    }
+    private void OnDisable()
+    {
+        playerName.SetActive(true);
     }
 
     public void CloseSkinShop()

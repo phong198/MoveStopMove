@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf94737afa7a8744bb7cb120877da67, type: 3}
+  m_Name: Rock4
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1626251599249400131, guid: 03aa0041c53eb9543bd38ca330fbd511, type: 3}
+  posX: -18
+  posY: -12.24
+  posZ: 23.2
+  rotX: 0
+  rotY: 12
+  rotZ: 0

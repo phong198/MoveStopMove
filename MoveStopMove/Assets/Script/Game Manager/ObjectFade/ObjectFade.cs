@@ -6,8 +6,7 @@ public class ObjectFade : MonoBehaviour
 {
     [SerializeField]
     private Renderer _renderer;
-    [SerializeField]
-    private GameObject player;
+    //[SerializeField] private GameObject player;
 
     private Material material;
     private Color fadeColor;
@@ -37,7 +36,7 @@ public class ObjectFade : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player)
+        if (other.gameObject.GetComponent<Player>() != null)
         {
             isFade = true;
         }
@@ -45,7 +44,7 @@ public class ObjectFade : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == player)
+        if (other.GetComponent<Player>() != null)
         {
             isFade = false;
         }

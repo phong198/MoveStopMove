@@ -10,12 +10,15 @@ public class CharacterUIManager : MonoBehaviour
     [SerializeField]
     private TMP_Text levelText;
     [SerializeField]
-    private Character character;
+    private TMP_Text enemyName;
+    [SerializeField]
+    private Enemy enemy;
 
     // Update is called once per frame
     void Update()
     {
-        levelText.SetText("Lv: " + character.level.ToString());
-        healthText.SetText(character.currentHealth.ToString() + "/" + character.maxHealth.ToString());
+        enemyName.SetText(enemy.characterName.ToString());
+        levelText.SetText("Lv: " + enemy.level.ToString());
+        healthText.SetText(enemy.currentHealth.ToString() + "/" + enemy.maxHealth.ToString());
     }
 }
