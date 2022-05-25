@@ -19,6 +19,7 @@ public class Character : GameUnit, IBoost, IDamage
     [HideInInspector] public int exp;
     [HideInInspector] public int expToNextLevel;
     [HideInInspector] public int level;
+
     public enum Weapon { Hammer, Knife, Candy }
     public Weapon equipedWeapon;
     [SerializeField] protected GameObject weaponHolder;
@@ -62,6 +63,11 @@ public class Character : GameUnit, IBoost, IDamage
     [HideInInspector] public int spawnpointID;
 
     [SerializeField] protected GameObject characterCanvas;
+
+    [SerializeField] protected Transform headPosition;
+    [SerializeField] protected Transform backPosition;
+    [SerializeField] protected Transform freeHandPosition;
+    [SerializeField] protected Transform tailPosition;
 
     public virtual void OnEnable()
     {
