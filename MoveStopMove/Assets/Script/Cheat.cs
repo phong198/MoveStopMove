@@ -21,6 +21,7 @@ public class Cheat : MonoBehaviour
     public void ResetMap()
     {
         PlayerPrefs.SetInt("mapID", 0);
+        PlayerPrefs.SetInt("totalEnemiesPerStage", 9);
         PlayerPrefs.Save();
         SceneManager.LoadScene(0);
     }

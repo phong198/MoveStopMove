@@ -22,7 +22,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
         totalPlayerGold = PlayerPrefs.GetInt("totalPlayerGold", 0);
         goldPerStage = 0;
         gameState = GameState.gameUI;
-        totalEnemiesPerStage = 19;
+        totalEnemiesPerStage = PlayerPrefs.GetInt("totalEnemiesPerStage", 9);
         enemiesLeftCount = totalEnemiesPerStage;
     }
       
@@ -50,6 +50,12 @@ public class GameFlowManager : Singleton<GameFlowManager>
         if (enemiesLeftCount == 0)
         {
             gameState = GameState.gameWin;
+            if (totalEnemiesPerStage <= 49)
+            {
+                totalEnemiesPerStage += 10;
+                PlayerPrefs.SetInt("totalEnemiesPerStage", totalEnemiesPerStage);
+                PlayerPrefs.Save();
+            }
         }
     }
 }
