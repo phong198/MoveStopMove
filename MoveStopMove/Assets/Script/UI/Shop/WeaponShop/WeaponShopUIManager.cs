@@ -34,7 +34,7 @@ public class WeaponShopUIManager : ShopUIManager
     }
 
     #region Change Page
-
+    //Start Change Page Region
     public void CloseWeaponShop()
     {
         gameObject.SetActive(false);
@@ -104,7 +104,7 @@ public class WeaponShopUIManager : ShopUIManager
     {
         KnifeCatalouge.SetActive(false);
     }
-
+    //End Change Page Region
     #endregion
 
     #region Buy Weapon
@@ -171,6 +171,7 @@ public class WeaponShopUIManager : ShopUIManager
     #endregion
 
     #region Change Weapon
+    //Start Change Weapon Region
     public void ChangeWeapon()
     {
         switch (currentPage)
@@ -195,5 +196,6 @@ public class WeaponShopUIManager : ShopUIManager
                 break;
         }
     }
+    //End Change Weapon Region
     #endregion
 }
