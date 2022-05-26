@@ -9,7 +9,7 @@ public class WeaponShopUIManager : ShopUIManager
     public int[] weaponPrice = { 800, 2000 };
     [SerializeField] private GameObject buyButton;
     [SerializeField] private GameObject equipButton;
-    [SerializeField] private GameObject equippedButton;
+    [SerializeField] private TMP_Text equippedText;
 
     [SerializeField] private TMP_Text priceText;
     [SerializeField] private GameObject HammerCatalouge;
@@ -48,11 +48,12 @@ public class WeaponShopUIManager : ShopUIManager
             case ShowPageKnife:
                 ChangePage(new ShowPageHammer());
                 buyButton.SetActive(false);
+                CheckHammerState();
                 equipButton.SetActive(true);
                 break;
             case ShowPageCandy:
                 ChangePage(new ShowPageKnife());
-                CheckKnifeBuyState();
+                CheckKnifeState();
                 break;
         }
     }
@@ -63,11 +64,11 @@ public class WeaponShopUIManager : ShopUIManager
         {
             case ShowPageHammer:
                 ChangePage(new ShowPageKnife());
-                CheckKnifeBuyState();
+                CheckKnifeState();
                 break;
             case ShowPageKnife:
                 ChangePage(new ShowPageCandy());
-                CheckCandyBuyState();
+                CheckCandyState();
                 break;
         }    
     }
@@ -120,7 +121,7 @@ public class WeaponShopUIManager : ShopUIManager
                     PlayerPrefs.SetInt("totalPlayerGold", GameFlowManager.Instance.totalPlayerGold);
                     PlayerPrefs.SetInt("knifeBuyState", 1);
                     PlayerPrefs.Save();
-                    CheckKnifeBuyState();
+                    CheckKnifeState();
                 }
                 break;
             case ShowPageCandy:
@@ -130,13 +131,23 @@ public class WeaponShopUIManager : ShopUIManager
                     PlayerPrefs.SetInt("totalPlayerGold", GameFlowManager.Instance.totalPlayerGold);
                     PlayerPrefs.SetInt("candyBuyState", 1);
                     PlayerPrefs.Save();
-                    CheckCandyBuyState();
+                    CheckCandyState();
                 }
                 break;
         }
     }
 
-    private void CheckKnifeBuyState()
+    private void CheckHammerState()
+    {
+        int equipedWeapon = PlayerPrefs.GetInt("equipedWeapon", 0);
+        if (equipedWeapon == (int)Character.Weapon.Hammer)
+        {
+            equippedText.SetText("Equipped");
+        }
+        else equippedText.SetText("Select");
+    }
+
+    private void CheckKnifeState()
     {
         int hammerBuyState = PlayerPrefs.GetInt("knifeBuyState", 0);
         switch (hammerBuyState)
@@ -148,11 +159,17 @@ public class WeaponShopUIManager : ShopUIManager
             case 1:
                 buyButton.SetActive(false);
                 equipButton.SetActive(true);
+                int equipedWeapon = PlayerPrefs.GetInt("equipedWeapon", 0);
+                if (equipedWeapon == (int)Character.Weapon.Knife)
+                {
+                    equippedText.SetText("Equipped");
+                }
+                else equippedText.SetText("Select");
                 break;
         }
     }
 
-    private void CheckCandyBuyState()
+    private void CheckCandyState()
     {
         int hammerBuyState = PlayerPrefs.GetInt("candyBuyState", 0);
         switch (hammerBuyState)
@@ -164,6 +181,12 @@ public class WeaponShopUIManager : ShopUIManager
             case 1:
                 buyButton.SetActive(false);
                 equipButton.SetActive(true);
+                int equipedWeapon = PlayerPrefs.GetInt("equipedWeapon", 0);
+                if (equipedWeapon == (int)Character.Weapon.Candy)
+                {
+                    equippedText.SetText("Equipped");
+                }
+                else equippedText.SetText("Select");
                 break;
         }
     }
@@ -181,18 +204,21 @@ public class WeaponShopUIManager : ShopUIManager
                 player.EquipWeapon();
                 PlayerPrefs.SetInt("equipedWeapon", (int)Character.Weapon.Hammer);
                 PlayerPrefs.Save();
+                CheckHammerState();
                 break;
             case ShowPageKnife:
                 player.equipedWeapon = Character.Weapon.Knife;
                 player.EquipWeapon();
                 PlayerPrefs.SetInt("equipedWeapon", (int)Character.Weapon.Knife);
                 PlayerPrefs.Save();
+                CheckKnifeState();
                 break;
             case ShowPageCandy:
                 player.equipedWeapon = Character.Weapon.Candy;
                 player.EquipWeapon();
                 PlayerPrefs.SetInt("equipedWeapon", (int)Character.Weapon.Candy);
                 PlayerPrefs.Save();
+                CheckCandyState();
                 break;
         }
     }

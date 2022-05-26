@@ -125,4 +125,8 @@ public class SkinShopUIManager : ShopUIManager
         SkinScrollRect.SetActive(false);
     }
     #endregion
+
+    #region Change Clothes
+
+    #endregion
 }

@@ -74,7 +74,7 @@ public class Character : GameUnit, IBoost, IDamage
     [HideInInspector] public enum Clothes { Default, Arrow, Cowboy, Crown, Ear, Hat, Hat_Cap, Hat_Yellow, HeadPhone, Rau, Khien, Shield, Batman, Chambi, comy, dabao, onion, pokemon, rainbow, Skull, Vantim, Devil, Angel, Witch, Deadpool, Thor }
     public virtual void OnEnable()
     {
-        //TODO: chuyển OnInit ra chỗ khác
+        //TODO: chuyển ChangeState ra chỗ khác
         OnInit();
         EventManager.Instance.onCharacterDie += CheckWin;
     }
