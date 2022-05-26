@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5160735084052087417}
   - component: {fileID: 4234962034340214863}
   - component: {fileID: 7636155409397892278}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: headphone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

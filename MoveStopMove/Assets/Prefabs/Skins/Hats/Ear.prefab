@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 304292337877724441}
   - component: {fileID: 8746578697724368687}
   - component: {fileID: 3053053041333234646}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Ear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
