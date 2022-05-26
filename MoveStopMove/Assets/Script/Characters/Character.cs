@@ -261,7 +261,7 @@ public class Character : GameUnit, IBoost, IDamage
 
     public virtual void GetDefaultClothes()
     {
-        
+        pantRenderer.material = characterClothes.PantsMaterials[0];
     }
 
     public virtual void ResetClothes()

@@ -20,6 +20,8 @@ public class Enemy : Character
 
     [SerializeField] private EnemiesSpawner spawner;
 
+    [SerializeField] private CharacterSkins enemySkins;
+
     public GameObject TargetIcon;
 
     private double reactionTimer;
@@ -42,6 +44,9 @@ public class Enemy : Character
         base.OnInit();
         characterName = ((EnemyName)UnityEngine.Random.Range(0, (int)Enum.GetValues(typeof(EnemyName)).Cast<EnemyName>().Max())).ToString();
 
+        GetDefaultClothes();
+        ChangeClothes((Clothes)UnityEngine.Random.Range(0, (int)Enum.GetValues(typeof(Clothes)).Cast<Clothes>().Max()));
+
         //Random Level khi spawn
         for (int i = 0; i < UnityEngine.Random.Range(player.level, player.level + 2); i++)
         {
@@ -54,6 +59,12 @@ public class Enemy : Character
         //random vũ khí khi spawn
         equipedWeapon = (Weapon)UnityEngine.Random.Range(0, 3);
         base.EquipWeapon();
+    }
+
+    public override void GetDefaultClothes()
+    {
+        base.GetDefaultClothes();
+        skinRenderer.material = enemySkins.SkinColor[UnityEngine.Random.Range(0, 20)];
     }
 
     private void ShowTargetIcon()

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CharacterSkin
   m_EditorClassIdentifier: 
   SkinColor:
-  - {fileID: 2100000, guid: a9514c6a4d773b2478d0c64708e698b0, type: 2}
+  - {fileID: 2100000, guid: 3e8c65d690e09124681d84d599c41f5e, type: 2}
   - {fileID: 2100000, guid: c84dffc8f63d46b4aa8f84793680c611, type: 2}
   - {fileID: 2100000, guid: 7f94f5aa3314a4b4091011a46dabb7a2, type: 2}
   - {fileID: 2100000, guid: 4a37a3ea957f9d24ea7d9d0da2752d0f, type: 2}
