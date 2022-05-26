@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -28,6 +28,7 @@ public class SkinShopUIManager : ShopUIManager
     private int skinButtonIndex;
     public Outline[] skinButtonOutlines;
     private Outline lastOutline;
+    public GameObject[] lockImages;
 
     private int[] price = { 500, 2500, 5000 };
     [SerializeField] private TMP_Text priceText;
@@ -47,6 +48,16 @@ public class SkinShopUIManager : ShopUIManager
         {
             button.onClick.AddListener(delegate { OnSkinButtonClick(System.Array.IndexOf(skinButtons, button), button); });
         }
+
+        foreach(GameObject lockImage in lockImages)
+        {
+            int state = PlayerPrefs.GetInt("clothesState" + System.Array.IndexOf(lockImages, lockImage));
+            if (state != 0)
+            {
+                lockImage.SetActive(false);
+            }    
+                
+        }    
 
         ChangePage(new ShowPageHats());
     }
@@ -137,6 +148,7 @@ public class SkinShopUIManager : ShopUIManager
 
     private void OnSkinButtonClick(int buttonIndex, Button button)
     {
+        CheckClothesState(buttonIndex);
         skinButtonIndex = buttonIndex;
         if (lastOutline != null && lastOutline != skinButtonOutlines[buttonIndex])
         {
@@ -150,11 +162,15 @@ public class SkinShopUIManager : ShopUIManager
     public void OnEquipSkinButtonClick()
     {
         ChangeClothes(skinButtonIndex);
+        PlayerPrefs.SetInt("clothesState" + skinButtonIndex, 2);
+        PlayerPrefs.Save();
+        CheckClothesState(skinButtonIndex);
     }
 
     private void ChangeClothes(int skinButtonIndex)
     {
         player.ChangeClothes((Character.Clothes)skinButtonIndex);
+        PlayerPrefs.SetInt("clothes", skinButtonIndex);
     }
     #endregion
 
@@ -166,7 +182,75 @@ public class SkinShopUIManager : ShopUIManager
 
     private void BuyClothes(int skinButtonIndex)
     {
+        if (skinButtonIndex <= 20)
+        {
+            if (GameFlowManager.Instance.totalPlayerGold >= price[0])
+            {
+                PlayerPrefs.SetInt("clothesState" + skinButtonIndex, 1);
+                GameFlowManager.Instance.totalPlayerGold -= price[0];
+                PlayerPrefs.SetInt("totalPlayerGold", GameFlowManager.Instance.totalPlayerGold);
+                PlayerPrefs.Save();
+                CheckClothesState(skinButtonIndex);
+            }    
+        }
+        else if (skinButtonIndex >= 21 && skinButtonIndex <= 23)
+        {
+            if (GameFlowManager.Instance.totalPlayerGold >= price[1])
+            {
+                PlayerPrefs.SetInt("clothesState" + skinButtonIndex, 1);
+                GameFlowManager.Instance.totalPlayerGold -= price[1];
+                PlayerPrefs.SetInt("totalPlayerGold", GameFlowManager.Instance.totalPlayerGold);
+                PlayerPrefs.Save();
+                CheckClothesState(skinButtonIndex);
+            }    
+        }    
+        else if (skinButtonIndex > 23)
+        {
+            if (GameFlowManager.Instance.totalPlayerGold >= price[2])
+            {
+                PlayerPrefs.SetInt("clothesState" + skinButtonIndex, 1);
+                GameFlowManager.Instance.totalPlayerGold -= price[2];
+                PlayerPrefs.SetInt("totalPlayerGold", GameFlowManager.Instance.totalPlayerGold);
+                PlayerPrefs.Save();
+                CheckClothesState(skinButtonIndex);
+            }
+        }    
+    }
 
+    private void CheckClothesState(int skinButtonIndex)
+    {
+        int state = PlayerPrefs.GetInt("clothesState" + skinButtonIndex, 0);
+        switch (state)
+        {
+            case 0: //chưa mua
+                buyButton.SetActive(true);
+                equipButton.SetActive(false);
+                if (skinButtonIndex <= 20)
+                {
+                    priceText.SetText(price[0].ToString());
+                }   
+                else if (skinButtonIndex >= 21 && skinButtonIndex <= 23)
+                {
+                    priceText.SetText(price[1].ToString());
+                }    
+                else if (skinButtonIndex > 23)
+                {
+                    priceText.SetText(price[2].ToString());
+                }    
+                break;
+            case 1: //đã mua, chưa equip
+                buyButton.SetActive(false);
+                equipButton.SetActive(true);
+                equipText.SetText("Select");
+                lockImages[skinButtonIndex].SetActive(false);
+                break;
+            case 2://đã equip
+                buyButton.SetActive(false);
+                equipButton.SetActive(true);
+                lockImages[skinButtonIndex].SetActive(false);
+                equipText.SetText("Equipped");
+                break;
+        }
     }
     #endregion
 }
