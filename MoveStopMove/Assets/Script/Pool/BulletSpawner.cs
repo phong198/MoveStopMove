@@ -12,8 +12,8 @@ public class BulletSpawner : MonoBehaviour
     [SerializeField] private Transform candyPoolParent;
     void Start()
     {
-        PoolSystem.Preload(hammer, 10, hammerPoolParent);
-        PoolSystem.Preload(knife, 10, knifePoolParent);
-        PoolSystem.Preload(candy, 10, candyPoolParent);
+        PoolSystem.Preload(hammer, 20, hammerPoolParent);
+        PoolSystem.Preload(knife, 20, knifePoolParent);
+        PoolSystem.Preload(candy, 20, candyPoolParent);
     }
 }
