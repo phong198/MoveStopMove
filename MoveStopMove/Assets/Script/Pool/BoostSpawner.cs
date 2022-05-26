@@ -38,6 +38,7 @@ public class BoostSpawner : MonoBehaviour
             }
         }
     }
+
     private void SpawnBoost(int boostID)
     {
         xPos = Random.Range(-50, 50);
