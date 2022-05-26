@@ -35,6 +35,7 @@ public class SkinShopUIManager : ShopUIManager
     [SerializeField] private GameObject buyButton;
     [SerializeField] private TMP_Text equipText;
     [SerializeField] private GameObject equipButton;
+    private int lastEquipedClothesIndex;
 
     private void OnEnable()
     {
@@ -169,6 +170,8 @@ public class SkinShopUIManager : ShopUIManager
 
     private void ChangeClothes(int skinButtonIndex)
     {
+        PlayerPrefs.SetInt("clothesState" + lastEquipedClothesIndex, 1);
+        lastEquipedClothesIndex = skinButtonIndex;
         player.ChangeClothes((Character.Clothes)skinButtonIndex);
         PlayerPrefs.SetInt("clothes", skinButtonIndex);
     }

@@ -19,6 +19,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
 
     private void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         totalPlayerGold = PlayerPrefs.GetInt("totalPlayerGold", 0);
         goldPerStage = 0;
         gameState = GameState.gameUI;

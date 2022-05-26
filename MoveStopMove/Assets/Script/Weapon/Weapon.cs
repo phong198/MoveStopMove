@@ -17,7 +17,7 @@ public class Weapon : GameUnit
         despawnTimer = despawnTime;
     }
 
-    public void Update()
+    public virtual void Update()
     {
         transform.position += transform.forward * bulletSpeed * Time.deltaTime;
 
