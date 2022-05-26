@@ -1,35 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
 public class SkinShopUIManager : ShopUIManager
 {
-    [SerializeField]
-    private GameObject HatsScrollRect;
-    [SerializeField]
-    private GameObject PantsScrollRect;
-    [SerializeField]
-    private GameObject ShieldScrollRect;
-    [SerializeField]
-    private GameObject SkinScrollRect;
+    [SerializeField] private GameObject HatsScrollRect;
+    [SerializeField] private GameObject PantsScrollRect;
+    [SerializeField] private GameObject ShieldScrollRect;
+    [SerializeField] private GameObject SkinScrollRect;
 
-    [SerializeField]
-    private Image ChangePageHatsImage;
-    [SerializeField]
-    private Image ChangePagePantsImage;
-    [SerializeField]
-    private Image ChangePageShieldImage;
-    [SerializeField]
-    private Image ChangePageSkinsImage;
+    [SerializeField] private Image ChangePageHatsImage;
+    [SerializeField] private Image ChangePagePantsImage;
+    [SerializeField] private Image ChangePageShieldImage;
+    [SerializeField] private Image ChangePageSkinsImage;
     [SerializeField] private GameObject playerName;
+    [SerializeField] private Player player;
 
     private Color imageHatColor;
     private Color imagePantColor;
     private Color imageShieldColor;
     private Color imageSkinColor;
 
+    public Button[] skinButtons;
+    private int skinButtonIndex;
+    public Outline[] skinButtonOutlines;
+    private Outline lastOutline;
+
+    private int[] price = { 500, 2500, 5000 };
+    [SerializeField] private TMP_Text priceText;
+    [SerializeField] private GameObject buyButton;
+    [SerializeField] private TMP_Text equipText;
+    [SerializeField] private GameObject equipButton;
 
     private void OnEnable()
     {
@@ -38,6 +42,11 @@ public class SkinShopUIManager : ShopUIManager
         imagePantColor = ChangePagePantsImage.color;
         imageShieldColor = ChangePageShieldImage.color;
         imageSkinColor = ChangePageSkinsImage.color;
+
+        foreach(Button button in skinButtons)
+        {
+            button.onClick.AddListener(delegate { OnSkinButtonClick(System.Array.IndexOf(skinButtons, button), button); });
+        }
 
         ChangePage(new ShowPageHats());
     }
@@ -126,7 +135,38 @@ public class SkinShopUIManager : ShopUIManager
     }
     #endregion
 
-    #region Change Clothes
+    private void OnSkinButtonClick(int buttonIndex, Button button)
+    {
+        skinButtonIndex = buttonIndex;
+        if (lastOutline != null && lastOutline != skinButtonOutlines[buttonIndex])
+        {
+            lastOutline.enabled = false;
+        }
+        skinButtonOutlines[buttonIndex].enabled = true;
+        lastOutline = skinButtonOutlines[buttonIndex];
+    }
 
+    #region Change Clothes
+    public void OnEquipSkinButtonClick()
+    {
+        ChangeClothes(skinButtonIndex);
+    }
+
+    private void ChangeClothes(int skinButtonIndex)
+    {
+        player.ChangeClothes((Character.Clothes)skinButtonIndex);
+    }
+    #endregion
+
+    #region Buy Clothes
+    public void OnBuyClothesButtonClick()
+    {
+        BuyClothes(skinButtonIndex);
+    }
+
+    private void BuyClothes(int skinButtonIndex)
+    {
+
+    }
     #endregion
 }

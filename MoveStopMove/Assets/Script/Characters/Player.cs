@@ -47,7 +47,7 @@ public class Player : Character
     {
         equipedWeapon = (Weapon)PlayerPrefs.GetInt("equipedWeapon", 0);
         characterName = PlayerPrefs.GetString("playerName", "Player");
-        ChangeClothes(Clothes.Witch);
+        ChangeClothes((Clothes)PlayerPrefs.GetInt("clothes", 0));
         base.OnInit();
     }
 

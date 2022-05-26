@@ -72,6 +72,7 @@ public class Character : GameUnit, IBoost, IDamage
     [SerializeField] protected SkinnedMeshRenderer pantRenderer;
     [SerializeField] protected SkinnedMeshRenderer skinRenderer;
     [HideInInspector] public enum Clothes { Default, Arrow, Cowboy, Crown, Ear, Hat, Hat_Cap, Hat_Yellow, HeadPhone, Rau, Khien, Shield, Batman, Chambi, comy, dabao, onion, pokemon, rainbow, Skull, Vantim, Devil, Angel, Witch, Deadpool, Thor }
+    [HideInInspector] public Clothes lastClothes;
     public virtual void OnEnable()
     {
         //TODO: chuyển ChangeState ra chỗ khác
@@ -141,6 +142,12 @@ public class Character : GameUnit, IBoost, IDamage
     //Start Equip Clothes region
     public virtual void ChangeClothes(Clothes clothes)
     {
+        if ((int)lastClothes > 20)
+        {
+            ResetClothes();
+        }
+        lastClothes = clothes;
+
         switch (clothes)
         {
             case Clothes.Default: //default skin
