@@ -48,6 +48,17 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 614a226743c10db43b4a5b2e49af9b3c, type: 2}
   - {fileID: 2100000, guid: c49a5d51ba4041741afa3c95d46d19cb, type: 2}
   - {fileID: 2100000, guid: 5623e3c399840ae4992d023370f5cbb0, type: 2}
+  - {fileID: 2100000, guid: 2f919e113858dc94096e2313e62d05e7, type: 2}
+  - {fileID: 2100000, guid: 909e29f579d4bd64c982bef2df56add0, type: 2}
+  - {fileID: 2100000, guid: d372b4da61d370a42b6af018af39d581, type: 2}
+  - {fileID: 2100000, guid: 8ff3bcc864145934f8cba9f9a5c8f44c, type: 2}
+  - {fileID: 2100000, guid: 7e2fcd2945de37048976e70f5df38a5c, type: 2}
+  - {fileID: 2100000, guid: 7e2fcd2945de37048976e70f5df38a5c, type: 2}
+  - {fileID: 2100000, guid: c7d35ee71ce399440bf2f7d4089bbf95, type: 2}
+  - {fileID: 2100000, guid: 6389c2622e8fa224aa16bb05d50ca739, type: 2}
+  - {fileID: 2100000, guid: e3e962b78046253429b7f4f8c0bb62ac, type: 2}
+  - {fileID: 2100000, guid: ce2ff5eb30ea53446b0147d386197063, type: 2}
+  - {fileID: 2100000, guid: 1e1c6a0a64beb49ec96272beefa468a5, type: 2}
   SkinMaterials:
   - {fileID: 2100000, guid: a9514c6a4d773b2478d0c64708e698b0, type: 2}
   - {fileID: 2100000, guid: a44bda687e509e246a53ade9e31b9ec4, type: 2}
