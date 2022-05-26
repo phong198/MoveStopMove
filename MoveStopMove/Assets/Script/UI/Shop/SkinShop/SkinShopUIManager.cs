@@ -51,6 +51,7 @@ public class SkinShopUIManager : ShopUIManager
         gameObject.SetActive(false);
     }
 
+    #region Change Page
     public void ChangePageHats()
     {
         ChangePage(new ShowPageHats());
@@ -123,4 +124,5 @@ public class SkinShopUIManager : ShopUIManager
         ChangePageSkinsImage.color = imageSkinColor;
         SkinScrollRect.SetActive(false);
     }
+    #endregion
 }

@@ -25,4 +25,11 @@ public class Cheat : MonoBehaviour
         PlayerPrefs.Save();
         SceneManager.LoadScene(0);
     }
+
+    public void ResetWeaponShop()
+    {
+        PlayerPrefs.SetInt("knifeBuyState", 0);
+        PlayerPrefs.SetInt("candyBuyState", 0);
+        PlayerPrefs.Save();
+    }    
 }

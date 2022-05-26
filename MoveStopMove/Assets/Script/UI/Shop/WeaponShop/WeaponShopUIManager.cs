@@ -25,6 +25,7 @@ public class WeaponShopUIManager : ShopUIManager
     {
         ChangePage(new ShowPageHammer());
         playerName.SetActive(false);
+        equipButton.SetActive(true);
     }
 
     private void OnDisable()
@@ -42,26 +43,33 @@ public class WeaponShopUIManager : ShopUIManager
 
     public void ClickLeftArrow()
     {
-        if (currentPage is ShowPageKnife)
+        switch (currentPage)
         {
-            ChangePage(new ShowPageHammer());
-        }
-        else if (currentPage is ShowPageCandy)
-        {
-            ChangePage(new ShowPageKnife());
+            case ShowPageKnife:
+                ChangePage(new ShowPageHammer());
+                buyButton.SetActive(false);
+                equipButton.SetActive(true);
+                break;
+            case ShowPageCandy:
+                ChangePage(new ShowPageKnife());
+                CheckKnifeBuyState();
+                break;
         }
     }
 
     public void ClickRightArrow()
     {
-        if (currentPage is ShowPageHammer)
+        switch (currentPage)
         {
-            ChangePage(new ShowPageKnife());
-        }
-        else if (currentPage is ShowPageKnife)
-        {
-            ChangePage(new ShowPageCandy());
-        }
+            case ShowPageHammer:
+                ChangePage(new ShowPageKnife());
+                CheckKnifeBuyState();
+                break;
+            case ShowPageKnife:
+                ChangePage(new ShowPageCandy());
+                CheckCandyBuyState();
+                break;
+        }    
     }
 
     public override void ShowHammerShop()
@@ -97,19 +105,69 @@ public class WeaponShopUIManager : ShopUIManager
         KnifeCatalouge.SetActive(false);
     }
 
+    #endregion
+
+    #region Buy Weapon
+    //Start Buy Weapon Region
     public void BuyWeapon()
     {
         switch (currentPage)
         {
             case ShowPageKnife:
-
+                if (GameFlowManager.Instance.totalPlayerGold >= weaponPrice[0])
+                {
+                    GameFlowManager.Instance.totalPlayerGold -= weaponPrice[0];
+                    PlayerPrefs.SetInt("totalPlayerGold", GameFlowManager.Instance.totalPlayerGold);
+                    PlayerPrefs.SetInt("knifeBuyState", 1);
+                    PlayerPrefs.Save();
+                    CheckKnifeBuyState();
+                }
                 break;
             case ShowPageCandy:
-
+                if (GameFlowManager.Instance.totalPlayerGold >= weaponPrice[1])
+                {
+                    GameFlowManager.Instance.totalPlayerGold -= weaponPrice[1];
+                    PlayerPrefs.SetInt("totalPlayerGold", GameFlowManager.Instance.totalPlayerGold);
+                    PlayerPrefs.SetInt("candyBuyState", 1);
+                    PlayerPrefs.Save();
+                    CheckCandyBuyState();
+                }
                 break;
         }
-    }    
+    }
 
+    private void CheckKnifeBuyState()
+    {
+        int hammerBuyState = PlayerPrefs.GetInt("knifeBuyState", 0);
+        switch (hammerBuyState)
+        {
+            case 0:
+                buyButton.SetActive(true);
+                equipButton.SetActive(false);
+                break;
+            case 1:
+                buyButton.SetActive(false);
+                equipButton.SetActive(true);
+                break;
+        }
+    }
+
+    private void CheckCandyBuyState()
+    {
+        int hammerBuyState = PlayerPrefs.GetInt("candyBuyState", 0);
+        switch (hammerBuyState)
+        {
+            case 0:
+                buyButton.SetActive(true);
+                equipButton.SetActive(false);
+                break;
+            case 1:
+                buyButton.SetActive(false);
+                equipButton.SetActive(true);
+                break;
+        }
+    }
+    //End Buy Weapon Region
     #endregion
 
     #region Change Weapon

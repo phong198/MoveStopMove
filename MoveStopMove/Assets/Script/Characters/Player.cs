@@ -47,7 +47,15 @@ public class Player : Character
     {
         equipedWeapon = (Weapon)PlayerPrefs.GetInt("equipedWeapon", 0);
         characterName = PlayerPrefs.GetString("playerName", "Player");
+        ChangeClothes(Clothes.Deadpool);
         base.OnInit();
+    }
+
+    public override void GetDefaultClothes()
+    {
+        base.GetDefaultClothes();
+        pantRenderer.material = characterClothes.PantsMaterials[0];
+        skinRenderer.material = characterClothes.SkinMaterials[0];
     }
 
     public override void ChangeFromIdleToAttack()

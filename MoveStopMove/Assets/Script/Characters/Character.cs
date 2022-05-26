@@ -68,7 +68,10 @@ public class Character : GameUnit, IBoost, IDamage
     [SerializeField] protected Transform backPosition;
     [SerializeField] protected Transform freeHandPosition;
     [SerializeField] protected Transform tailPosition;
-
+    [SerializeField] protected ClothesInfo characterClothes;
+    [SerializeField] protected SkinnedMeshRenderer pantRenderer;
+    [SerializeField] protected SkinnedMeshRenderer skinRenderer;
+    [HideInInspector] public enum Clothes { Default, Arrow, Cowboy, Crown, Ear, Hat, Hat_Cap, Hat_Yellow, HeadPhone, Rau, Khien, Shield, Batman, Chambi, comy, dabao, onion, pokemon, rainbow, Skull, Vantim, Devil, Angel, Witch, Deadpool, Thor }
     public virtual void OnEnable()
     {
         //TODO: chuyển OnInit ra chỗ khác
@@ -133,6 +136,175 @@ public class Character : GameUnit, IBoost, IDamage
             AttackTargets.Remove(other.gameObject);
         }
     }
+
+    #region Equip Clothes
+    //Start Equip Clothes region
+    public virtual void ChangeClothes(Clothes clothes)
+    {
+        switch (clothes)
+        {
+            case Clothes.Default: //default skin
+                GetDefaultClothes();
+                break;
+            case Clothes.Arrow: //mũ
+                ResetHead();
+                Instantiate(characterClothes.HeadPosition[6], headPosition);
+                break;
+            case Clothes.Cowboy:
+                ResetHead();
+                Instantiate(characterClothes.HeadPosition[7], headPosition);
+                break;
+            case Clothes.Crown:
+                ResetHead();
+                Instantiate(characterClothes.HeadPosition[1], headPosition);
+                break;
+            case Clothes.Ear:
+                ResetHead();
+                Instantiate(characterClothes.HeadPosition[2], headPosition);
+                break;
+            case Clothes.Hat:
+                ResetHead();
+                Instantiate(characterClothes.HeadPosition[3], headPosition);
+                break;
+            case Clothes.Hat_Cap:
+                ResetHead();
+                Instantiate(characterClothes.HeadPosition[4], headPosition);
+                break;
+            case Clothes.Hat_Yellow:
+                ResetHead();
+                Instantiate(characterClothes.HeadPosition[5], headPosition);
+                break;
+            case Clothes.HeadPhone:
+                ResetHead();
+                Instantiate(characterClothes.HeadPosition[8], headPosition);
+                break;
+            case Clothes.Rau:
+                ResetHead();
+                Instantiate(characterClothes.HeadPosition[0], headPosition);
+                break;
+            case Clothes.Khien: //khiên
+                ResetFreeHand();
+                Instantiate(characterClothes.FreeHandPosition[1], freeHandPosition);
+                break;
+            case Clothes.Shield:
+                ResetFreeHand();
+                Instantiate(characterClothes.FreeHandPosition[0], freeHandPosition);
+                break;
+            case Clothes.Batman: //quần
+                GetDefaultClothes();
+                pantRenderer.material = characterClothes.PantsMaterials[7];
+                break;
+            case Clothes.Chambi:
+                GetDefaultClothes();
+                pantRenderer.material = characterClothes.PantsMaterials[1];
+                break;
+            case Clothes.comy:
+                GetDefaultClothes();
+                pantRenderer.material = characterClothes.PantsMaterials[2];
+                break;
+            case Clothes.dabao:
+                GetDefaultClothes();
+                pantRenderer.material = characterClothes.PantsMaterials[3];
+                break;
+            case Clothes.onion:
+                GetDefaultClothes();
+                pantRenderer.material = characterClothes.PantsMaterials[4];
+                break;
+            case Clothes.rainbow:
+                GetDefaultClothes();
+                pantRenderer.material = characterClothes.PantsMaterials[5];
+                break;
+            case Clothes.pokemon:
+                GetDefaultClothes();
+                pantRenderer.material = characterClothes.PantsMaterials[8];
+                break;
+            case Clothes.Skull:
+                GetDefaultClothes();
+                pantRenderer.material = characterClothes.PantsMaterials[9];
+                break;
+            case Clothes.Vantim:
+                GetDefaultClothes();
+                pantRenderer.material = characterClothes.PantsMaterials[6];
+                break;
+            case Clothes.Devil: //skin
+                ResetClothes();
+                Instantiate(characterClothes.HeadPosition[9], headPosition);
+                Instantiate(characterClothes.BackPosition[0], backPosition);
+                Instantiate(characterClothes.TailPosition[0], tailPosition);
+                skinRenderer.material = characterClothes.SkinMaterials[1];
+                break;
+            case Clothes.Angel:
+                ResetClothes();
+                Instantiate(characterClothes.HeadPosition[10], headPosition);
+                Instantiate(characterClothes.BackPosition[1], backPosition);
+                Instantiate(characterClothes.FreeHandPosition[2], freeHandPosition);
+                skinRenderer.material = characterClothes.SkinMaterials[2];
+                break;
+            case Clothes.Witch:
+                ResetClothes();
+                Instantiate(characterClothes.HeadPosition[11], headPosition);
+                Instantiate(characterClothes.FreeHandPosition[3], freeHandPosition);
+                skinRenderer.material = characterClothes.SkinMaterials[3];
+                break;
+            case Clothes.Deadpool:
+                ResetClothes();
+                Instantiate(characterClothes.BackPosition[2], backPosition);
+                skinRenderer.material = characterClothes.SkinMaterials[4];
+                break;
+            case Clothes.Thor:
+                ResetClothes();
+                Instantiate(characterClothes.HeadPosition[12], headPosition);
+                skinRenderer.material = characterClothes.SkinMaterials[5];
+                break;
+        }
+    }
+
+    public virtual void GetDefaultClothes()
+    {
+        
+    }
+
+    public virtual void ResetClothes()
+    {
+        ResetFreeHand();
+        ResetHead();
+        ResetBack();
+        ResetTail();
+        GetDefaultClothes();
+    }
+
+    public virtual void ResetFreeHand()
+    {
+        foreach (Transform item in freeHandPosition)
+        {
+            Destroy(item.gameObject);
+        }
+    }
+
+    public virtual void ResetHead()
+    {
+        foreach (Transform item in headPosition)
+        {
+            Destroy(item.gameObject);
+        }
+    }
+
+    public virtual void ResetBack()
+    {
+        foreach (Transform item in backPosition)
+        {
+            Destroy(item.gameObject);
+        }
+    }
+
+    public virtual void ResetTail()
+    {
+        foreach (Transform item in tailPosition)
+        {
+            Destroy(item.gameObject);
+        }
+    }
+    #endregion
 
     #region Equip Weapon
     //Start Equip Weapon Region
