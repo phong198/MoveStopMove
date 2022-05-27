@@ -95,7 +95,10 @@ public class Player : Character
     public override void IncreaseXP(int expID, int enemyLevel)
     {
         base.IncreaseXP(expID, enemyLevel);
-        GameFlowManager.Instance.IncreaseGoldWhenKill();
+        if (expID == 3)
+        {
+            GameFlowManager.Instance.IncreaseGoldWhenKill();
+        }
     }
 
     private void CloseUI()
