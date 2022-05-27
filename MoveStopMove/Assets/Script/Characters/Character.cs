@@ -151,7 +151,6 @@ public class Character : GameUnit, IBoost, IDamage
         switch (clothes)
         {
             case Clothes.Default: //default skin
-                GetDefaultClothes();
                 ResetClothes();
                 break;
             case Clothes.Arrow: //mũ
